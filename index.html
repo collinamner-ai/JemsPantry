@@ -15,7 +15,7 @@
       --text-primary: #1C1C1E;
       --text-secondary: #6B7280;
       --border: #E5E7EB;
-      --danger: #EF4444;     /* ✅ solid red */
+      --danger: #EF4444;
       --success: #10B981;
       --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
       --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -91,7 +91,7 @@
     }
 
     .help-btn {
-      border-radius: 999px; /* small circle */
+      border-radius: 999px;
       width: 40px;
       height: 40px;
       background: rgba(255,255,255,0.22);
@@ -130,7 +130,7 @@
     .search-container{
       position: relative;
       margin-bottom: 12px;
-      padding-right: 86px; /* ✅ leaves room for help + cart */
+      padding-right: 86px; /* room for help + cart */
     }
 
     .search-input-wrapper {
@@ -168,12 +168,10 @@
       flex-shrink: 0;
     }
     .search-clear.active { display: flex; }
-
     .search-icon { width: 20px; height: 20px; flex-shrink: 0; color: var(--primary); }
 
     /* ============ FILTER CHIPS ============ */
     .filter-group { margin-bottom: 10px; }
-
     .filter-label {
       font-size: 11px;
       font-weight: 900;
@@ -219,7 +217,6 @@
       -webkit-overflow-scrolling: touch;
       padding-bottom: max(84px, env(safe-area-inset-bottom));
     }
-
     .container { padding: 12px; padding-bottom: 20px; max-width: 100%; }
 
     /* ============ EMPTY STATE ============ */
@@ -452,7 +449,6 @@
     }
     .edit-btn:active { transform: scale(0.92); }
 
-    /* ✅ solid red remove button */
     .delete-btn {
       display:none;
       flex:1;
@@ -469,10 +465,7 @@
       letter-spacing: 0.4px;
     }
     .delete-btn:active { transform: scale(0.96); opacity: 0.95; }
-
-    .item-row.out-of-stock .item-footer-actions .delete-btn{
-      display:block;
-    }
+    .item-row.out-of-stock .item-footer-actions .delete-btn{ display:block; }
 
     /* ============ MODALS ============ */
     .modal-overlay {
@@ -755,7 +748,7 @@
       text-align: center;
     }
 
-    /* ============ SPLASH + GUIDE ============ */
+    /* ============ SPLASH + GUIDE (CLEAN) ============ */
     .splash-overlay{
       position: fixed;
       inset: 0;
@@ -763,76 +756,59 @@
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 18px;
-      background: radial-gradient(1200px 700px at 50% 30%, #2D7A4F 0%, #0F3D25 55%, #072416 100%);
+      padding: 22px;
+      background: radial-gradient(1000px 700px at 50% 30%, #2D7A4F 0%, #0F3D25 55%, #072416 100%);
     }
-    .splash-overlay.active{ display: flex; }
+    .splash-overlay.active{ display:flex; }
 
     .splash-card{
       width: min(520px, 100%);
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 22px;
-      padding: 18px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
-      backdrop-filter: blur(10px);
-      color: #fff;
       text-align: center;
+      color: #fff;
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
     }
 
     .splash-logo{
-      width: min(340px, 82%);
+      width: min(360px, 86%);
       height: auto;
       display: block;
-      margin: 10px auto 10px;
-      border-radius: 18px;
-    }
-
-    .splash-title{
-      margin: 6px 0 2px;
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: -0.3px;
+      margin: 0 auto 16px;
     }
 
     .splash-version{
-      margin: 0 0 12px;
+      margin: 0 0 16px;
       font-size: 12px;
-      font-weight: 900;
-      opacity: 0.85;
+      font-weight: 800;
+      opacity: 0.8;
       letter-spacing: 0.6px;
       text-transform: uppercase;
     }
 
     .splash-actions{
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
     }
 
     .splash-btn{
+      width: min(280px, 92%);
       border: none;
-      border-radius: 14px;
-      padding: 12px 14px;
+      border-radius: 16px;
+      padding: 14px 16px;
       font-weight: 900;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 15px;
       letter-spacing: 0.3px;
     }
-
-    .splash-btn.primary{ background: #10B981; color: #fff; }
+    .splash-btn.primary{ background: #10B981; color:#fff; }
     .splash-btn.secondary{
-      background: rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.14);
       color: #fff;
       border: 1px solid rgba(255,255,255,0.18);
-    }
-
-    .splash-note{
-      margin-top: 10px;
-      font-size: 12px;
-      opacity: 0.85;
-      line-height: 1.35;
     }
 
     .splash-skip{
@@ -840,15 +816,26 @@
       gap:10px;
       align-items:center;
       justify-content:center;
-      margin-top: 10px;
+      margin-top: 16px;
       font-size: 12px;
       opacity: 0.9;
     }
+
     .splash-skip input{
       width: 18px;
       height: 18px;
       accent-color: #10B981;
     }
+
+    .splash-note{
+      margin-top: 12px;
+      font-size: 12px;
+      opacity: 0.75;
+      line-height: 1.35;
+    }
+
+    /* ✅ Ensure guide opens above splash */
+    #guideModal { z-index: 6001; }
 
     .guide h3{
       margin: 12px 0 6px;
@@ -920,7 +907,6 @@
     <div class="splash-card">
       <!-- Put JP_logo.png in the same folder as index.html -->
       <img src="JP_logo.png" class="splash-logo" alt="JemsPantry logo">
-      <div class="splash-title">JemsPantry</div>
       <div class="splash-version" id="splashVersion">Version</div>
 
       <div class="splash-actions">
@@ -941,7 +927,6 @@
 
   <div class="header">
     <div class="header-actions">
-      <!-- ✅ Help icon -->
       <button class="help-btn" onclick="openUserGuide()" aria-label="Help">?</button>
 
       <button class="cart-btn" onclick="openShoppingList()" aria-label="Shopping list">
@@ -1190,7 +1175,6 @@
     "Personal Care & Pharmacy"
   ];
 
-  // Brand packs used to gently improve auto-category by region
   const REGION_BRANDS = {
     UK: {
       dairy: ["cathedral city","arla","muller","müller","oatly","alpro","lurpak","kerrygold","anchor","philadelphia"],
@@ -1436,7 +1420,6 @@
     if (pack?.snacks?.some(has))    add("Snacks", 2);
     if (pack?.beverages?.some(has)) add("Beverages", 2);
 
-    // Keyword rules
     if ([
       "vegetable","vegetables","veg","carrot","broccoli","cabbage","lettuce","spinach","kale","cucumber",
       "tomato","tomatoes","pepper","onion","garlic","leek","potato","potatoes","sweet potato",
@@ -1713,8 +1696,6 @@
     const delRow = document.getElementById('deleteRow');
 
     editingId = rowNumber;
-
-    // ✅ always scroll to top so Item Name is visible first
     scrollItemModalToTop();
 
     if (!rowNumber) {
@@ -1732,7 +1713,6 @@
 
       modal.classList.add('active');
 
-      // ✅ focus item name
       setTimeout(() => {
         scrollItemModalToTop();
         document.getElementById('f_item').focus();
@@ -1823,7 +1803,6 @@
     });
   }
 
-  // ==================== DELETE ITEM (CARD) ====================
   function deleteItem(row) {
     const item = inventory.find(x => x.rowNumber === row);
     if (!item) return;
@@ -1845,7 +1824,6 @@
     });
   }
 
-  // ==================== UPDATE QTY ====================
   function updateQty(row, delta) {
     const item = inventory.find(x => x.rowNumber === row);
     if (!item) return;
@@ -1859,7 +1837,6 @@
     render();
   }
 
-  // ==================== RENDER ====================
   function render() {
     const container = document.getElementById('main');
     const query = document.getElementById('search').value.toLowerCase();
@@ -1963,7 +1940,6 @@
     });
   }
 
-  // ==================== LOAD ====================
   function load() {
     openCats = loadOpenCatsFromStorage();
     inventory = loadInventoryFromStorage();
@@ -1990,7 +1966,6 @@
     updateHeaderHeight();
   }
 
-  // ==================== INIT ====================
   window.addEventListener('load', () => {
     load();
     updateHeaderHeight();
@@ -1998,7 +1973,6 @@
   });
 
   window.addEventListener('resize', updateHeaderHeight);
-
   document.getElementById('search').addEventListener('input', () => render());
 
   document.addEventListener('keydown', (e) => {
@@ -2007,7 +1981,6 @@
       closeItemEditor();
       closeConfirm();
       closeUserGuide();
-      // don't force-close splash on ESC (nice UX)
     }
   });
 
