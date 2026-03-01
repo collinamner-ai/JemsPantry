@@ -2,7 +2,7 @@
   "name": "JemsPantry - Pantry Inventory Tracker",
   "short_name": "JemsPantry",
   "description": "Keep track of your groceries locally. No account needed, no cloud storage. Your data stays on your device.",
-  "start_url": "https://your-github-pages-url.com/",
+  "start_url": "https://collinamner-ai.github.io/JemsPantry/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
