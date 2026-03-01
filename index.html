@@ -202,22 +202,28 @@
     }
 
     /* ============ SEARCH ROW (below storage) ============ */
-    .search-row{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin-bottom:4px;
-    }
-    .search-container{flex:1;}
-    .search-input-wrapper{
-      display:flex;
-      align-items:center;
-      background:rgba(255,255,255,0.95);
-      border-radius:999px;            /* pill shaped */
-      padding:0 2px;
-      gap:10px;
-      box-shadow:var(--shadow-sm);
-    }
+.search-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:4px;
+}
+
+.search-container{
+  flex:1;
+  min-width:0;
+  margin-right:14px;   /* adjust: 10px / 14px / 18px etc */
+}
+
+.search-input-wrapper{
+  display:flex;
+  align-items:center;
+  background:rgba(255,255,255,0.95);
+  border-radius:999px;
+  padding:0 8px;
+  gap:10px;
+  box-shadow:var(--shadow-sm);
+}
     .search-icon{width:20px;height:20px;flex-shrink:0;color:var(--primary);}
     #search{
       flex:1;
