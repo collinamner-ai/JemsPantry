@@ -3,7 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>JemsPantry</title>
+  <meta name="theme-color" content="#2D7A4F">
+  <meta name="description" content="JemsPantry - Local pantry inventory tracker. Keep track of your groceries without the cloud.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="JemsPantry">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self';">
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="JP_logo.png">
+  <link rel="apple-touch-icon" href="JP_logo.png">
+  
+  <title>JemsPantry - Pantry Tracker</title>
 
   <style>
     :root {
@@ -101,6 +112,78 @@
       line-height: 1;
     }
 
+    /* ============ REGION SELECTOR ============ */
+    .region-btn {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      border: none;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(10px);
+      font-weight: 900;
+      font-size: 14px;
+      min-width: 44px;
+    }
+
+    .region-btn:active {
+      transform: scale(0.9);
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .region-menu {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      z-index: 1002;
+      display: none;
+      overflow: hidden;
+      min-width: 120px;
+    }
+
+    .region-menu.active {
+      display: block;
+      animation: slideDownRegion 0.2s ease;
+    }
+
+    .region-option {
+      padding: 12px 16px;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--text-primary);
+      font-size: 13px;
+      transition: all 0.15s ease;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .region-option:last-child {
+      border-bottom: none;
+    }
+
+    .region-option:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .region-option.active {
+      background: var(--primary);
+      color: white;
+      font-weight: 900;
+    }
+
     .cart-btn:active, .help-btn:active {
       transform: scale(0.9);
       background: rgba(255, 255, 255, 0.3);
@@ -130,7 +213,7 @@
     .search-container{
       position: relative;
       margin-bottom: 12px;
-      padding-right: 86px; /* room for help + cart */
+      padding-right: 140px;
     }
 
     .search-input-wrapper {
@@ -834,7 +917,6 @@
       line-height: 1.35;
     }
 
-    /* ✅ Ensure guide opens above splash */
     #guideModal { z-index: 6001; }
 
     .guide h3{
@@ -869,6 +951,10 @@
     @keyframes slideUpModal {
       from { transform: translateY(24px); opacity: 0.9; }
       to   { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideDownRegion {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -905,29 +991,38 @@
   <!-- SPLASH OVERLAY -->
   <div class="splash-overlay" id="splash">
     <div class="splash-card">
-      <!-- Put JP_logo.png in the same folder as index.html -->
       <img src="JP_logo.png" class="splash-logo" alt="JemsPantry logo">
       <div class="splash-version" id="splashVersion">Version</div>
 
       <div class="splash-actions">
-        <button class="splash-btn primary" onclick="startApp()">Start</button>
-        <button class="splash-btn secondary" onclick="openUserGuide()">User Guide</button>
+        <button class="splash-btn primary" onclick="startApp()" aria-label="Start app">Start</button>
+        <button class="splash-btn secondary" onclick="openUserGuide()" aria-label="Open user guide">User Guide</button>
       </div>
 
       <label class="splash-skip">
-        <input type="checkbox" id="skipSplash">
-        Don’t show this again
+        <input type="checkbox" id="skipSplash" aria-label="Don't show splash again">
+        Don't show this again
       </label>
 
       <div class="splash-note">
-        Local Inventory Storage
+        Local Inventory Storage • No Account Required
       </div>
     </div>
   </div>
 
   <div class="header">
     <div class="header-actions">
-      <button class="help-btn" onclick="openUserGuide()" aria-label="Help">?</button>
+      <div style="position: relative;">
+        <button class="region-btn" onclick="toggleRegionMenu()" aria-label="Select region" id="regionDisplayBtn">UK</button>
+        <div class="region-menu" id="regionMenu">
+          <button class="region-option active" onclick="selectRegion('UK')" data-region="UK">🇬🇧 UK</button>
+          <button class="region-option" onclick="selectRegion('US')" data-region="US">🇺🇸 US</button>
+          <button class="region-option" onclick="selectRegion('EU')" data-region="EU">🇪🇺 EU</button>
+          <button class="region-option" onclick="selectRegion('Global')" data-region="Global">🌍 Global</button>
+        </div>
+      </div>
+
+      <button class="help-btn" onclick="openUserGuide()" aria-label="Help - open user guide">?</button>
 
       <button class="cart-btn" onclick="openShoppingList()" aria-label="Shopping list">
         <svg class="cart-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -946,8 +1041,8 @@
             <circle cx="11" cy="11" r="8"></circle>
             <path d="m21 21-4.35-4.35"></path>
           </svg>
-          <input type="text" id="search" placeholder="Search items...">
-          <button class="search-clear" onclick="clearSearch()">
+          <input type="text" id="search" placeholder="Search items..." aria-label="Search items">
+          <button class="search-clear" onclick="clearSearch()" aria-label="Clear search">
             <svg viewBox="0 0 24 24" fill="currentColor" style="width: 18px; height: 18px;">
               <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
             </svg>
@@ -958,45 +1053,35 @@
       <div class="filter-group">
         <span class="filter-label">Location</span>
         <div class="filter-chips">
-          <div class="chip" onclick="setFilter('loc','Kitchen',this)">Kitchen</div>
-          <div class="chip" onclick="setFilter('loc','Garage',this)">Garage</div>
+          <div class="chip" onclick="setFilter('loc','Kitchen',this)" role="button" tabindex="0">Kitchen</div>
+          <div class="chip" onclick="setFilter('loc','Garage',this)" role="button" tabindex="0">Garage</div>
         </div>
       </div>
 
       <div class="filter-group">
         <span class="filter-label">Storage Type</span>
         <div class="filter-chips">
-          <div class="chip" onclick="setFilter('stor','Fridge',this)">Fridge</div>
-          <div class="chip" onclick="setFilter('stor','Cupboard',this)">Cupboard</div>
-          <div class="chip" onclick="setFilter('stor','Freezer',this)">Freezer</div>
-        </div>
-      </div>
-
-      <div class="filter-group">
-        <span class="filter-label">Region</span>
-        <div class="filter-chips" id="regionChips">
-          <div class="chip" onclick="setRegion('UK', this)">UK</div>
-          <div class="chip" onclick="setRegion('US', this)">US</div>
-          <div class="chip" onclick="setRegion('EU', this)">EU</div>
-          <div class="chip" onclick="setRegion('Global', this)">Global</div>
+          <div class="chip" onclick="setFilter('stor','Fridge',this)" role="button" tabindex="0">Fridge</div>
+          <div class="chip" onclick="setFilter('stor','Cupboard',this)" role="button" tabindex="0">Cupboard</div>
+          <div class="chip" onclick="setFilter('stor','Freezer',this)" role="button" tabindex="0">Freezer</div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="content-wrapper" id="contentWrapper">
-    <div class="container" id="main"></div>
-    <div id="toast"></div>
+    <div class="container" id="main" role="main"></div>
+    <div id="toast" role="status" aria-live="polite"></div>
   </div>
 
-  <button class="fab" onclick="openItemEditor(null)" aria-label="Add item">+</button>
+  <button class="fab" onclick="openItemEditor(null)" aria-label="Add new item">+</button>
 
   <!-- SHOPPING LIST MODAL -->
   <div class="modal-overlay" id="shoppingModal" onclick="closeShoppingList(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
       <div class="modal-header">
         <h2>Shopping List</h2>
-        <button class="modal-close" onclick="closeShoppingList()">✕</button>
+        <button class="modal-close" onclick="closeShoppingList()" aria-label="Close shopping list">✕</button>
       </div>
       <div class="modal-body" id="shoppingListContent">
         <div class="shopping-list-empty">
@@ -1013,27 +1098,27 @@
     <div class="modal-content" onclick="event.stopPropagation()">
       <div class="modal-header">
         <h2 id="itemModalTitle">Add Item</h2>
-        <button class="modal-close" onclick="closeItemEditor()">✕</button>
+        <button class="modal-close" onclick="closeItemEditor()" aria-label="Close">✕</button>
       </div>
       <div class="modal-body" id="itemModalBody">
         <div class="field">
-          <label>Item Name</label>
+          <label for="f_item">Item Name</label>
           <input id="f_item" type="text" placeholder="e.g. Milk, Chicken Breast" autocomplete="off">
         </div>
 
         <div class="form-grid">
           <div class="field">
-            <label>Store</label>
+            <label for="f_store">Store</label>
             <input id="f_store" type="text" placeholder="e.g. Tesco, Iceland" autocomplete="off">
           </div>
 
           <div class="field">
-            <label>Quantity</label>
+            <label for="f_qty">Quantity</label>
             <input id="f_qty" type="number" min="0" step="1" value="1">
           </div>
 
           <div class="field">
-            <label>Location</label>
+            <label for="f_location">Location</label>
             <select id="f_location">
               <option value="Kitchen">Kitchen</option>
               <option value="Garage">Garage</option>
@@ -1041,7 +1126,7 @@
           </div>
 
           <div class="field">
-            <label>Storage Type</label>
+            <label for="f_storage">Storage Type</label>
             <select id="f_storage">
               <option value="Fridge">Fridge</option>
               <option value="Cupboard">Cupboard</option>
@@ -1050,26 +1135,26 @@
           </div>
 
           <div class="field">
-            <label>Category</label>
+            <label for="f_category">Category</label>
             <select id="f_category">
               <option value="">Auto (recommended)</option>
             </select>
           </div>
 
           <div class="field">
-            <label>Expiry Date</label>
+            <label for="f_expiry">Expiry Date</label>
             <input id="f_expiry" type="date">
           </div>
         </div>
 
         <div class="field">
-          <label>Notes</label>
+          <label for="f_notes">Notes</label>
           <textarea id="f_notes" placeholder="Optional notes..."></textarea>
         </div>
 
         <div class="form-actions">
           <button class="btn-wide secondary" onclick="closeItemEditor()">Cancel</button>
-          <button class="btn-wide primary" onclick="saveItemFromModal()">Save</button>
+          <button class="btn-wide primary" id="saveBtnForm" onclick="saveItemFromModal()">Save</button>
         </div>
 
         <div class="form-actions" id="deleteRow" style="display:none;">
@@ -1084,7 +1169,7 @@
     <div class="modal-content" onclick="event.stopPropagation()">
       <div class="modal-header">
         <h2>How to use JemsPantry</h2>
-        <button class="modal-close" onclick="closeUserGuide()">✕</button>
+        <button class="modal-close" onclick="closeUserGuide()" aria-label="Close guide">✕</button>
       </div>
       <div class="modal-body guide">
         <div class="tip">Quick start: Tap <b>+</b> to add your first item.</div>
@@ -1115,19 +1200,19 @@
           <li>Tick items as you buy them, or remove them.</li>
         </ul>
 
-        <h3>Search & filters</h3>
+        <h3>Search &amp; filters</h3>
         <ul>
           <li>Use the search bar to find items instantly.</li>
           <li>Use chips to filter by <b>Location</b> and <b>Storage Type</b>.</li>
           <li>Region helps smart category detection recognise brands.</li>
         </ul>
 
-        <div class="tip">Tip: Your data is stored locally on this device (no account required).</div>
+        <div class="tip"><b>Important:</b> Your data is stored locally on this device only. No account required, and nothing is sent to any server.</div>
       </div>
     </div>
   </div>
 
-  <!-- CLEAN CONFIRM MODAL -->
+  <!-- CONFIRM MODAL -->
   <div class="modal-overlay" id="confirmModal" onclick="closeConfirm(event)">
     <div class="confirm-sheet" onclick="event.stopPropagation()">
       <h3 class="confirm-title" id="confirmTitle">Confirm</h3>
@@ -1140,10 +1225,52 @@
   </div>
 
 <script>
-  // ===== Version =====
+  // ===== ERROR BOUNDARY =====
+  window.addEventListener('error', (e) => {
+    console.error('Uncaught error:', e.error);
+    toast('An error occurred. Your data has been saved.');
+  });
+
+  window.addEventListener('unhandledrejection', (e) => {
+    console.error('Unhandled rejection:', e.reason);
+    toast('An error occurred. Your data has been saved.');
+  });
+
+  // ===== STORAGE SAFETY WRAPPER =====
+  const SafeStorage = {
+    getItem: (key) => {
+      try {
+        return localStorage.getItem(key);
+      } catch (e) {
+        console.error('localStorage getItem failed:', e);
+        return null;
+      }
+    },
+    setItem: (key, value) => {
+      try {
+        localStorage.setItem(key, value);
+        return true;
+      } catch (e) {
+        console.error('localStorage setItem failed:', e);
+        toast('Storage quota exceeded. Please delete some items.');
+        return false;
+      }
+    },
+    removeItem: (key) => {
+      try {
+        localStorage.removeItem(key);
+        return true;
+      } catch (e) {
+        console.error('localStorage removeItem failed:', e);
+        return false;
+      }
+    }
+  };
+
+  // ===== VERSION =====
   const APP_VERSION = "1.0.0";
 
-  // ===== State =====
+  // ===== STATE =====
   let inventory = [];
   let shoppingList = [];
   let filters = { loc: new Set(), stor: new Set() };
@@ -1161,44 +1288,35 @@
   let editingId = null;
 
   const CATEGORIES = [
-    "Fruit & Veg",
-    "Meat, Poultry & Seafood",
-    "Dairy & Refrigerated",
-    "Bakery & Bread",
-    "Pantry & Dry Goods",
-    "Canned Goods & Sauces",
-    "Frozen Foods",
-    "Snacks",
-    "Beverages",
-    "Condiments & Oils",
-    "Household & Cleaning",
-    "Personal Care & Pharmacy"
+    "Fruit & Veg", "Meat, Poultry & Seafood", "Dairy & Refrigerated", "Bakery & Bread",
+    "Pantry & Dry Goods", "Canned Goods & Sauces", "Frozen Foods", "Snacks",
+    "Beverages", "Condiments & Oils", "Household & Cleaning", "Personal Care & Pharmacy"
   ];
 
   const REGION_BRANDS = {
     UK: {
-      dairy: ["cathedral city","arla","muller","müller","oatly","alpro","lurpak","kerrygold","anchor","philadelphia"],
-      bakery: ["warburtons","kingsmill","hovis","allinsons","allinson's","jacksons","jackson's","roberts","sunblest"],
+      dairy: ["cathedral city","arla","muller","oatly","alpro","lurpak","kerrygold","anchor","philadelphia"],
+      bakery: ["warburtons","kingsmill","hovis","allinsons","jacksons","roberts","sunblest"],
       canned: ["heinz","branston","baxters","princes","john west","napolina","mutti","cirio"],
-      snacks: ["walkers","mcvities","cadbury","tunnocks","foxs","fox's","tyrrells","kettle","pringles","doritos"],
-      beverages: ["coca cola","coca-cola","pepsi","ribena","lucozade","vimto","tango","robinsons","irn bru","irn-bru"]
+      snacks: ["walkers","mcvities","cadbury","tunnocks","foxs","tyrrells","kettle","pringles","doritos"],
+      beverages: ["coca cola","coca-cola","pepsi","ribena","lucozade","vimto","tango","robinsons","irn bru"]
     },
     US: {
       dairy: ["kraft","philadelphia","land o'lakes","daisy","chobani","yoplait","dannon","horizon","silk","oatly"],
-      bakery: ["wonder","pepperidge farm","sara lee","nature's own","entennmann's","martin's","bimbo","oroweat","ball park","thomas'"],
+      bakery: ["wonder","pepperidge farm","sara lee","nature's own","entennmann's","martin's","bimbo","oroweat"],
       canned: ["campbell's","progresso","hunts","del monte","libby's","hormel","stagg","goya","bush's","heinz"],
       snacks: ["lays","doritos","cheetos","ritz","oreo","hershey's","reese's","kellogg's","quaker","nature valley"],
       beverages: ["gatorade","powerade","coke","coca-cola","pepsi","dr pepper","mountain dew","snapple","arizona"]
     },
     EU: {
-      dairy: ["danone","nestle","muller","müller","arla","president","président","galbani","valio","kerrygold"],
+      dairy: ["danone","nestle","muller","arla","president","galbani","valio","kerrygold"],
       bakery: ["barilla","mulino bianco","wasa","jacquet","bonduelle"],
       canned: ["mutti","cirio","bonduelle","rio mare","ortiz","knorr","heinz"],
       snacks: ["haribo","milka","ritter sport","lays","pringles","kinder","ferrero","nutella","oreo","jacobs"],
       beverages: ["coca-cola","pepsi","fanta","sprite","san pellegrino","lavazza","nescafe","nespresso"]
     },
     Global: {
-      dairy: ["danone","nestle","oatly","alpro","arla","philadelphia","yoplait","muller","müller","kerrygold"],
+      dairy: ["danone","nestle","oatly","alpro","arla","philadelphia","yoplait","muller","kerrygold"],
       bakery: ["bimbo","barilla","warburtons","hovis","pepperidge farm","sara lee","wasa"],
       canned: ["heinz","campbell's","mutti","cirio","del monte","libby's","princes","john west","goya","knorr"],
       snacks: ["pringles","oreo","doritos","lays","kettle","walkers","haribo","kinder","cadbury","mcvities"],
@@ -1206,7 +1324,7 @@
     }
   };
 
-  // ==================== CLEAN CONFIRM MODAL ====================
+  // ==================== CONFIRM MODAL ====================
   let _confirm = { onYes: null, onNo: null };
 
   function showConfirm({ title, message, yesText = "Yes", noText = "No", onYes, onNo }) {
@@ -1230,13 +1348,21 @@
   // ==================== SPLASH + GUIDE ====================
   function showSplashIfNeeded(){
     document.getElementById("splashVersion").textContent = `Version ${APP_VERSION}`;
-    const skip = localStorage.getItem(SPLASH_SKIP_KEY) === "1";
-    if (!skip) document.getElementById("splash").classList.add("active");
+    const skip = SafeStorage.getItem(SPLASH_SKIP_KEY) === "1";
+    if (!skip) {
+      document.getElementById("splash").classList.add("active");
+      // Auto-dismiss after 10 seconds as fallback
+      setTimeout(() => {
+        if (document.getElementById("splash").classList.contains("active")) {
+          startApp();
+        }
+      }, 10000);
+    }
   }
 
   function startApp(){
     const dontShow = document.getElementById("skipSplash")?.checked;
-    if (dontShow) localStorage.setItem(SPLASH_SKIP_KEY, "1");
+    if (dontShow) SafeStorage.setItem(SPLASH_SKIP_KEY, "1");
     document.getElementById("splash").classList.remove("active");
   }
 
@@ -1248,11 +1374,11 @@
     document.getElementById("guideModal").classList.remove("active");
   }
 
-  // ==================== NORMALISE ====================
+  // ==================== NORMALIZATION ====================
   function normalizeText(s) {
     return String(s || "")
       .toLowerCase()
-      .replace(/[’']/g, "'")
+      .replace(/['']/g, "'")
       .replace(/&/g, " and ")
       .replace(/\s+/g, " ")
       .trim();
@@ -1263,17 +1389,18 @@
 
   function loadStoreColors() {
     try {
-      const raw = localStorage.getItem(STORE_COLORS_KEY);
+      const raw = SafeStorage.getItem(STORE_COLORS_KEY);
       const parsed = raw ? JSON.parse(raw) : {};
       storeColors = (parsed && typeof parsed === "object") ? parsed : {};
     } catch (e) {
+      console.error('Error parsing store colors:', e);
       storeColors = {};
     }
     if (!storeColors[storeKey("Tesco")]) storeColors[storeKey("Tesco")] = "#3B82F6";
     if (!storeColors[storeKey("Iceland")]) storeColors[storeKey("Iceland")] = "#EF4444";
     saveStoreColors();
   }
-  function saveStoreColors() { try { localStorage.setItem(STORE_COLORS_KEY, JSON.stringify(storeColors)); } catch (e) {} }
+  function saveStoreColors() { SafeStorage.setItem(STORE_COLORS_KEY, JSON.stringify(storeColors)); }
   function getStoreColor(store) { const key = storeKey(store); return key ? (storeColors[key] || null) : null; }
   function setStoreColor(store, hex) { const key = storeKey(store); if (!key) return; storeColors[key] = hex; saveStoreColors(); }
 
@@ -1311,39 +1438,42 @@
       renderShoppingList();
     }, { once: true });
 
-    picker.addEventListener("change", () => picker.remove(), { once: true });
+    picker.addEventListener("change", () => {
+      try { picker.remove(); } catch (e) {}
+    }, { once: true });
+
     picker.click();
   }
 
   // ==================== LOCAL STORAGE ====================
-  function saveInventoryToStorage() { try { localStorage.setItem(INVENTORY_STORAGE_KEY, JSON.stringify(inventory)); } catch (e) {} }
+  function saveInventoryToStorage() { SafeStorage.setItem(INVENTORY_STORAGE_KEY, JSON.stringify(inventory)); }
   function loadInventoryFromStorage() {
     try {
-      const raw = localStorage.getItem(INVENTORY_STORAGE_KEY);
+      const raw = SafeStorage.getItem(INVENTORY_STORAGE_KEY);
       if (!raw) return [];
       const parsed = JSON.parse(raw);
       return Array.isArray(parsed) ? parsed : [];
-    } catch (e) { return []; }
+    } catch (e) { console.error('Error loading inventory:', e); return []; }
   }
 
-  function saveOpenCatsToStorage() { try { localStorage.setItem(OPENCATS_STORAGE_KEY, JSON.stringify([...openCats])); } catch (e) {} }
+  function saveOpenCatsToStorage() { SafeStorage.setItem(OPENCATS_STORAGE_KEY, JSON.stringify([...openCats])); }
   function loadOpenCatsFromStorage() {
     try {
-      const raw = localStorage.getItem(OPENCATS_STORAGE_KEY);
+      const raw = SafeStorage.getItem(OPENCATS_STORAGE_KEY);
       if (!raw) return new Set();
       const parsed = JSON.parse(raw);
       return new Set(Array.isArray(parsed) ? parsed : []);
-    } catch (e) { return new Set(); }
+    } catch (e) { console.error('Error loading open cats:', e); return new Set(); }
   }
 
-  function saveShoppingList() { try { localStorage.setItem(SHOPPING_STORAGE_KEY, JSON.stringify(shoppingList)); } catch (e) {} }
+  function saveShoppingList() { SafeStorage.setItem(SHOPPING_STORAGE_KEY, JSON.stringify(shoppingList)); }
   function loadShoppingListFromStorage() {
     try {
-      const raw = localStorage.getItem(SHOPPING_STORAGE_KEY);
+      const raw = SafeStorage.getItem(SHOPPING_STORAGE_KEY);
       if (!raw) return [];
       const parsed = JSON.parse(raw);
       return Array.isArray(parsed) ? parsed : [];
-    } catch (e) { return []; }
+    } catch (e) { console.error('Error loading shopping list:', e); return []; }
   }
 
   function reconcileShoppingListWithInventory() {
@@ -1358,29 +1488,66 @@
   }
 
   // ==================== REGION ====================
-  function loadRegion() { try { region = localStorage.getItem(REGION_KEY) || "UK"; } catch (e) { region = "UK"; } }
-  function saveRegion() { try { localStorage.setItem(REGION_KEY, region); } catch (e) {} }
+  function loadRegion() { try { region = SafeStorage.getItem(REGION_KEY) || "UK"; } catch (e) { region = "UK"; } }
+  function saveRegion() { SafeStorage.setItem(REGION_KEY, region); }
 
-  function syncRegionChipsUI() {
-    const wrap = document.getElementById("regionChips");
-    if (!wrap) return;
-    [...wrap.querySelectorAll(".chip")].forEach(ch => {
-      const val = ch.textContent.trim();
-      ch.classList.toggle("active", val === region);
-    });
+  function toggleRegionMenu() {
+    const menu = document.getElementById("regionMenu");
+    if (!menu) return;
+    menu.classList.toggle("active");
+    // Close if clicking outside
+    document.addEventListener('click', closeRegionMenuOnClickOutside);
   }
 
-  function setRegion(val, el) {
+  function closeRegionMenuOnClickOutside(event) {
+    const menu = document.getElementById("regionMenu");
+    const btn = document.getElementById("regionDisplayBtn");
+    if (!menu || !btn) return;
+    
+    if (!menu.contains(event.target) && !btn.contains(event.target)) {
+      menu.classList.remove("active");
+      document.removeEventListener('click', closeRegionMenuOnClickOutside);
+    }
+  }
+
+  function selectRegion(val) {
     region = val;
     saveRegion();
-    const row = el.parentElement;
-    [...row.querySelectorAll(".chip")].forEach(c => c.classList.remove("active"));
-    el.classList.add("active");
+    
+    // Update button display
+    const btn = document.getElementById("regionDisplayBtn");
+    if (btn) btn.textContent = val;
+    
+    // Update menu active state
+    const menu = document.getElementById("regionMenu");
+    if (menu) {
+      const options = menu.querySelectorAll(".region-option");
+      options.forEach(opt => {
+        opt.classList.toggle("active", opt.getAttribute("data-region") === val);
+      });
+    }
+    
+    // Close menu
+    if (menu) menu.classList.remove("active");
+    
     toast(`Region: ${val}`);
     render();
   }
 
-  // ==================== SMART AUTO CATEGORY DETECTION ====================
+  function syncRegionUI() {
+    const btn = document.getElementById("regionDisplayBtn");
+    if (btn) btn.textContent = region;
+    
+    const menu = document.getElementById("regionMenu");
+    if (menu) {
+      const options = menu.querySelectorAll(".region-option");
+      options.forEach(opt => {
+        opt.classList.toggle("active", opt.getAttribute("data-region") === region);
+      });
+    }
+  }
+
+  // ==================== SMART CATEGORY DETECTION ====================
   function detectCategoryAuto(item) {
     const name = normalizeText(item.item);
     if (item.storage === "Freezer") return "Frozen Foods";
@@ -1391,15 +1558,13 @@
 
     const BRAND = {
       produce: ["dole", "fyffes", "pink lady", "chiquita"],
-      bakery: ["warburtons", "kingsmill", "hovis", "allinson's", "allinsons", "jackson's", "jacksons", "roberts"],
-      dairy: ["cathedral city", "arla", "lactofree", "lacto free", "yazoo", "actimel", "danone", "yoplait", "muller", "müller", "oatly", "alpro", "flora", "clover", "lurpak", "kerrygold", "anchor", "philadelphia"],
+      bakery: ["warburtons", "kingsmill", "hovis", "allinson's", "jackson's", "roberts"],
+      dairy: ["cathedral city", "arla", "lactofree", "yazoo", "actimel", "danone", "yoplait", "muller", "oatly", "alpro", "flora", "clover", "lurpak", "kerrygold"],
       meat: ["heck", "richmond", "bernard matthews"],
-      fish: ["young's", "youngs", "birds eye", "birdseye", "princes", "john west", "mowi"],
-      dry: ["uncle ben's", "uncle bens", "ben's original", "bens original", "dolmio", "barilla", "napolina", "sharwood's", "sharwoods", "patak's", "pataks", "bachelor's", "bachelors", "super noodles", "pot noodle", "blue dragon", "schwartz", "colman's", "colmans"],
+      fish: ["young's", "birds eye", "princes", "john west", "mowi"],
+      dry: ["uncle ben's", "ben's original", "dolmio", "barilla", "napolina", "sharwood's", "patak's"],
       canned: ["heinz", "branston", "princes", "napolina", "mutti", "cirio", "john west"],
-      condiments: ["heinz", "hp", "hellmann's", "hellmanns", "colman's", "colmans", "tabasco", "kikkoman", "encona"],
-      cleaning: ["fairy", "persil", "bold", "ariel", "lenor", "comfort", "flash", "cif", "domestos", "dettol", "andrex", "cushelle"],
-      meds: ["calpol", "nurofen", "benylin", "strepsils", "lemsip", "gaviscon", "panadol", "sudafed"]
+      condiments: ["heinz", "hp", "hellmann's", "colman's", "tabasco", "kikkoman"]
     };
 
     if (BRAND.produce.some(has)) add("Fruit & Veg", 6);
@@ -1410,8 +1575,6 @@
     if (BRAND.dry.some(has)) add("Pantry & Dry Goods", 5);
     if (BRAND.canned.some(has)) add("Canned Goods & Sauces", 6);
     if (BRAND.condiments.some(has)) add("Condiments & Oils", 6);
-    if (BRAND.cleaning.some(has)) add("Household & Cleaning", 8);
-    if (BRAND.meds.some(has)) add("Personal Care & Pharmacy", 10);
 
     const pack = REGION_BRANDS[region] || REGION_BRANDS.Global;
     if (pack?.dairy?.some(has))     add("Dairy & Refrigerated", 3);
@@ -1420,66 +1583,25 @@
     if (pack?.snacks?.some(has))    add("Snacks", 2);
     if (pack?.beverages?.some(has)) add("Beverages", 2);
 
-    if ([
-      "vegetable","vegetables","veg","carrot","broccoli","cabbage","lettuce","spinach","kale","cucumber",
-      "tomato","tomatoes","pepper","onion","garlic","leek","potato","potatoes","sweet potato",
-      "courgette","zucchini","aubergine","eggplant","mushroom","asparagus","green beans","peas",
-      "blueberry","strawberry","raspberry","blackberry","apple","orange","banana","grape","melon","watermelon",
-      "pineapple","mango","lime","lemon","avocado","kiwi"
-    ].some(has)) add("Fruit & Veg", 10);
+    // Simplified keyword lists
+    const keywords = {
+      "Fruit & Veg": ["vegetable","veg","carrot","broccoli","cabbage","lettuce","spinach","apple","banana","orange"],
+      "Dairy & Refrigerated": ["milk","yoghurt","yogurt","cheese","butter","eggs","cream"],
+      "Meat, Poultry & Seafood": ["beef","pork","lamb","chicken","turkey","fish","salmon","tuna"],
+      "Bakery & Bread": ["bread","roll","bagel","wrap","naan","pitta"],
+      "Pantry & Dry Goods": ["rice","pasta","noodles","ramen","flour","oats"],
+      "Canned Goods & Sauces": ["tin","tinned","canned","bean","sauce"],
+      "Condiments & Oils": ["oil","ketchup","mayo","mustard","vinegar"],
+      "Frozen Foods": ["frozen","ice cream","pizza"],
+      "Snacks": ["biscuit","cookie","chocolate","crisp","popcorn"],
+      "Beverages": ["juice","drink","cola","tea","coffee"],
+      "Household & Cleaning": ["cleaning","detergent","bleach","toilet paper"],
+      "Personal Care & Pharmacy": ["medicine","vitamin","shampoo","toothpaste"]
+    };
 
-    if ([
-      "milk","yoghurt","yogurt","cheese","cheddar","mozzarella","parmesan","feta","brie",
-      "cream cheese","butter","eggs","cream","sour cream","cottage cheese","lactose free"
-    ].some(has)) add("Dairy & Refrigerated", 10);
-
-    if ([
-      "beef","pork","lamb","chicken","turkey","duck","steak","mince","ground beef","ground chicken",
-      "sausage","sausages","bacon","burger","burgers","fish","salmon","tuna","cod","haddock",
-      "prawns","shrimp","seafood"
-    ].some(has)) add("Meat, Poultry & Seafood", 10);
-
-    if ([
-      "bread","roll","rolls","bagel","bagels","wrap","wraps","naan","pitta","pita","baguette","sourdough","croissant"
-    ].some(has)) add("Bakery & Bread", 10);
-
-    if ([
-      "rice","pasta","noodles","ramen","couscous","quinoa","lentil","lentils","flour","oats","porridge",
-      "herb","spice","seasoning","paprika","cumin","turmeric","cinnamon","salt","pepper"
-    ].some(has)) add("Pantry & Dry Goods", 10);
-
-    if ([
-      "tin","tins","tinned","canned","passata","chopped tomatoes","baked beans","chickpeas","kidney beans",
-      "jar","jars","pesto","pickle","olives","capers","pasta sauce","curry sauce"
-    ].some(has)) add("Canned Goods & Sauces", 10);
-
-    if ([
-      "oil","olive oil","vegetable oil","ketchup","mayo","mayonnaise","mustard","vinegar","bbq","hot sauce",
-      "soy sauce","tamari","teriyaki","dressing"
-    ].some(has)) add("Condiments & Oils", 10);
-
-    if ([
-      "frozen","ice cream","pizza","frozen pizza","chips","fries","hash browns","nuggets","dumplings","gyoza","spring rolls"
-    ].some(has)) add("Frozen Foods", 10);
-
-    if ([
-      "biscuit","biscuits","cookie","cookies","chocolate","crisps","chips","popcorn","nuts","snack"
-    ].some(has)) add("Snacks", 10);
-
-    if ([
-      "juice","drink","cola","coke","pepsi","fanta","sprite","lemonade","squash","cordial","smoothie",
-      "tea","coffee","hot chocolate"
-    ].some(has)) add("Beverages", 10);
-
-    if ([
-      "cleaning","detergent","washing powder","laundry","bleach","disinfectant","wipes",
-      "toilet paper","tissues","bin bags","foil","cling film","washing up liquid"
-    ].some(has)) add("Household & Cleaning", 10);
-
-    if ([
-      "medicine","vitamins","paracetamol","ibuprofen","cold","flu","cough","antacid","allergy",
-      "shampoo","conditioner","soap","toothpaste","deodorant","sunscreen","lotion","moisturiser","moisturizer"
-    ].some(has)) add("Personal Care & Pharmacy", 12);
+    for (const [cat, kws] of Object.entries(keywords)) {
+      if (kws.some(has)) add(cat, 10);
+    }
 
     let best = null, bestScore = 0;
     for (const [cat, score] of scores.entries()) {
@@ -1496,12 +1618,14 @@
   // ==================== UTILITIES ====================
   function updateHeaderHeight() {
     const header = document.querySelector('.header');
+    if (!header) return;
     const height = header.offsetHeight;
     document.documentElement.style.setProperty('--header-height', height + 'px');
   }
 
   function toast(msg) {
     const t = document.getElementById('toast');
+    if (!t) return;
     t.textContent = msg;
     t.style.display = 'block';
     setTimeout(() => t.style.display = 'none', 2500);
@@ -1560,6 +1684,7 @@
 
   function updateCartBadge() {
     const badge = document.getElementById('cartBadge');
+    if (!badge) return;
     const count = shoppingList.length;
     if (count === 0) badge.classList.add('hidden');
     else { badge.classList.remove('hidden'); badge.textContent = count; }
@@ -1597,6 +1722,7 @@
     updateCartBadge();
     render();
     renderShoppingList();
+    toast("Checked items cleared");
   }
 
   function clearAllItems() {
@@ -1618,6 +1744,7 @@
 
   function renderShoppingList() {
     const content = document.getElementById('shoppingListContent');
+    if (!content) return;
 
     if (shoppingList.length === 0) {
       content.innerHTML = `
@@ -1644,7 +1771,7 @@
       const fg = getContrastingTextColor(bg);
 
       html += `<div class="shopping-list-grouped">`;
-      html += `<div class="shopping-store-header" style="background:${bg};color:${fg};">${escapeHtml(store)}</div>`;
+      html += `<div class="shopping-store-header" style="background:${escapeHtml(bg)};color:${escapeHtml(fg)};">${escapeHtml(store)}</div>`;
 
       grouped[store].forEach(item => {
         html += `
@@ -1655,7 +1782,7 @@
             <div class="shopping-item-info">
               <span class="shopping-item-name">${escapeHtml(item.item)}</span>
             </div>
-            <button class="shopping-item-remove" onclick="removeFromShoppingList(${item.index})">✕</button>
+            <button class="shopping-item-remove" onclick="removeFromShoppingList(${item.index})" aria-label="Remove ${escapeHtml(item.item)}">✕</button>
           </div>
         `;
       });
@@ -1679,6 +1806,7 @@
   // ==================== ADD / EDIT ITEM MODAL ====================
   function populateCategoryDropdown() {
     const sel = document.getElementById('f_category');
+    if (!sel) return;
     let html = `<option value="">Auto (recommended)</option>`;
     CATEGORIES.forEach(c => html += `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`);
     sel.innerHTML = html;
@@ -1839,10 +1967,12 @@
 
   function render() {
     const container = document.getElementById('main');
+    if (!container) return;
+    
     const query = document.getElementById('search').value.toLowerCase();
     const searchBtn = document.querySelector('.search-clear');
 
-    searchBtn.classList.toggle('active', query.length > 0);
+    if (searchBtn) searchBtn.classList.toggle('active', query.length > 0);
     container.innerHTML = '';
 
     const filtered = inventory.filter(i => {
@@ -1911,7 +2041,7 @@
 
           <div class="item-actions">
             <div class="item-controls">
-              <button class="add-to-shop ${showAddBtn ? 'show' : ''} ${isInCart ? 'in-cart' : ''}" onclick="addToShoppingList(${i.rowNumber})">
+              <button class="add-to-shop ${showAddBtn ? 'show' : ''} ${isInCart ? 'in-cart' : ''}" onclick="addToShoppingList(${i.rowNumber})" aria-label="${isInCart ? 'Remove from shopping list' : 'Add to shopping list'}">
                 <svg class="add-to-shop-icon" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0020 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
                 </svg>
@@ -1919,14 +2049,14 @@
               </button>
 
               <div class="qty-control">
-                <button class="qty-btn minus" onclick="updateQty(${i.rowNumber}, -1)">−</button>
+                <button class="qty-btn minus" onclick="updateQty(${i.rowNumber}, -1)" aria-label="Decrease quantity">−</button>
                 <div class="qty-display">${i.quantity ?? 0}</div>
-                <button class="qty-btn plus" onclick="updateQty(${i.rowNumber}, 1)">+</button>
+                <button class="qty-btn plus" onclick="updateQty(${i.rowNumber}, 1)" aria-label="Increase quantity">+</button>
               </div>
 
               <div class="item-footer-actions">
-                <button class="edit-btn" onclick="openItemEditor(${i.rowNumber})" title="Edit">✎</button>
-                <button class="delete-btn" onclick="deleteItem(${i.rowNumber})">Remove</button>
+                <button class="edit-btn" onclick="openItemEditor(${i.rowNumber})" title="Edit" aria-label="Edit ${escapeHtml(i.item)}">✎</button>
+                <button class="delete-btn" onclick="deleteItem(${i.rowNumber})" aria-label="Remove ${escapeHtml(i.item)}">Remove</button>
               </div>
             </div>
           </div>
@@ -1946,7 +2076,7 @@
     shoppingList = loadShoppingListFromStorage();
 
     loadRegion();
-    syncRegionChipsUI();
+    syncRegionUI();
     loadStoreColors();
 
     if (!inventory || inventory.length === 0) {
@@ -1966,6 +2096,18 @@
     updateHeaderHeight();
   }
 
+  // ==================== ANDROID BACK BUTTON ====================
+  document.addEventListener('backbutton', () => {
+    const modals = ['shoppingModal', 'itemModal', 'guideModal', 'confirmModal'];
+    for (const id of modals) {
+      const el = document.getElementById(id);
+      if (el && el.classList.contains('active')) {
+        el.classList.remove('active');
+        return;
+      }
+    }
+  });
+
   window.addEventListener('load', () => {
     load();
     updateHeaderHeight();
@@ -1973,7 +2115,9 @@
   });
 
   window.addEventListener('resize', updateHeaderHeight);
-  document.getElementById('search').addEventListener('input', () => render());
+  
+  const searchInput = document.getElementById('search');
+  if (searchInput) searchInput.addEventListener('input', () => render());
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -1984,10 +2128,13 @@
     }
   });
 
-  document.getElementById("f_store").addEventListener("blur", (e) => {
-    const s = e.target.value.trim();
-    if (s) ensureStoreHasColor(s);
-  });
+  const storeInput = document.getElementById("f_store");
+  if (storeInput) {
+    storeInput.addEventListener("blur", (e) => {
+      const s = e.target.value.trim();
+      if (s) ensureStoreHasColor(s);
+    });
+  }
 </script>
 </body>
 </html>
