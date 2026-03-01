@@ -1,0 +1,75 @@
+{
+  "name": "JemsPantry - Pantry Inventory Tracker",
+  "short_name": "JemsPantry",
+  "description": "Keep track of your groceries locally. No account needed, no cloud storage. Your data stays on your device.",
+  "start_url": "https://your-github-pages-url.com/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FFFFFF",
+  "theme_color": "#2D7A4F",
+  "categories": ["productivity", "shopping"],
+  "screenshots": [
+    {
+      "src": "JP_logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "JP_logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "icons": [
+    {
+      "src": "JP_logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "JP_logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "JP_logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Add Item",
+      "short_name": "Add",
+      "description": "Quickly add a new item to your pantry",
+      "url": "/?action=add",
+      "icons": [
+        {
+          "src": "JP_logo.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Shopping List",
+      "short_name": "Shop",
+      "description": "View your shopping list",
+      "url": "/?action=shop",
+      "icons": [
+        {
+          "src": "JP_logo.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}
