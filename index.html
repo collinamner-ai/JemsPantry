@@ -212,6 +212,7 @@
     .search-input-wrapper{
       display:flex;
       align-items:center;
+      width:100%;
       background:rgba(255,255,255,0.95);
       border-radius:999px;            /* pill shaped */
       padding:0 14px;
@@ -230,20 +231,30 @@
       -webkit-appearance:none;
       min-width:0;
     }
-    #search::placeholder{color:var(--text-secondary);}
-    .search-clear{
-      width:30px;height:30px;
-      border:none;
-      background:none;
-      color:var(--text-secondary);
-      cursor:pointer;
-      display:none;
-      padding:0;
-      align-items:center;
-      justify-content:center;
-      flex-shrink:0;
-    }
-    .search-clear.active{display:flex;}
+  .search-clear{
+  width:30px;height:30px;
+  border:none;
+  background:none;
+  color:var(--text-secondary);
+  cursor:pointer;
+
+  /* always take up space */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+
+  /* hidden by default, but still occupies width */
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.search-clear.active{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
 
     /* Cart now sits on same row as search */
     .cart-btn{
