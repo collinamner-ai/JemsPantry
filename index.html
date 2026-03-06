@@ -859,7 +859,34 @@
       display:block;
     }
 
-    /* ✅ elements sit below the centred logo */
+    /* ✅ Loading text (beige) */
+    .splash-loading{
+      margin-top:-6px;
+      margin-bottom:16px;
+      text-align:center;
+      font-size:14px;
+      font-weight:800;
+      letter-spacing:.2px;
+      color:#EAD9B5; /* beige */
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      opacity:.95;
+    }
+    .splash-loading .dots::after{
+      content:"...";
+      display:inline-block;
+      width:1.2em;
+      text-align:left;
+      animation:dots 1.1s steps(4,end) infinite;
+    }
+    @keyframes dots{
+      0%   { content:""; }
+      25%  { content:"."; }
+      50%  { content:".."; }
+      75%  { content:"..."; }
+      100% { content:""; }
+    }
+
+    /* ✅ bottom elements */
     .splash-bottom{
       display:flex;
       flex-direction:column;
@@ -966,6 +993,11 @@
     <div class="splash-card">
       <div class="splash-logo-wrap">
         <img src="JP_logo.png" class="splash-logo" alt="JemsPantry logo">
+      </div>
+
+      <!-- ✅ Fake loading line (between logo and checkbox) -->
+      <div class="splash-loading" aria-live="polite">
+        Filling your pantry...<span class="dots" aria-hidden="true"></span>
       </div>
 
       <div class="splash-bottom">
@@ -1310,7 +1342,6 @@
     const skip = localStorage.getItem(SPLASH_SKIP_KEY) === "1";
     if (skip) return;
 
-    // save preference immediately when user ticks it
     if (skipBox){
       skipBox.checked = false;
       skipBox.addEventListener("change", () => {
@@ -1322,9 +1353,8 @@
     splash.classList.add("active");
     splash.setAttribute("aria-hidden", "false");
 
-    // hold logo, then fade out to main app
-    const HOLD_MS = 2000;
-    const FADE_MS = 450;
+    const HOLD_MS = 2500;  // ✅ adjust delay before fade
+    const FADE_MS = 450;   // ✅ match CSS transition
 
     setTimeout(() => {
       splash.classList.add("fading");
@@ -2091,6 +2121,7 @@
     }
   });
 
+  // store colour picker trigger
   document.getElementById("f_store").addEventListener("blur", (e) => {
     const s = e.target.value.trim();
     if (s) ensureStoreHasColor(s);
