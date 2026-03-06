@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -813,6 +812,12 @@
       text-align:center;
     }
 
+    body.preload-main .header,
+    body.preload-main .content-wrapper,
+    body.preload-main .fab{
+      visibility:hidden;
+    }
+
     /* ============ SPLASH (AUTO FADE) ============ */
     .splash-overlay{
       position:fixed;
@@ -894,23 +899,6 @@
       align-items:center;
       gap:12px;
       padding-bottom:6px;
-    }
-    .splash-skip{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:center;
-      font-size:12px;
-      opacity:.9;
-    }
-    .splash-skip input{width:18px;height:18px;accent-color:#10B981;}
-
-    .splash-note{
-      margin:0;
-      font-size:12px;
-      opacity:.75;
-      line-height:1.35;
-      text-align:center;
     }
     .splash-version{
       margin:0;
@@ -1002,12 +990,6 @@
       </div>
 
       <div class="splash-bottom">
-        <label class="splash-skip">
-          <input type="checkbox" id="skipSplash">
-          Don't show this again
-        </label>
-
-        <div class="splash-note">Local Inventory Storage</div>
         <div class="splash-version" id="splashVersion">Version</div>
       </div>
     </div>
@@ -1261,7 +1243,6 @@
   const OPENCATS_STORAGE_KEY  = "jemspantry_openCats_v1";
   const REGION_KEY            = "jemspantry_region_v1";
   const STORE_COLORS_KEY      = "jemspanry_storeColors_v1";
-  const SPLASH_SKIP_KEY       = "jemspantry_skipSplash_v1";
 
   let region = "UK";
   let storeColors = {};
@@ -1336,32 +1317,23 @@
   function showSplashIfNeeded(){
     const splash = document.getElementById("splash");
     const ver = document.getElementById("splashVersion");
-    const skipBox = document.getElementById("skipSplash");
 
     if (ver) ver.textContent = `Version ${APP_VERSION}`;
 
-    const skip = localStorage.getItem(SPLASH_SKIP_KEY) === "1";
-    if (skip) return;
-
-    if (skipBox){
-      skipBox.checked = false;
-      skipBox.addEventListener("change", () => {
-        if (skipBox.checked) localStorage.setItem(SPLASH_SKIP_KEY, "1");
-        else localStorage.removeItem(SPLASH_SKIP_KEY);
-      }, { once:false });
-    }
+    document.body.classList.add("preload-main");
 
     splash.classList.add("active");
     splash.setAttribute("aria-hidden", "false");
 
-    const HOLD_MS = 2500;  // ✅ adjust delay before fade
-    const FADE_MS = 450;   // ✅ match CSS transition
+    const HOLD_MS = 2500;
+    const FADE_MS = 450;
 
     setTimeout(() => {
       splash.classList.add("fading");
       setTimeout(() => {
         splash.classList.remove("active", "fading");
         splash.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("preload-main");
       }, FADE_MS + 20);
     }, HOLD_MS);
   }
