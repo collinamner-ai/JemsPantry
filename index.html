@@ -215,13 +215,11 @@
       gap:10px;
       margin-bottom:4px;
     }
-
     .search-container{
       flex:1;
       min-width:0;
       margin-right:14px;
     }
-
     .search-input-wrapper{
       display:flex;
       align-items:center;
@@ -249,12 +247,10 @@
       background:none;
       color:var(--text-secondary);
       cursor:pointer;
-
       display:flex;
       align-items:center;
       justify-content:center;
       flex-shrink:0;
-
       opacity:0;
       visibility:hidden;
       pointer-events:none;
@@ -393,8 +389,6 @@
     .item-row.freezer{background:var(--storage-freezer);}
     .item-row.out-of-stock{opacity:.55;}
     .item-row.out-of-stock .item-label{text-decoration:line-through;}
-
-    /* ✅ Keep Remove button full-strength even when row is faded */
     .item-row.out-of-stock .delete-btn{
       opacity:1;
       filter:none;
@@ -558,7 +552,7 @@
       background:var(--surface);
       border-radius:20px 20px 0 0;
       max-height:90vh;
-      overflow-y:auto;                 /* ✅ this is the real scroller */
+      overflow-y:auto;
       -webkit-overflow-scrolling:touch;
       z-index:1501;
       animation:slideUpModal .22s ease;
@@ -597,7 +591,7 @@
       content:"";
       position:absolute;
       left:10px;
-      top:74px;      /* sits below the sticky header */
+      top:74px;
       bottom:18px;
       width:3px;
       border-radius:4px;
@@ -699,7 +693,7 @@
 
     /* ============ ADD/EDIT FORM ============ */
     .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-    .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;} /* ✅ Location + Storage */
+    .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
     .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
     .field label{
       font-size:12px;
@@ -709,7 +703,6 @@
       letter-spacing:.4px;
     }
 
-    /* ✅ idle (not focused) fields are light green */
     .field input,.field select,.field textarea{
       width:100%;
       border:1px solid var(--border);
@@ -721,7 +714,6 @@
       color:var(--text-primary);
       transition: background .15s ease, border-color .15s ease;
     }
-    /* ✅ active field is white */
     .field input:focus,.field select:focus,.field textarea:focus{
       background:#fff;
       border-color: rgba(45,122,79,0.45);
@@ -820,7 +812,7 @@
       text-align:center;
     }
 
-    /* ============ SPLASH ============ */
+    /* ============ SPLASH (AUTO FADE) ============ */
     .splash-overlay{
       position:fixed;
       inset:0;
@@ -830,27 +822,67 @@
       justify-content:center;
       padding:22px;
       background:#00442f;
+      opacity:0;
+      transition:opacity .45s ease;
     }
-    .splash-overlay.active{display:flex;}
+    .splash-overlay.active{
+      display:flex;
+      opacity:1;
+    }
+    .splash-overlay.active.fading{
+      opacity:0;
+    }
+
     .splash-card{
       width:min(520px,100%);
-      text-align:center;
+      height:100%;
+      max-height:calc(100vh - 44px);
       color:#fff;
-
-      display:flex;
-      flex-direction:column;
-      min-height:calc(100vh - 44px);
-      padding-bottom:max(18px, env(safe-area-inset-bottom));
-
       background:transparent;
       border:none;
       box-shadow:none;
+      display:flex;
+      flex-direction:column;
+      padding-bottom:max(18px, env(safe-area-inset-bottom));
+    }
+
+    /* ✅ centres the logo on screen */
+    .splash-logo-wrap{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
     .splash-logo{
       width:min(360px,86%);
       height:auto;
       display:block;
-      margin:0 auto 16px;
+    }
+
+    /* ✅ elements sit below the centred logo */
+    .splash-bottom{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:12px;
+      padding-bottom:6px;
+    }
+    .splash-skip{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+      opacity:.9;
+    }
+    .splash-skip input{width:18px;height:18px;accent-color:#10B981;}
+
+    .splash-note{
+      margin:0;
+      font-size:12px;
+      opacity:.75;
+      line-height:1.35;
+      text-align:center;
     }
     .splash-version{
       margin:0;
@@ -859,46 +891,7 @@
       opacity:.85;
       letter-spacing:.6px;
       text-transform:uppercase;
-    }
-    .splash-actions{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      align-items:center;
-    }
-    .splash-btn{
-      width:min(280px,92%);
-      border:none;
-      border-radius:16px;
-      padding:14px 16px;
-      font-weight:900;
-      cursor:pointer;
-      font-size:15px;
-      letter-spacing:.3px;
-    }
-    .splash-btn.primary{background:#10B981;color:#fff;}
-    .splash-btn.secondary{
-      background:rgba(255,255,255,0.14);
-      color:#fff;
-      border:1px solid rgba(255,255,255,0.18);
-    }
-    .splash-skip{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:center;
-      margin-top:16px;
-      font-size:12px;
-      opacity:.9;
-    }
-    .splash-skip input{width:18px;height:18px;accent-color:#10B981;}
-    .splash-spacer{flex:1;}
-    .splash-note{
-      margin-top:0;
-      margin-bottom:8px;
-      font-size:12px;
-      opacity:.75;
-      line-height:1.35;
+      text-align:center;
     }
 
     /* Ensure guide opens above splash */
@@ -939,8 +932,6 @@
       .form-grid{grid-template-columns:1fr;}
       .item-actions{width:124px;}
       .region-btn{padding:0 10px;font-size:12px;}
-
-      /* ✅ keep Location + Storage on same row even on mobile */
       .form-row-2{grid-template-columns:1fr 1fr;}
     }
 
@@ -962,30 +953,30 @@
       .item-row.fridge{border-color:rgba(255,255,255,0.18);}
       .region-selector{background:#0F172A;}
       .region-button{background:#0F172A;color:var(--text-primary);border-color:var(--border);}
+      .field input:focus,.field select:focus,.field textarea:focus{
+        background: rgba(15,23,42,0.65);
+      }
     }
   </style>
 </head>
 
 <body>
-  <!-- ✅ SPLASH OVERLAY -->
-  <div class="splash-overlay" id="splash">
+  <!-- ✅ SPLASH OVERLAY (logo hold → fade → main) -->
+  <div class="splash-overlay" id="splash" aria-hidden="true">
     <div class="splash-card">
-      <img src="JP_logo.png" class="splash-logo" alt="JemsPantry logo">
-
-      <div class="splash-actions">
-        <button class="splash-btn primary" onclick="startApp()">Start</button>
-        <button class="splash-btn secondary" onclick="openUserGuide()">Help</button>
+      <div class="splash-logo-wrap">
+        <img src="JP_logo.png" class="splash-logo" alt="JemsPantry logo">
       </div>
 
-      <label class="splash-skip">
-        <input type="checkbox" id="skipSplash">
-        Don't show this again
-      </label>
+      <div class="splash-bottom">
+        <label class="splash-skip">
+          <input type="checkbox" id="skipSplash">
+          Don't show this again
+        </label>
 
-      <div class="splash-spacer"></div>
-
-      <div class="splash-note">Local Inventory Storage</div>
-      <div class="splash-version" id="splashVersion">Version</div>
+        <div class="splash-note">Local Inventory Storage</div>
+        <div class="splash-version" id="splashVersion">Version</div>
+      </div>
     </div>
   </div>
 
@@ -1103,7 +1094,6 @@
           <input id="f_item" type="text" placeholder="e.g. Milk, Chicken Breast" autocomplete="off">
         </div>
 
-        <!-- Store + Qty -->
         <div class="form-grid">
           <div class="field">
             <label>Store</label>
@@ -1116,7 +1106,6 @@
           </div>
         </div>
 
-        <!-- ✅ Location + Storage Type on same row -->
         <div class="form-row-2">
           <div class="field">
             <label>Location</label>
@@ -1136,7 +1125,6 @@
           </div>
         </div>
 
-        <!-- Category + Expiry -->
         <div class="form-grid">
           <div class="field">
             <label>Category</label>
@@ -1311,17 +1299,40 @@
     document.documentElement.style.setProperty('--header-height', height + 'px');
   }
 
-  // ==================== SPLASH ====================
+  // ==================== SPLASH (AUTO) ====================
   function showSplashIfNeeded(){
-    document.getElementById("splashVersion").textContent = `Version ${APP_VERSION}`;
-    const skip = localStorage.getItem(SPLASH_SKIP_KEY) === "1";
-    if (!skip) document.getElementById("splash").classList.add("active");
-  }
+    const splash = document.getElementById("splash");
+    const ver = document.getElementById("splashVersion");
+    const skipBox = document.getElementById("skipSplash");
 
-  function startApp(){
-    const dontShow = document.getElementById("skipSplash")?.checked;
-    if (dontShow) localStorage.setItem(SPLASH_SKIP_KEY, "1");
-    document.getElementById("splash").classList.remove("active");
+    if (ver) ver.textContent = `Version ${APP_VERSION}`;
+
+    const skip = localStorage.getItem(SPLASH_SKIP_KEY) === "1";
+    if (skip) return;
+
+    // save preference immediately when user ticks it
+    if (skipBox){
+      skipBox.checked = false;
+      skipBox.addEventListener("change", () => {
+        if (skipBox.checked) localStorage.setItem(SPLASH_SKIP_KEY, "1");
+        else localStorage.removeItem(SPLASH_SKIP_KEY);
+      }, { once:false });
+    }
+
+    splash.classList.add("active");
+    splash.setAttribute("aria-hidden", "false");
+
+    // hold logo, then fade out to main app
+    const HOLD_MS = 1100;
+    const FADE_MS = 450;
+
+    setTimeout(() => {
+      splash.classList.add("fading");
+      setTimeout(() => {
+        splash.classList.remove("active", "fading");
+        splash.setAttribute("aria-hidden", "true");
+      }, FADE_MS + 20);
+    }, HOLD_MS);
   }
 
   // ==================== GUIDE ====================
@@ -1772,7 +1783,6 @@
     sel.innerHTML = html;
   }
 
-  /* ✅ Always scroll the modal sheet to top (prevents "reopening at last scroll") */
   function scrollItemModalToTop(){
     const modalScroller = document.querySelector("#itemModal .modal-content");
     if (modalScroller) modalScroller.scrollTop = 0;
@@ -1803,7 +1813,7 @@
 
       modal.classList.add('active');
       setTimeout(() => {
-        scrollItemModalToTop();                 // ✅ force top every time
+        scrollItemModalToTop();
         document.getElementById('f_item').focus();
       }, 60);
       return;
@@ -1826,7 +1836,7 @@
 
     modal.classList.add('active');
     setTimeout(() => {
-      scrollItemModalToTop();                   // ✅ force top every time
+      scrollItemModalToTop();
       document.getElementById('f_item').focus();
     }, 60);
   }
@@ -2081,7 +2091,6 @@
     }
   });
 
-  // store colour picker trigger
   document.getElementById("f_store").addEventListener("blur", (e) => {
     const s = e.target.value.trim();
     if (s) ensureStoreHasColor(s);
