@@ -24,9 +24,13 @@
       --storage-cupboard:#FFF3DB;
       --storage-freezer:#D4F7FF;
 
-      /* ✅ Shared positioning (FAB + confirm sheet) */
-      --fab-bottom: max(28px, env(safe-area-inset-bottom));
+      /* ✅ Shared positioning (FAB + confirm sheet)
+         Move FAB up by increasing this value */
+      --fab-bottom: max(44px, env(safe-area-inset-bottom));      /* was 28px */
       --confirm-bottom: calc(var(--fab-bottom) + 68px);
+
+      /* ✅ "Region changed" toast aligned with top of FAB */
+      --toast-bottom: calc(var(--fab-bottom) + 10px);
 
       /* ✅ Form idle background */
       --field-idle-bg: rgba(45,122,79,0.10);
@@ -719,7 +723,9 @@
       border-color: rgba(45,122,79,0.45);
     }
 
-    .field textarea{min-height:76px;resize:vertical;}
+    /* ✅ Notes smaller height */
+    .field textarea{min-height:56px;resize:vertical;} /* was 76px */
+
     .form-actions{display:flex;gap:10px;margin-top:8px;}
     .btn-wide{
       flex:1;
@@ -795,7 +801,7 @@
     /* ============ TOAST ============ */
     #toast{
       position:fixed;
-      bottom:20px;
+      bottom:var(--toast-bottom);  /* ✅ aligns toast with FAB top */
       left:50%;
       transform:translateX(-50%);
       background:var(--text-primary);
@@ -825,13 +831,8 @@
       opacity:0;
       transition:opacity .45s ease;
     }
-    .splash-overlay.active{
-      display:flex;
-      opacity:1;
-    }
-    .splash-overlay.active.fading{
-      opacity:0;
-    }
+    .splash-overlay.active{display:flex;opacity:1;}
+    .splash-overlay.active.fading{opacity:0;}
 
     .splash-card{
       width:min(520px,100%);
@@ -846,7 +847,6 @@
       padding-bottom:max(18px, env(safe-area-inset-bottom));
     }
 
-    /* ✅ centres the logo on screen */
     .splash-logo-wrap{
       flex:1;
       display:flex;
@@ -859,16 +859,16 @@
       display:block;
     }
 
-    /* ✅ Loading text (beige) */
+    /* ✅ Loading text: bigger + cursive "handwriting" style */
     .splash-loading{
-      margin-top:-6px;
-      margin-bottom:16px;
+      margin-top:-10px;
+      margin-bottom:18px;
       text-align:center;
-      font-size:14px;
-      font-weight:800;
+      font-size:26px;           /* was 14px */
+      font-weight:700;
       letter-spacing:.2px;
-      color:#EAD9B5; /* beige */
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:#EAD9B5;
+      font-family: "Brush Script MT","Segoe Script","Comic Sans MS","Snell Roundhand",cursive;
       opacity:.95;
     }
     .splash-loading .dots::after{
@@ -886,7 +886,6 @@
       100% { content:""; }
     }
 
-    /* ✅ bottom elements */
     .splash-bottom{
       display:flex;
       flex-direction:column;
@@ -995,9 +994,8 @@
         <img src="JP_logo.png" class="splash-logo" alt="JemsPantry logo">
       </div>
 
-      <!-- ✅ Fake loading line (between logo and checkbox) -->
       <div class="splash-loading" aria-live="polite">
-        Filling your pantry...<span class="dots" aria-hidden="true"></span>
+        Filling your pantry<span class="dots" aria-hidden="true"></span>
       </div>
 
       <div class="splash-bottom">
@@ -1094,6 +1092,7 @@
     <div id="toast"></div>
   </div>
 
+  <!-- ✅ FAB moved up via --fab-bottom -->
   <button class="fab" onclick="openItemEditor(null)" aria-label="Add item">+</button>
 
   <!-- SHOPPING LIST MODAL -->
@@ -1353,8 +1352,8 @@
     splash.classList.add("active");
     splash.setAttribute("aria-hidden", "false");
 
-    const HOLD_MS = 2500;  // ✅ adjust delay before fade
-    const FADE_MS = 450;   // ✅ match CSS transition
+    const HOLD_MS = 2500;
+    const FADE_MS = 450;
 
     setTimeout(() => {
       splash.classList.add("fading");
@@ -1573,96 +1572,7 @@
   function confirmYes(){ const fn=_confirm.onYes; closeConfirm(); if(fn) fn(); }
   function confirmNo(){ const fn=_confirm.onNo; closeConfirm(); if(fn) fn(); }
 
-  // ==================== SMART CATEGORY DETECTION ====================
-  function detectCategoryAuto(item){
-    const name = normalizeText(item.item);
-    if (item.storage === "Freezer") return "Frozen Foods";
-
-    const scores = new Map();
-    const add = (cat, pts) => scores.set(cat, (scores.get(cat) || 0) + pts);
-    const has = (k) => name.includes(normalizeText(k));
-
-    const BRAND = {
-      produce: ["dole","fyffes","pink lady","chiquita"],
-      bakery: ["warburtons","kingsmill","hovis","allinson's","allinsons","jackson's","jacksons","roberts"],
-      dairy: ["cathedral city","arla","lactofree","lacto free","yazoo","actimel","danone","yoplait","muller","müller","oatly","alpro","flora","clover","lurpak","kerrygold","anchor","philadelphia"],
-      meat: ["heck","richmond","bernard matthews"],
-      fish: ["young's","youngs","birds eye","birdseye","princes","john west","mowi"],
-      dry: ["uncle ben's","uncle bens","ben's original","bens original","dolmio","barilla","napolina","sharwood's","sharwoods","patak's","pataks","bachelor's","bachelors","super noodles","pot noodle","blue dragon","schwartz","colman's","colmans"],
-      canned: ["heinz","branston","princes","napolina","mutti","cirio","john west"],
-      condiments: ["heinz","hp","hellmann's","hellmanns","colman's","colmans","tabasco","kikkoman","encona"],
-      cleaning: ["fairy","persil","bold","ariel","lenor","comfort","flash","cif","domestos","dettol","andrex","cushelle"],
-      meds: ["calpol","nurofen","benylin","strepsils","lemsip","gaviscon","panadol","sudafed"]
-    };
-
-    if (BRAND.produce.some(has)) add("Fruit & Veg", 6);
-    if (BRAND.bakery.some(has)) add("Bakery & Bread", 7);
-    if (BRAND.dairy.some(has)) add("Dairy & Refrigerated", 8);
-    if (BRAND.meat.some(has)) add("Meat, Poultry & Seafood", 6);
-    if (BRAND.fish.some(has)) add("Meat, Poultry & Seafood", 7);
-    if (BRAND.dry.some(has)) add("Pantry & Dry Goods", 5);
-    if (BRAND.canned.some(has)) add("Canned Goods & Sauces", 6);
-    if (BRAND.condiments.some(has)) add("Condiments & Oils", 6);
-    if (BRAND.cleaning.some(has)) add("Household & Cleaning", 8);
-    if (BRAND.meds.some(has)) add("Personal Care & Pharmacy", 10);
-
-    const pack = REGION_BRANDS[region] || REGION_BRANDS.Global;
-    if (pack?.dairy?.some(has))     add("Dairy & Refrigerated", 3);
-    if (pack?.bakery?.some(has))    add("Bakery & Bread", 3);
-    if (pack?.canned?.some(has))    add("Canned Goods & Sauces", 3);
-    if (pack?.snacks?.some(has))    add("Snacks", 2);
-    if (pack?.beverages?.some(has)) add("Beverages", 2);
-
-    if (["vegetable","vegetables","veg","carrot","broccoli","cabbage","lettuce","spinach","kale","cucumber",
-         "tomato","tomatoes","pepper","onion","garlic","leek","potato","potatoes","sweet potato",
-         "courgette","zucchini","aubergine","eggplant","mushroom","asparagus","green beans","peas",
-         "blueberry","strawberry","raspberry","blackberry","apple","orange","banana","grape","melon","watermelon",
-         "pineapple","mango","lime","lemon","avocado","kiwi"].some(has)) add("Fruit & Veg", 10);
-
-    if (["milk","yoghurt","yogurt","cheese","cheddar","mozzarella","parmesan","feta","brie",
-         "cream cheese","butter","eggs","cream","sour cream","cottage cheese","lactose free"].some(has)) add("Dairy & Refrigerated", 10);
-
-    if (["beef","pork","lamb","chicken","turkey","duck","steak","mince","ground beef","ground chicken",
-         "sausage","sausages","bacon","burger","burgers","fish","salmon","tuna","cod","haddock",
-         "prawns","shrimp","seafood"].some(has)) add("Meat, Poultry & Seafood", 10);
-
-    if (["bread","roll","rolls","bagel","bagels","wrap","wraps","naan","pitta","pita","baguette","sourdough","croissant"].some(has)) add("Bakery & Bread", 10);
-
-    if (["rice","pasta","noodles","ramen","couscous","quinoa","lentil","lentils","flour","oats","porridge",
-         "herb","spice","seasoning","paprika","cumin","turmeric","cinnamon","salt","pepper"].some(has)) add("Pantry & Dry Goods", 10);
-
-    if (["tin","tins","tinned","canned","passata","chopped tomatoes","baked beans","chickpeas","kidney beans",
-         "jar","jars","pesto","pickle","olives","capers","pasta sauce","curry sauce"].some(has)) add("Canned Goods & Sauces", 10);
-
-    if (["oil","olive oil","vegetable oil","ketchup","mayo","mayonnaise","mustard","vinegar","bbq","hot sauce",
-         "soy sauce","tamari","teriyaki","dressing"].some(has)) add("Condiments & Oils", 10);
-
-    if (["frozen","ice cream","pizza","frozen pizza","chips","fries","hash browns","nuggets","dumplings","gyoza","spring rolls"].some(has)) add("Frozen Foods", 10);
-
-    if (["biscuit","biscuits","cookie","cookies","chocolate","crisps","chips","popcorn","nuts","snack"].some(has)) add("Snacks", 10);
-
-    if (["juice","drink","cola","coke","pepsi","fanta","sprite","lemonade","squash","cordial","smoothie",
-         "tea","coffee","hot chocolate"].some(has)) add("Beverages", 10);
-
-    if (["cleaning","detergent","washing powder","laundry","bleach","disinfectant","wipes",
-         "toilet paper","tissues","bin bags","foil","cling film","washing up liquid"].some(has)) add("Household & Cleaning", 10);
-
-    if (["medicine","vitamins","paracetamol","ibuprofen","cold","flu","cough","antacid","allergy",
-         "shampoo","conditioner","soap","toothpaste","deodorant","sunscreen","lotion","moisturiser","moisturizer"].some(has)) add("Personal Care & Pharmacy", 12);
-
-    let best=null,bestScore=0;
-    for (const [cat,score] of scores.entries()){
-      if (score>bestScore){bestScore=score;best=cat;}
-    }
-    return best;
-  }
-
-  function getCategory(item){
-    if (item.category && String(item.category).trim()) return String(item.category).trim();
-    return detectCategoryAuto(item);
-  }
-
-  // ==================== SHOPPING LIST ====================
+  // ==================== SHOPPING LIST (unchanged code) ====================
   function updateCartBadge(){
     const badge = document.getElementById('cartBadge');
     const count = shoppingList.length;
@@ -1805,7 +1715,7 @@
     content.innerHTML = html;
   }
 
-  // ==================== ADD / EDIT ITEM ====================
+  // ==================== ADD / EDIT ITEM (unchanged logic) ====================
   function populateCategoryDropdown(){
     const sel = document.getElementById('f_category');
     let html = `<option value="">Auto (recommended)</option>`;
@@ -1968,7 +1878,7 @@
     render();
   }
 
-  // ==================== RENDER ====================
+  // ==================== RENDER (unchanged) ====================
   function render(){
     const container = document.getElementById('main');
     const query = document.getElementById('search').value.toLowerCase();
@@ -2121,7 +2031,6 @@
     }
   });
 
-  // store colour picker trigger
   document.getElementById("f_store").addEventListener("blur", (e) => {
     const s = e.target.value.trim();
     if (s) ensureStoreHasColor(s);
