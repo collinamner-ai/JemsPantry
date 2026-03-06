@@ -23,6 +23,13 @@
       --storage-fridge:#FFFFFF;
       --storage-cupboard:#FFF3DB;
       --storage-freezer:#D4F7FF;
+
+      /* ✅ Shared positioning (FAB + confirm sheet) */
+      --fab-bottom: max(28px, env(safe-area-inset-bottom));
+      --confirm-bottom: calc(var(--fab-bottom) + 68px);
+
+      /* ✅ Form idle background */
+      --field-idle-bg: rgba(45,122,79,0.10);
     }
 
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -202,28 +209,28 @@
     }
 
     /* ============ SEARCH ROW (below storage) ============ */
-.search-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:4px;
-}
+    .search-row{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:4px;
+    }
 
-.search-container{
-  flex:1;
-  min-width:0;
-  margin-right:14px;   /* adjust: 10px / 14px / 18px etc */
-}
+    .search-container{
+      flex:1;
+      min-width:0;
+      margin-right:14px;
+    }
 
-.search-input-wrapper{
-  display:flex;
-  align-items:center;
-  background:rgba(255,255,255,0.95);
-  border-radius:999px;
-  padding:0 8px;
-  gap:10px;
-  box-shadow:var(--shadow-sm);
-}
+    .search-input-wrapper{
+      display:flex;
+      align-items:center;
+      background:rgba(255,255,255,0.95);
+      border-radius:999px;
+      padding:0 8px;
+      gap:10px;
+      box-shadow:var(--shadow-sm);
+    }
     .search-icon{width:20px;height:20px;flex-shrink:0;color:var(--primary);}
     #search{
       flex:1;
@@ -236,32 +243,28 @@
       -webkit-appearance:none;
       min-width:0;
     }
-  .search-clear{
-  width:30px;height:30px;
-  border:none;
-  background:none;
-  color:var(--text-secondary);
-  cursor:pointer;
+    .search-clear{
+      width:30px;height:30px;
+      border:none;
+      background:none;
+      color:var(--text-secondary);
+      cursor:pointer;
 
-  /* always take up space */
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-shrink:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
 
-  /* hidden by default, but still occupies width */
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-}
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+    }
+    .search-clear.active{
+      opacity:1;
+      visibility:visible;
+      pointer-events:auto;
+    }
 
-.search-clear.active{
-  opacity:1;
-  visibility:visible;
-  pointer-events:auto;
-}
-
-    /* Cart now sits on same row as search */
     .cart-btn{
       position:relative;
       width:44px;height:44px;
@@ -390,6 +393,13 @@
     .item-row.freezer{background:var(--storage-freezer);}
     .item-row.out-of-stock{opacity:.55;}
     .item-row.out-of-stock .item-label{text-decoration:line-through;}
+
+    /* ✅ Keep Remove button full-strength even when row is faded */
+    .item-row.out-of-stock .delete-btn{
+      opacity:1;
+      filter:none;
+      box-shadow:var(--shadow-sm);
+    }
 
     .item-info{flex:1;min-width:0;}
     .item-label{
@@ -548,7 +558,7 @@
       background:var(--surface);
       border-radius:20px 20px 0 0;
       max-height:90vh;
-      overflow-y:auto;
+      overflow-y:auto;                 /* ✅ this is the real scroller */
       -webkit-overflow-scrolling:touch;
       z-index:1501;
       animation:slideUpModal .22s ease;
@@ -581,6 +591,19 @@
     }
     .modal-close:active{transform:scale(.9);}
     .modal-body{padding:16px;}
+
+    /* ✅ Add/Edit modal: subtle green scroll indicator on the left */
+    #itemModal .modal-content::before{
+      content:"";
+      position:absolute;
+      left:10px;
+      top:74px;      /* sits below the sticky header */
+      bottom:18px;
+      width:3px;
+      border-radius:4px;
+      background: rgba(45,122,79,0.22);
+      pointer-events:none;
+    }
 
     /* ============ SHOPPING LIST ============ */
     .shopping-list-empty{text-align:center;padding:40px 20px;color:var(--text-secondary);}
@@ -676,6 +699,7 @@
 
     /* ============ ADD/EDIT FORM ============ */
     .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;} /* ✅ Location + Storage */
     .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
     .field label{
       font-size:12px;
@@ -684,6 +708,8 @@
       text-transform:uppercase;
       letter-spacing:.4px;
     }
+
+    /* ✅ idle (not focused) fields are light green */
     .field input,.field select,.field textarea{
       width:100%;
       border:1px solid var(--border);
@@ -691,9 +717,16 @@
       padding:10px 10px;
       font-size:14px;
       outline:none;
-      background:#fff;
+      background:var(--field-idle-bg);
       color:var(--text-primary);
+      transition: background .15s ease, border-color .15s ease;
     }
+    /* ✅ active field is white */
+    .field input:focus,.field select:focus,.field textarea:focus{
+      background:#fff;
+      border-color: rgba(45,122,79,0.45);
+    }
+
     .field textarea{min-height:76px;resize:vertical;}
     .form-actions{display:flex;gap:10px;margin-top:8px;}
     .btn-wide{
@@ -719,7 +752,7 @@
     .fab{
       position:fixed;
       right:16px;
-      bottom:max(16px, env(safe-area-inset-bottom));
+      bottom:var(--fab-bottom);
       z-index:1200;
       width:56px;height:56px;
       border-radius:18px;
@@ -739,7 +772,8 @@
 
     /* ============ CONFIRM SHEET ============ */
     .confirm-sheet{
-      position:absolute;left:0;right:0;bottom:0;
+      position:absolute;left:0;right:0;
+      bottom:var(--confirm-bottom);
       background:var(--surface);
       border-radius:20px 20px 0 0;
       box-shadow:var(--shadow-lg);
@@ -802,7 +836,12 @@
       width:min(520px,100%);
       text-align:center;
       color:#fff;
-      padding:0;
+
+      display:flex;
+      flex-direction:column;
+      min-height:calc(100vh - 44px);
+      padding-bottom:max(18px, env(safe-area-inset-bottom));
+
       background:transparent;
       border:none;
       box-shadow:none;
@@ -814,7 +853,7 @@
       margin:0 auto 16px;
     }
     .splash-version{
-      margin:0 0 16px;
+      margin:0;
       font-size:12px;
       font-weight:800;
       opacity:.85;
@@ -853,8 +892,10 @@
       opacity:.9;
     }
     .splash-skip input{width:18px;height:18px;accent-color:#10B981;}
+    .splash-spacer{flex:1;}
     .splash-note{
-      margin-top:12px;
+      margin-top:0;
+      margin-bottom:8px;
       font-size:12px;
       opacity:.75;
       line-height:1.35;
@@ -898,6 +939,9 @@
       .form-grid{grid-template-columns:1fr;}
       .item-actions{width:124px;}
       .region-btn{padding:0 10px;font-size:12px;}
+
+      /* ✅ keep Location + Storage on same row even on mobile */
+      .form-row-2{grid-template-columns:1fr 1fr;}
     }
 
     @media (prefers-color-scheme: dark){
@@ -908,6 +952,7 @@
         --text-secondary:#94A3B8;
         --border:#334155;
         --primary-light:rgba(45,122,79,0.2);
+        --field-idle-bg: rgba(45,122,79,0.18);
       }
       .search-input-wrapper{background:rgba(30,41,59,0.8);}
       #search{color:var(--text-primary);}
@@ -915,7 +960,6 @@
       .cat-header{background:rgba(45,122,79,0.08);}
       .qty-control{background:#334155;}
       .item-row.fridge{border-color:rgba(255,255,255,0.18);}
-      .field input,.field select,.field textarea{background:rgba(15,23,42,0.5);color:var(--text-primary);}
       .region-selector{background:#0F172A;}
       .region-button{background:#0F172A;color:var(--text-primary);border-color:var(--border);}
     }
@@ -923,11 +967,10 @@
 </head>
 
 <body>
-  <!-- ✅ SPLASH OVERLAY (reinstated) -->
+  <!-- ✅ SPLASH OVERLAY -->
   <div class="splash-overlay" id="splash">
     <div class="splash-card">
       <img src="JP_logo.png" class="splash-logo" alt="JemsPantry logo">
-      <div class="splash-version" id="splashVersion">Version</div>
 
       <div class="splash-actions">
         <button class="splash-btn primary" onclick="startApp()">Start</button>
@@ -939,7 +982,10 @@
         Don't show this again
       </label>
 
+      <div class="splash-spacer"></div>
+
       <div class="splash-note">Local Inventory Storage</div>
+      <div class="splash-version" id="splashVersion">Version</div>
     </div>
   </div>
 
@@ -994,7 +1040,6 @@
         </div>
       </div>
 
-      <!-- ✅ Search moved below storage + cart aligned right -->
       <div class="search-row">
         <div class="search-container">
           <div class="search-input-wrapper">
@@ -1003,7 +1048,6 @@
               <path d="m21 21-4.35-4.35"></path>
             </svg>
             <input type="text" id="search" placeholder="Search items...">
-            <!-- ✅ X clear reinstated -->
             <button class="search-clear" onclick="clearSearch()" aria-label="Clear search">
               <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;">
                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
@@ -1027,7 +1071,6 @@
     <div id="toast"></div>
   </div>
 
-  <!-- ✅ Add item button reinstated -->
   <button class="fab" onclick="openItemEditor(null)" aria-label="Add item">+</button>
 
   <!-- SHOPPING LIST MODAL -->
@@ -1060,6 +1103,7 @@
           <input id="f_item" type="text" placeholder="e.g. Milk, Chicken Breast" autocomplete="off">
         </div>
 
+        <!-- Store + Qty -->
         <div class="form-grid">
           <div class="field">
             <label>Store</label>
@@ -1070,7 +1114,10 @@
             <label>Quantity</label>
             <input id="f_qty" type="number" min="0" step="1" value="1">
           </div>
+        </div>
 
+        <!-- ✅ Location + Storage Type on same row -->
+        <div class="form-row-2">
           <div class="field">
             <label>Location</label>
             <select id="f_location">
@@ -1087,7 +1134,10 @@
               <option value="Freezer">Freezer</option>
             </select>
           </div>
+        </div>
 
+        <!-- Category + Expiry -->
+        <div class="form-grid">
           <div class="field">
             <label>Category</label>
             <select id="f_category">
@@ -1125,43 +1175,40 @@
         <h2>How to use JemsPantry</h2>
         <button class="modal-close" onclick="closeUserGuide()">✕</button>
       </div>
-      <div class="modal-body guide">
-        <div class="tip">Quick start: Tap <b>+</b> to add your first item.</div>
 
-        <h3>Add items</h3>
+      <div class="modal-body guide">
+        <div class="tip"><b>Quick start:</b> Tap <b>+</b> to add your first item.</div>
+
+        <h3>Add an item</h3>
         <ul>
-          <li>Tap the green <b>+</b> button.</li>
-          <li>Enter <b>Item Name</b> first, then store, quantity, location, storage, category, expiry and notes.</li>
+          <li>Tap the green <b>+</b>.</li>
+          <li>Enter <b>Item Name</b> (required).</li>
+          <li>Set <b>Quantity</b>, <b>Location</b>, <b>Storage</b>, optional <b>Expiry</b> + <b>Notes</b>.</li>
           <li>Tap <b>Save</b>.</li>
         </ul>
 
-        <h3>Edit items</h3>
+        <h3>Edit or remove</h3>
         <ul>
-          <li>Tap the <b>✎</b> pencil on a card.</li>
-          <li>Update fields and tap <b>Save</b>.</li>
+          <li>Tap <b>✎</b> to edit → <b>Save</b>.</li>
+          <li>When quantity hits <b>0</b>, a <b>Remove</b> button appears on the item card.</li>
         </ul>
 
-        <h3>Quantity</h3>
+        <h3>Stock + shopping list</h3>
         <ul>
-          <li>Use <b>−</b> and <b>+</b> on the item card.</li>
-          <li>When an item reaches <b>0</b>, the <b>Remove</b> button appears.</li>
+          <li>Use <b>−</b>/<b>+</b> on the item card to change quantity.</li>
+          <li>When stock is low (≤2), an <b>Add</b> button appears.</li>
+          <li>Tap <b>Add</b> to send it to the shopping list.</li>
+          <li>Tap the <b>cart</b> icon to view your list, tick items as you buy them.</li>
         </ul>
 
-        <h3>Shopping list</h3>
+        <h3>Find things fast</h3>
         <ul>
-          <li>When stock is low, an <b>Add</b> button appears on the card.</li>
-          <li>Tap the cart icon to view the shopping list.</li>
-          <li>Tick items as you buy them, or remove them.</li>
-        </ul>
-
-        <h3>Search & filters</h3>
-        <ul>
-          <li>Use the search bar to find items instantly.</li>
+          <li>Use <b>Search</b> to instantly filter items.</li>
           <li>Use chips to filter by <b>Location</b> and <b>Storage Type</b>.</li>
-          <li>Tap the region button (top right) to select your region (helps with smart category detection).</li>
+          <li>Top-right <b>Region</b> helps smart category detection match your area.</li>
         </ul>
 
-        <div class="tip">Tip: Your data is stored locally on this device (no account required).</div>
+        <div class="tip">Your data is stored <b>locally on this device</b> (no account required).</div>
       </div>
     </div>
   </div>
@@ -1725,7 +1772,10 @@
     sel.innerHTML = html;
   }
 
+  /* ✅ Always scroll the modal sheet to top (prevents "reopening at last scroll") */
   function scrollItemModalToTop(){
+    const modalScroller = document.querySelector("#itemModal .modal-content");
+    if (modalScroller) modalScroller.scrollTop = 0;
     const body = document.getElementById("itemModalBody");
     if (body) body.scrollTop = 0;
   }
@@ -1737,7 +1787,6 @@
     const delRow = document.getElementById('deleteRow');
 
     editingId = rowNumber;
-    scrollItemModalToTop();
 
     if (!rowNumber){
       title.textContent = "Add Item";
@@ -1754,7 +1803,7 @@
 
       modal.classList.add('active');
       setTimeout(() => {
-        scrollItemModalToTop();
+        scrollItemModalToTop();                 // ✅ force top every time
         document.getElementById('f_item').focus();
       }, 60);
       return;
@@ -1776,7 +1825,10 @@
     document.getElementById('f_notes').value = item.notes || "";
 
     modal.classList.add('active');
-    setTimeout(()=> scrollItemModalToTop(), 60);
+    setTimeout(() => {
+      scrollItemModalToTop();                   // ✅ force top every time
+      document.getElementById('f_item').focus();
+    }, 60);
   }
 
   function closeItemEditor(event){
