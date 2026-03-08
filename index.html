@@ -25,7 +25,7 @@
 
       /* moved FAB higher */
       --fab-bottom: max(28px, env(safe-area-inset-bottom));
-  --fab-bottom: max(40px, calc(env(safe-area-inset-bottom) + 40px));
+      --fab-bottom: max(40px, calc(env(safe-area-inset-bottom) + 40px));
 
       --field-idle-bg: rgba(45,122,79,0.10);
     }
@@ -735,21 +735,21 @@
     .fab:active{transform:scale(.92);}
 
     /* full-height delete confirmation sheet */
-   .confirm-sheet{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  height:180px;
-  background:var(--surface);
-  border-radius:20px 20px 0 0;
-  box-shadow:var(--shadow-lg);
-  padding:20px 16px;
-  padding-bottom:max(18px, env(safe-area-inset-bottom));
-  animation:slideUpModal .22s ease;
-  display:flex;
-  flex-direction:column;
-}
+    .confirm-sheet{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:180px;
+      background:var(--surface);
+      border-radius:20px 20px 0 0;
+      box-shadow:var(--shadow-lg);
+      padding:20px 16px;
+      padding-bottom:max(18px, env(safe-area-inset-bottom));
+      animation:slideUpModal .22s ease;
+      display:flex;
+      flex-direction:column;
+    }
     .confirm-title{
       margin:0 0 6px;
       font-size:16px;
@@ -893,7 +893,7 @@
     }
 
     #guideModal{z-index:6001;}
-    .guide h3{margin:12px 0 6px;font-size:14px;font-weight:900;color:var(--text-primary);}
+    .guide h3{margin:0;font-size:14px;font-weight:900;color:var(--text-primary);}
     .guide p,.guide li{margin:0 0 8px;font-size:13px;line-height:1.4;color:var(--text-secondary);}
     .guide ul{margin:0 0 10px 18px;padding:0;}
     .guide .tip{
@@ -907,31 +907,267 @@
       font-weight:800;
     }
 
- .guide-startup-pref{
-  display:none;
-  align-items:center;
-  gap:10px;
-  background:rgba(239,68,68,0.10);
-  border:1px solid rgba(239,68,68,0.22);
-  border-radius:12px;
-  padding:12px;
-  margin-bottom:14px;
+    .guide{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .guide-quick{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      background:rgba(45,122,79,0.08);
+      border:1px solid rgba(45,122,79,0.18);
+      border-radius:14px;
+      padding:12px;
+      margin-bottom:2px;
+    }
+
+    .guide-quick-plus{
+      width:42px;
+      height:42px;
+      border-radius:12px;
+      background:linear-gradient(135deg,#34D399 0%, #2D7A4F 100%);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      font-weight:900;
+      box-shadow:var(--shadow-md);
+      flex-shrink:0;
+    }
+
+    .guide-quick-text{
+      margin:0;
+      font-size:14px;
+      line-height:1.35;
+      color:var(--text-primary);
+      font-weight:800;
+    }
+
+    .guide-card{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:14px;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .guide-card-head{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:8px;
+    }
+
+    .guide-card-icon{
+      width:42px;
+      height:42px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+      font-size:22px;
+      font-weight:900;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .guide-card-icon.add{
+      background:linear-gradient(135deg,#34D399 0%, #2D7A4F 100%);
+      color:#fff;
+    }
+    .guide-card-icon.edit{
+      background:rgba(45,122,79,0.12);
+      color:var(--primary);
+    }
+    .guide-card-icon.stock{
+      background:rgba(59,130,246,0.12);
+      color:#3B82F6;
+    }
+    .guide-card-icon.shop{
+      background:rgba(45,122,79,0.12);
+      color:var(--primary);
+    }
+    .guide-card-icon.find{
+      background:rgba(45,122,79,0.10);
+      color:var(--primary);
+    }
+    .guide-card-icon.private{
+      background:rgba(16,185,129,0.12);
+      color:var(--success);
+    }
+
+    .guide-card-title{
+      margin:0;
+      font-size:16px;
+      line-height:1.2;
+      font-weight:900;
+      color:var(--text-primary);
+    }
+
+    .guide-card-text{
+      margin:0;
+      font-size:14px;
+      line-height:1.45;
+      color:var(--text-secondary);
+    }
+
+    .guide-demo-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .guide-demo-save,
+    .guide-demo-add,
+    .guide-demo-chip,
+    .guide-demo-region,
+    .guide-demo-edit,
+    .guide-demo-cart{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      border-radius:10px;
+      font-size:12px;
+      font-weight:900;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .guide-demo-save{
+      padding:0 14px;
+      background:var(--primary);
+      color:#fff;
+    }
+
+    .guide-demo-add{
+      padding:0 14px;
+      background:var(--primary-light);
+      color:var(--primary);
+      border:1px solid rgba(45,122,79,0.14);
+    }
+
+    .guide-demo-edit{
+      width:42px;
+      background:rgba(45,122,79,0.12);
+      color:var(--primary);
+    }
+
+    .guide-demo-region{
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(45,122,79,0.14);
+      color:var(--primary);
+      gap:6px;
+    }
+
+   .guide-demo-chip{
+  padding:0 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.15);
+  color:var(--primary);
+  border:1px solid rgba(45,122,79,0.35);
+  box-shadow:none;
 }
-.guide-startup-pref.show{display:flex;}
-.guide-startup-pref input{
-  width:18px;
-  height:18px;
-  accent-color:var(--danger);
-  flex-shrink:0;
-}
-.guide-startup-pref label{
-  margin:0;
-  font-size:13px;
-  font-weight:800;
-  color:var(--text-primary);
-  line-height:1.35;
-  cursor:pointer;
-}
+
+    .guide-demo-cart{
+      width:42px;
+      position:relative;
+      background:rgba(45,122,79,0.14);
+      color:var(--primary);
+    }
+
+    .guide-demo-badge{
+      position:absolute;
+      top:-4px;
+      right:-4px;
+      width:18px;
+      height:18px;
+      border-radius:999px;
+      background:var(--danger);
+      color:#fff;
+      font-size:10px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:2px solid var(--surface);
+    }
+
+    .guide-demo-qty{
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      background:var(--bg);
+      border-radius:10px;
+      padding:2px;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .guide-demo-qty-btn{
+      width:30px;
+      height:30px;
+      border:none;
+      border-radius:8px;
+      color:#fff;
+      font-size:18px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .guide-demo-qty-btn.minus{background:var(--danger);}
+    .guide-demo-qty-btn.plus{background:#3B82F6;}
+
+    .guide-demo-qty-num{
+      min-width:32px;
+      text-align:center;
+      font-size:13px;
+      font-weight:900;
+      color:var(--text-primary);
+    }
+
+    .guide-privacy{
+      background:rgba(45,122,79,0.08);
+      border:1px solid rgba(45,122,79,0.18);
+      border-radius:14px;
+      padding:12px;
+      font-size:14px;
+      line-height:1.4;
+      color:var(--text-primary);
+      font-weight:800;
+    }
+
+    .guide-startup-pref{
+      display:none;
+      align-items:center;
+      gap:10px;
+      background:rgba(239,68,68,0.10);
+      border:1px solid rgba(239,68,68,0.22);
+      border-radius:12px;
+      padding:12px;
+      margin-bottom:2px;
+    }
+    .guide-startup-pref.show{display:flex;}
+    .guide-startup-pref input{
+      width:18px;
+      height:18px;
+      accent-color:var(--danger);
+      flex-shrink:0;
+    }
+    .guide-startup-pref label{
+      margin:0;
+      font-size:13px;
+      font-weight:800;
+      color:var(--text-primary);
+      line-height:1.35;
+      cursor:pointer;
+    }
 
     @keyframes slideUpToast{
       from{opacity:0;transform:translateX(-50%) translateY(20px);}
@@ -1170,46 +1406,94 @@
         <h2>How to use JemsPantry</h2>
         <button class="modal-close" onclick="closeUserGuide()">✕</button>
       </div>
-      <div class="modal-body guide">
-        <div class="guide-startup-pref" id="guideStartupPref">
-          <input type="checkbox" id="guideDontShowAgain" onchange="setGuideStartupPreference(this.checked)">
-          <label for="guideDontShowAgain">Do not show again</label>
-        </div>
+  <div class="modal-body guide">
+  <div class="guide-startup-pref" id="guideStartupPref">
+    <input type="checkbox" id="guideDontShowAgain" onchange="setGuideStartupPreference(this.checked)">
+    <label for="guideDontShowAgain">Do not show again</label>
+  </div>
 
-        <div class="tip"><b>Quick start:</b> Tap <b>+</b> to add your first item.</div>
+  <div class="guide-card">
+    <div class="guide-card-head">
+      <div class="guide-card-icon add">+</div>
+      <h3 class="guide-card-title">Adding Items</h3>
+    </div>
+    <p class="guide-card-text">
+      Enter item name, quantity, location, storage, expiry date and notes, then tap <b>Save</b>.
+    </p>
+    <p class="guide-card-text" style="margin-top:8px;">
+      You can manually choose a category for the new item, or choose <b>Auto</b>. This lets the app auto allocate a category based on your item name.
+    </p>
+    <div class="guide-demo-row">
+      <div class="guide-demo-save">Save</div>
+    </div>
+  </div>
 
-        <h3>Add an item</h3>
-        <ul>
-          <li>Tap the green <b>+</b>.</li>
-          <li>Enter <b>Item Name</b> (required).</li>
-          <li>Set <b>Quantity</b>, <b>Location</b>, <b>Storage</b>, optional <b>Expiry</b> + <b>Notes</b>.</li>
-          <li>Tap <b>Save</b>.</li>
-        </ul>
+  <div class="guide-card">
+    <div class="guide-card-head">
+      <div class="guide-card-icon edit">✎</div>
+    <h3 class="guide-card-title">Editing an Item</h3>
+    </div>
+    <p class="guide-card-text">
+      Tap the edit icon to update an item’s details. You can edit item details at any time.
+    </p>
+  </div>
 
-        <h3>Edit or remove</h3>
-        <ul>
-          <li>Tap <b>✎</b> to edit → <b>Save</b>.</li>
-          <li>When quantity hits <b>0</b>, a <b>Remove</b> button appears on the item card.</li>
-        </ul>
-
-        <h3>Stock + shopping list</h3>
-        <ul>
-          <li>Use <b>−</b>/<b>+</b> on the item card to change quantity.</li>
-          <li>When stock is low (≤2), an <b>Add</b> button appears.</li>
-          <li>Tap <b>Add</b> to send it to the shopping list.</li>
-          <li>Tap the <b>cart</b> icon to view your list, tick items as you buy them.</li>
-        </ul>
-
-        <h3>Find things fast</h3>
-        <ul>
-          <li>Use <b>Search</b> to instantly filter items.</li>
-          <li>Use chips to filter by <b>Location</b> and <b>Storage Type</b>.</li>
-          <li>Top-right <b>Region</b> helps smart category detection match your area.</li>
-        </ul>
-
-        <div class="tip">Your data is stored <b>locally on this device</b> (no account required).</div>
+  <div class="guide-card">
+    <div class="guide-card-head">
+      <div class="guide-card-icon stock">−+</div>
+      <h3 class="guide-card-title">Item Quantities</h3>
+    </div>
+    <p class="guide-card-text">
+      Use <b>− / +</b> to change the item quantity. When an item reaches <b>0</b>, you can remove it from your list by tapping the <b>Remove</b> button.
+    </p>
+    <div class="guide-demo-row">
+      <div class="guide-demo-qty">
+        <div class="guide-demo-qty-btn minus">−</div>
+        <div class="guide-demo-qty-num">1</div>
+        <div class="guide-demo-qty-btn plus">+</div>
       </div>
     </div>
+  </div>
+
+  <div class="guide-card">
+    <div class="guide-card-head">
+      <div class="guide-card-icon shop">🛒</div>
+      <h3 class="guide-card-title">Shop List</h3>
+    </div>
+    <p class="guide-card-text">
+      When an item is running low (<b>2</b>) you can <b>Add</b> it to your Shopping List.
+    </p>
+    <p class="guide-card-text" style="margin-top:8px;">
+      Open the Shopping List to view your shopping list and tick off items as you buy them, helping you plan what items you are running low on.
+    </p>
+    <div class="guide-demo-row">
+      <div class="guide-demo-add">Add</div>
+      <div class="guide-demo-cart">
+        🛒
+        <span class="guide-demo-badge">2</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="guide-card">
+    <div class="guide-card-head">
+      <div class="guide-card-icon find">⌕</div>
+      <h3 class="guide-card-title">Find</h3>
+    </div>
+    <p class="guide-card-text">
+      Use Search, Location, Storage and Region filters to find items quickly.
+    </p>
+    <div class="guide-demo-row">
+      <div class="guide-demo-chip" style="background:rgba(255,255,255,0.15); border:1px solid rgba(45,122,79,0.35); color:var(--primary);">Kitchen</div>
+      <div class="guide-demo-chip" style="background:rgba(255,255,255,0.15); border:1px solid rgba(45,122,79,0.35); color:var(--primary);">Fridge</div>
+      <div class="guide-demo-region">🌐 <span>UK</span></div>
+    </div>
+  </div>
+
+  <div class="guide-privacy">
+    <b>Private by default:</b> Your data is stored 100% locally on your device.
+  </div>
+</div>    </div>
   </div>
 
   <div class="modal-overlay" id="confirmModal" onclick="closeConfirm(event)">
