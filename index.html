@@ -981,7 +981,7 @@
     }
   </style>
 </head>
-<body>
+<body class="preload-main">
   <div class="splash-overlay" id="splash" aria-hidden="true">
     <div class="splash-card">
       <div class="splash-logo-wrap">
@@ -1311,7 +1311,6 @@
       const ver = document.getElementById("splashVersion");
       if (ver) ver.textContent = `Version ${APP_VERSION}`;
 
-      document.body.classList.add("preload-main");
       splash.classList.add("active");
       splash.setAttribute("aria-hidden", "false");
 
