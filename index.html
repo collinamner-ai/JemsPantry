@@ -24,7 +24,7 @@
       --storage-freezer:#D4F7FF;
 
       /* moved FAB higher */
-      --fab-bottom: max(92px, calc(env(safe-area-inset-bottom) + 56px));
+      --fab-bottom: max(28px, env(safe-area-inset-bottom));
       --confirm-bottom: calc(var(--fab-bottom) + 68px);
 
       --field-idle-bg: rgba(45,122,79,0.10);
@@ -735,23 +735,21 @@
     .fab:active{transform:scale(.92);}
 
     /* full-height delete confirmation sheet */
-    .confirm-sheet{
-      position:absolute;
-      left:0;
-      right:0;
-      top:0;
-      bottom:0;
-      background:var(--surface);
-      border-radius:20px 20px 0 0;
-      box-shadow:var(--shadow-lg);
-      padding:20px 16px;
-      padding-top:max(24px, calc(env(safe-area-inset-top) + 12px));
-      padding-bottom:max(18px, env(safe-area-inset-bottom));
-      animation:slideUpModal .22s ease;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-start;
-    }
+   .confirm-sheet{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:180px;
+  background:var(--surface);
+  border-radius:20px 20px 0 0;
+  box-shadow:var(--shadow-lg);
+  padding:20px 16px;
+  padding-bottom:max(18px, env(safe-area-inset-bottom));
+  animation:slideUpModal .22s ease;
+  display:flex;
+  flex-direction:column;
+}
     .confirm-title{
       margin:0 0 6px;
       font-size:16px;
@@ -909,31 +907,31 @@
       font-weight:800;
     }
 
-    .guide-startup-pref{
-      display:none;
-      align-items:center;
-      gap:10px;
-      background:rgba(45,122,79,0.08);
-      border:1px solid rgba(45,122,79,0.18);
-      border-radius:12px;
-      padding:12px;
-      margin-bottom:14px;
-    }
-    .guide-startup-pref.show{display:flex;}
-    .guide-startup-pref input{
-      width:18px;
-      height:18px;
-      accent-color:var(--primary);
-      flex-shrink:0;
-    }
-    .guide-startup-pref label{
-      margin:0;
-      font-size:13px;
-      font-weight:800;
-      color:var(--text-primary);
-      line-height:1.35;
-      cursor:pointer;
-    }
+ .guide-startup-pref{
+  display:none;
+  align-items:center;
+  gap:10px;
+  background:rgba(239,68,68,0.10);
+  border:1px solid rgba(239,68,68,0.22);
+  border-radius:12px;
+  padding:12px;
+  margin-bottom:14px;
+}
+.guide-startup-pref.show{display:flex;}
+.guide-startup-pref input{
+  width:18px;
+  height:18px;
+  accent-color:var(--danger);
+  flex-shrink:0;
+}
+.guide-startup-pref label{
+  margin:0;
+  font-size:13px;
+  font-weight:800;
+  color:var(--text-primary);
+  line-height:1.35;
+  cursor:pointer;
+}
 
     @keyframes slideUpToast{
       from{opacity:0;transform:translateX(-50%) translateY(20px);}
