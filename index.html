@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -821,7 +822,7 @@
 
     #toast{
       position:fixed;
-      bottom:20px;
+      bottom:max(80px, calc(env(safe-area-inset-bottom) + 80px));
       left:50%;
       transform:translateX(-50%);
       background:var(--text-primary);
@@ -2098,32 +2099,48 @@
 
     const REGION_BRANDS = {
       UK: {
-        dairy: ["cathedral city","arla","muller","müller","oatly","alpro","lurpak","kerrygold","anchor","philadelphia"],
+        dairy: ["cathedral city","arla","muller","müller","oatly","alpro","lurpak","kerrygold","anchor","philadelphia","lindahls","yeo valley"],
         bakery: ["warburtons","kingsmill","hovis","allinsons","allinson's","jacksons","jackson's","roberts","sunblest"],
+        breakfast: ["weetabix","alpen","jordans","jordan's","ready brek","dorset cereals","shreddies"],
+        herbsSpices: ["schwartz","bart","rajah","east end","trs","oxo"],
         canned: ["heinz","branston","baxters","princes","john west","napolina","mutti","cirio"],
-        snacks: ["walkers","mcvities","cadbury","tunnocks","foxs","fox's","tyrrells","kettle","pringles","doritos"],
-        beverages: ["coca cola","coca-cola","pepsi","ribena","lucozade","vimto","tango","robinsons","irn bru","irn-bru"]
+        frozen: ["birds eye","birdseye","mccain","goodfella's","goodfellas","chicago town","aunt bessie's","aunt bessies"],
+        snacks: ["walkers","mcvities","cadbury","tunnocks","foxs","fox's","tyrrells","kettle","pringles","doritos","ferrero"],
+        beverages: ["coca cola","coca-cola","pepsi","ribena","lucozade","vimto","tango","robinsons","irn bru","irn-bru","twinings","pg tips"],
+        personalCare: ["gillette","venus","colgate","sensodyne","sure","lynx"]
       },
       US: {
         dairy: ["kraft","philadelphia","land o'lakes","daisy","chobani","yoplait","dannon","horizon","silk","oatly"],
         bakery: ["wonder","pepperidge farm","sara lee","nature's own","entennmann's","martin's","bimbo","oroweat","ball park","thomas'"],
+        breakfast: ["kellogg's","quaker","cheerios","special k","general mills"],
+        herbsSpices: ["mccormick","simply organic","spice islands"],
         canned: ["campbell's","progresso","hunts","del monte","libby's","hormel","stagg","goya","bush's","heinz"],
-        snacks: ["lays","doritos","cheetos","ritz","oreo","hershey's","reese's","kellogg's","quaker","nature valley"],
-        beverages: ["gatorade","powerade","coke","coca-cola","pepsi","dr pepper","mountain dew","snapple","arizona"]
+        frozen: ["ore-ida","birds eye","mccain","ben & jerry's","haagen-dazs"],
+        snacks: ["lays","doritos","cheetos","ritz","oreo","hershey's","reese's","nature valley","ferrero"],
+        beverages: ["gatorade","powerade","coke","coca-cola","pepsi","dr pepper","mountain dew","snapple","arizona"],
+        personalCare: ["gillette","crest","colgate","old spice","degree"]
       },
       EU: {
         dairy: ["danone","nestle","muller","müller","arla","president","président","galbani","valio","kerrygold"],
-        bakery: ["barilla","mulino bianco","wasa","jacquet","bonduelle"],
-        canned: ["mutti","cirio","bonduelle","rio mare","ortiz","knorr","heinz"],
-        snacks: ["haribo","milka","ritter sport","lays","pringles","kinder","ferrero","nutella","oreo","jacobs"],
-        beverages: ["coca-cola","pepsi","fanta","sprite","san pellegrino","lavazza","nescafe","nespresso"]
+        bakery: ["wasa","jacquet"],
+        breakfast: ["alpen","nestle cereals","jordans","jordan's"],
+        herbsSpices: ["ducros","santa maria","fuchs","knorr"],
+        canned: ["mutti","cirio","bonduelle","rio mare","ortiz","heinz"],
+        frozen: ["findus","dr oetker","mccain"],
+        snacks: ["haribo","milka","ritter sport","lays","pringles","kinder","ferrero","oreo","jacobs"],
+        beverages: ["coca-cola","pepsi","fanta","sprite","san pellegrino","lavazza","nescafe","nespresso"],
+        personalCare: ["nivea","dove","sensodyne","gillette"]
       },
       Global: {
-        dairy: ["danone","nestle","oatly","alpro","arla","philadelphia","yoplait","muller","müller","kerrygold"],
-        bakery: ["bimbo","barilla","warburtons","hovis","pepperidge farm","sara lee","wasa"],
-        canned: ["heinz","campbell's","mutti","cirio","del monte","libby's","princes","john west","goya","knorr"],
-        snacks: ["pringles","oreo","doritos","lays","kettle","walkers","haribo","kinder","cadbury","mcvities"],
-        beverages: ["coca-cola","pepsi","fanta","sprite","nescafe","nespresso","lavazza"]
+        dairy: ["danone","nestle","oatly","alpro","arla","philadelphia","yoplait","muller","müller","kerrygold","lindahls"],
+        bakery: ["bimbo","warburtons","hovis","pepperidge farm","sara lee","wasa"],
+        breakfast: ["quaker","cheerios","weetabix","alpen","kellogg's"],
+        herbsSpices: ["schwartz","mccormick","simply organic","bart","knorr"],
+        canned: ["heinz","campbell's","mutti","cirio","del monte","libby's","princes","john west","goya"],
+        frozen: ["birds eye","birdseye","mccain","findus","ben & jerry's","haagen-dazs"],
+        snacks: ["pringles","oreo","doritos","lays","kettle","walkers","haribo","kinder","cadbury","mcvities","ferrero"],
+        beverages: ["coca-cola","pepsi","fanta","sprite","nescafe","nespresso","lavazza","twinings"],
+        personalCare: ["gillette","colgate","sensodyne","dove","nivea"]
       }
     };
 
@@ -2663,80 +2680,169 @@
       const scores = new Map();
       const add = (cat, pts) => scores.set(cat, (scores.get(cat) || 0) + pts);
       const has = (k) => name.includes(normalizeText(k));
+      const hasAny = (arr) => arr.some(has);
 
       const BRAND = {
-        produce: ["dole","fyffes","pink lady","chiquita"],
-        bakery: ["warburtons","kingsmill","hovis","allinson's","allinsons","jackson's","jacksons","roberts"],
-        dairy: ["cathedral city","arla","lactofree","lacto free","yazoo","actimel","danone","yoplait","muller","müller","oatly","alpro","flora","clover","lurpak","kerrygold","anchor","philadelphia"],
+        produce: ["dole","fyffes","pink lady","chiquita","zespri","pink lady apples"],
+        bakery: ["warburtons","kingsmill","hovis","allinson's","allinsons","jackson's","jacksons","roberts","sunblest","soreen","genius"],
+        dairy: ["cathedral city","arla","lactofree","lacto free","yazoo","actimel","activia","danone","yoplait","muller","müller","oatly","alpro","lurpak","kerrygold","anchor","philadelphia","galbani","president","président","fage","lindahls","yeo valley"],
         meat: ["heck","richmond","bernard matthews"],
-        fish: ["young's","youngs","birds eye","birdseye","princes","john west","mowi"],
-        dry: ["uncle ben's","uncle bens","ben's original","bens original","dolmio","barilla","napolina","sharwood's","sharwoods","patak's","pataks","bachelor's","bachelors","super noodles","pot noodle","blue dragon","schwartz","colman's","colmans"],
-        canned: ["heinz","branston","princes","napolina","mutti","cirio","john west"],
-        condiments: ["heinz","hp","hellmann's","hellmanns","colman's","colmans","tabasco","kikkoman","encona"],
-        cleaning: ["fairy","persil","bold","ariel","lenor","comfort","flash","cif","domestos","dettol","andrex","cushelle"],
-        meds: ["calpol","nurofen","benylin","strepsils","lemsip","gaviscon","panadol","sudafed"]
+        fish: ["young's","youngs","mowi","john west"],
+        dry: ["uncle ben's","uncle bens","ben's original","bens original","dolmio","barilla","napolina","bachelor's","bachelors","super noodles","pot noodle","tilda","de cecco","buitoni","ragu","oxo"],
+        herbsSpices: ["schwartz","mccormick","bart","rajah","east end","trs","ducros","santa maria","simply organic","spice islands","fuchs"],
+        breakfast: ["weetabix","kellogg's","quaker","alpen","jordans","jordan's","dorset cereals","ready brek","cheerios","general mills","nestle cereals","oatibix","shreddies"],
+        canned: ["heinz","branston","princes","napolina","mutti","cirio","campbell's","baxters","progresso","del monte","libby's","goya"],
+        frozen: ["birds eye","birdseye","findus","mccain","goodfella's","goodfellas","chicago town","ben & jerry's","ben and jerry's","haagen-dazs","häagen-dazs","ore-ida","aunt bessie's","aunt bessies","dr oetker"],
+        snacks: ["mcvities","mcvitie's","cadbury","oreo","lotus","walkers","doritos","cheetos","lays","pringles","kettle","tyrrells","lindt","milka","ferrero","ferrero rocher","kinder","haribo","rowntree's","skinny whip","love mallow","nature valley","graze","nakd"],
+        beverages: ["coca cola","coca-cola","coke","pepsi","fanta","sprite","schweppes","fever-tree","ribena","vimto","tropicana","innocent","twinings","pg tips","tetley","nescafe","nespresso","lavazza","illy","starbucks","guinness","perrier","evian","volvic","gatorade","powerade"],
+        condiments: ["hellmann's","hellmanns","best foods","hp","lea & perrins","lea and perrins","kikkoman","red boat","megachef","lee kum kee","tabasco","frank's redhot","franks redhot","blue dragon","sharwood's","sharwoods","patak's","pataks","amoy","sabra","fry light"],
+        cleaning: ["fairy","persil","bold","ariel","lenor","comfort","flash","cif","domestos","dettol","andrex","cushelle","finish","vanish","harpic"],
+        meds: ["calpol","nurofen","benylin","strepsils","lemsip","gaviscon","panadol","sudafed","gillette","venus","colgate","sensodyne","oral-b","corsodyl","sure","lynx","dove","nivea"]
       };
 
-      if (BRAND.produce.some(has)) add("Fruit & Veg", 6);
-      if (BRAND.bakery.some(has)) add("Bakery & Bread", 7);
-      if (BRAND.dairy.some(has)) add("Dairy & Refrigerated", 8);
-      if (BRAND.meat.some(has)) add("Meat, Poultry & Seafood", 6);
-      if (BRAND.fish.some(has)) add("Meat, Poultry & Seafood", 7);
-      if (BRAND.dry.some(has)) add("Pantry & Dry Goods", 5);
-      if (BRAND.canned.some(has)) add("Canned Goods & Sauces", 6);
-      if (BRAND.condiments.some(has)) add("Condiments & Oils", 6);
-      if (BRAND.cleaning.some(has)) add("Household & Cleaning", 8);
-      if (BRAND.meds.some(has)) add("Personal Care & Pharmacy", 10);
+      if (hasAny(BRAND.produce)) add("Fruit & Veg", 6);
+      if (hasAny(BRAND.bakery)) add("Bakery & Bread", 7);
+      if (hasAny(BRAND.dairy)) add("Dairy & Refrigerated", 8);
+      if (hasAny(BRAND.meat)) add("Meat, Poultry & Seafood", 6);
+      if (hasAny(BRAND.fish)) add("Meat, Poultry & Seafood", 7);
+      if (hasAny(BRAND.dry)) add("Pantry & Dry Goods", 6);
+      if (hasAny(BRAND.herbsSpices)) add("Herbs & Spices", 8);
+      if (hasAny(BRAND.breakfast)) add("Cereals & Breakfast", 8);
+      if (hasAny(BRAND.canned)) add("Canned Goods & Sauces", 6);
+      if (hasAny(BRAND.frozen)) add("Frozen Foods", 8);
+      if (hasAny(BRAND.snacks)) add("Snacks", 7);
+      if (hasAny(BRAND.beverages)) add("Beverages", 7);
+      if (hasAny(BRAND.condiments)) add("Condiments & Oils", 7);
+      if (hasAny(BRAND.cleaning)) add("Household & Cleaning", 8);
+      if (hasAny(BRAND.meds)) add("Personal Care & Pharmacy", 9);
+
+      if (has("heinz")) {
+        add("Canned Goods & Sauces", 6);
+        add("Condiments & Oils", 4);
+      }
+      if (hasAny(["nestle","nestlé"])) {
+        add("Snacks", 4);
+        add("Cereals & Breakfast", 4);
+        add("Beverages", 3);
+      }
+      if (has("quaker")) {
+        add("Cereals & Breakfast", 6);
+        add("Pantry & Dry Goods", 3);
+      }
+      if (has("knorr")) {
+        add("Canned Goods & Sauces", 4);
+        add("Condiments & Oils", 4);
+        add("Herbs & Spices", 3);
+      }
+      if (has("maggi")) {
+        add("Pantry & Dry Goods", 4);
+        add("Condiments & Oils", 4);
+        add("Canned Goods & Sauces", 3);
+      }
+      if (hasAny(["colman's","colmans"])) {
+        add("Condiments & Oils", 6);
+        add("Herbs & Spices", 4);
+      }
+      if (has("schwartz")) {
+        add("Herbs & Spices", 8);
+        add("Pantry & Dry Goods", 2);
+      }
+      if (hasAny(["birds eye","birdseye"])) {
+        add("Frozen Foods", 8);
+        add("Meat, Poultry & Seafood", 3);
+        add("Fruit & Veg", 2);
+      }
+      if (hasAny(["patak's","pataks","sharwood's","sharwoods","blue dragon"])) {
+        add("Condiments & Oils", 5);
+        add("Canned Goods & Sauces", 5);
+        add("Pantry & Dry Goods", 3);
+      }
+      if (has("oxo")) {
+        add("Pantry & Dry Goods", 7);
+        add("Herbs & Spices", 3);
+      }
+      if (has("ferrero")) add("Snacks", 8);
+      if (hasAny(["gillette","venus"])) add("Personal Care & Pharmacy", 8);
+      if (has("fry light")) add("Condiments & Oils", 9);
 
       const pack = REGION_BRANDS[region] || REGION_BRANDS.Global;
       if (pack?.dairy?.some(has)) add("Dairy & Refrigerated", 3);
       if (pack?.bakery?.some(has)) add("Bakery & Bread", 3);
+      if (pack?.breakfast?.some(has)) add("Cereals & Breakfast", 3);
+      if (pack?.herbsSpices?.some(has)) add("Herbs & Spices", 3);
       if (pack?.canned?.some(has)) add("Canned Goods & Sauces", 3);
+      if (pack?.frozen?.some(has)) add("Frozen Foods", 3);
       if (pack?.snacks?.some(has)) add("Snacks", 2);
       if (pack?.beverages?.some(has)) add("Beverages", 2);
+      if (pack?.personalCare?.some(has)) add("Personal Care & Pharmacy", 3);
+
+      if (item.storage === "Fridge") {
+        add("Dairy & Refrigerated", 2);
+        add("Fruit & Veg", 1);
+        add("Condiments & Oils", 1);
+      }
+      if (item.storage === "Cupboard") {
+        add("Pantry & Dry Goods", 1);
+        add("Cereals & Breakfast", 1);
+        add("Snacks", 1);
+      }
+
+      if (hasAny(["black pepper","white pepper","peppercorn","mustard powder","sesame seeds","sesame seed","mixed herbs","italian seasoning"])) add("Herbs & Spices", 14);
+      if (hasAny(["bell pepper","red pepper","green pepper"])) add("Fruit & Veg", 14);
+      if (hasAny(["cornflakes","corn flakes","malt wheats","mini wheats","shredded wheat","wheaties"])) add("Cereals & Breakfast", 14);
+      if (hasAny(["mixed baby leaves","baby leaves","babyleaf","babyleaf salad","salad leaves","leaf salad"])) add("Fruit & Veg", 14);
+      if (hasAny(["parmigiano reggiano","parmigiano","grana padano","grated parmigiano","kvarg","coleslaw"])) add("Dairy & Refrigerated", 14);
+      if (hasAny(["dishwasher cleaner","dishwasher tablet","dishwasher tablets","rinse aid","caddy liners","compostable liners","tie top liners"])) add("Household & Cleaning", 14);
+      if (hasAny(["oxo stock powder","stock powder","stock pot","stock pots","bouillon","icing pens","icing sugar","meringue nest","meringue nests"])) add("Pantry & Dry Goods", 14);
+      if (hasAny(["fry light","spray oil","cooking spray"])) add("Condiments & Oils", 14);
+      if (hasAny(["ferrero rocher","wafer bars","wafer bar","toffee bars","skinny whip","pink and whites","pink & whites"])) add("Snacks", 14);
+      if (hasAny(["gillette venus","disposable razors","razor","razors","shaving"])) add("Personal Care & Pharmacy", 14);
+      if (hasAny(["gherkin","gherkins","pickled gherkins"])) add("Canned Goods & Sauces", 14);
+      if (hasAny(["houmous","hummous"])) add("Condiments & Oils", 14);
+      if (has("saffron")) add("Herbs & Spices", 14);
 
       const KEYWORDS = {
         "Fruit & Veg": [
-          "apple","apples","banana","bananas","orange","oranges","pear","pears","grape","grapes","melon","watermelon","pineapple","mango","peach","plum","apricot","cherry","cherries","blueberry","strawberry","raspberry","blackberry","kiwi","lime","lemon","avocado","papaya","guava","grapefruit","clementine","satsuma","mandarin","fig","pomegranate","nectarine","rhubarb","carrot","carrots","broccoli","cauliflower","cabbage","cucumber","tomato","tomatoes","lettuce","spinach","kale","pepper","peppers","onion","onions","garlic","leek","celery","beet","beetroot","radish","turnip","parsnip","potato","potatoes","sweet potato","courgette","zucchini","aubergine","eggplant","mushroom","asparagus","artichoke","green beans","peas","vegetable","vegetables","veg"
+          "apple","apples","banana","bananas","orange","oranges","pear","pears","grape","grapes","melon","watermelon","pineapple","mango","peach","plum","apricot","cherry","cherries","blueberry","blueberries","strawberry","strawberries","raspberry","blackberry","kiwi","lime","lemon","avocado","papaya","guava","grapefruit","clementine","satsuma","mandarin","fig","pomegranate","nectarine","rhubarb","carrot","carrots","broccoli","cauliflower","cabbage","cucumber","tomato","tomatoes","lettuce","spinach","kale","pepper","peppers","onion","onions","garlic","leek","celery","beet","beetroot","radish","turnip","parsnip","potato","potatoes","sweet potato","courgette","zucchini","aubergine","eggplant","mushroom","asparagus","artichoke","green beans","peas","vegetable","vegetables","veg","baby leaf","baby leaves","babyleaf","mixed leaves","salad leaves","leaf salad"
         ],
         "Meat, Poultry & Seafood": [
           "beef","pork","lamb","chicken","turkey","duck","steak","mince","minced","ground beef","ground chicken","sausage","sausages","bacon","burger","burgers","ham","gammon","pepperoni","salami","chorizo","fish","salmon","tuna","cod","haddock","plaice","halibut","mackerel","trout","prawn","prawns","shrimp","crab","lobster","mussels","anchovy","sardine","kipper","venison","seafood"
         ],
         "Dairy & Refrigerated": [
-          "milk","cheese","butter","yoghurt","yogurt","eggs","cream","cheddar","mozzarella","parmesan","feta","brie","camembert","halloumi","edam","stilton","quark","ricotta","sour cream","cottage cheese","lactose free","string cheese","cream cheese","double cream","single cream","semi skimmed","skimmed","whole milk","buttermilk","créme fraiche","creme fraiche","custard","kefir","fromage frais","soft cheese"
+          "milk","cheese","butter","yoghurt","yogurt","eggs","cream","cheddar","mozzarella","parmesan","parmigiano","parmigiano reggiano","grana padano","feta","brie","camembert","halloumi","edam","stilton","quark","kvarg","ricotta","sour cream","cottage cheese","lactose free","string cheese","cream cheese","double cream","single cream","semi skimmed","skimmed","whole milk","buttermilk","créme fraiche","creme fraiche","custard","kefir","fromage frais","soft cheese","skyr","coleslaw"
         ],
         "Bakery & Bread": [
           "bread","roll","rolls","bagel","bagels","wrap","wraps","naan","pitta","pita","baguette","sourdough","croissant","muffin","bun","buns","crumpet","brioche","ciabatta","focaccia","loaf","toastie","teacake"
         ],
         "Pantry & Dry Goods": [
-          "rice","pasta","noodles","ramen","couscous","quinoa","lentil","lentils","flour","oats","porridge","bean","beans","chickpea","chickpeas","pulses","sugar","honey","syrup","maple","treacle","molasses","jam","preserves","marmalade","semolina","polenta","bulgur","barley","breadcrumbs","stock cube","stock cubes","gravy","gravy granules","stuffing","cracker","crackers","taco kit","tortilla kit","pancake mix","baking powder","bicarbonate","baking soda","yeast","custard powder","jelly","gelatine","gelatin","rice pudding","spaghetti","macaroni","penne","fusilli","lasagne sheets","lasagna sheets"
+          "rice","pasta","noodles","ramen","couscous","quinoa","lentil","lentils","flour","oats","porridge","bean","beans","chickpea","chickpeas","pulses","sugar","honey","syrup","maple","treacle","molasses","jam","preserves","marmalade","semolina","polenta","bulgur","barley","breadcrumbs","stock cube","stock cubes","stock powder","stock pot","stock pots","bouillon","gravy","gravy granules","stuffing","cracker","crackers","taco kit","tortilla kit","pancake mix","baking powder","bicarbonate","baking soda","yeast","custard powder","jelly","gelatine","gelatin","rice pudding","spaghetti","macaroni","penne","fusilli","lasagne sheets","lasagna sheets","icing","icing sugar","icing pens","meringue","meringue nest","meringue nests","oxo"
         ],
         "Herbs & Spices": [
-          "herb","herbs","spice","spices","seasoning","paprika","cumin","turmeric","coriander","oregano","basil","thyme","rosemary","parsley","mint","dill","chives","tarragon","cinnamon","nutmeg","cardamom","ginger","cloves","pepper","salt","chilli","chili","mustard","vanilla","cocoa","schwartz","colman's","colmans","season all","mixed herbs","italian seasoning","garam masala","five spice","allspice","bay leaf","bay leaves","sage","marjoram"
+          "herb","herbs","spice","spices","seasoning","paprika","cumin","turmeric","coriander","oregano","basil","thyme","rosemary","parsley","mint","dill","chives","tarragon","cinnamon","nutmeg","cardamom","ginger","cloves","pepper","salt","chilli","chili","mustard","vanilla","cocoa","schwartz","colman's","colmans","season all","mixed herbs","italian seasoning","garam masala","five spice","allspice","bay leaf","bay leaves","sage","marjoram","sesame seeds","sesame seed","saffron","garlic powder","onion powder","black pepper","white pepper","peppercorn"
         ],
         "Cereals & Breakfast": [
-          "cereal","cereals","porridge","muesli","granola","oats","weetabix","cornflakes","frosties","cheerios","bran","flakes","alpen","oatibix","readybrek","shreddies","shredded wheat","coco pops","rice krispies","breakfast biscuit","breakfast bar","granola bar"
+          "cereal","cereals","porridge","muesli","granola","oats","weetabix","cornflakes","frosties","cheerios","bran","flakes","alpen","oatibix","readybrek","ready brek","shreddies","shredded wheat","coco pops","rice krispies","breakfast biscuit","breakfast bar","granola bar","wheats","malt wheats","mini wheats","wheat biscuits"
         ],
         "Canned Goods & Sauces": [
-          "tin","tins","tinned","canned","passata","soup","soups","pesto","pickle","olives","capers","pasta sauce","curry sauce","baked beans","chopped tomatoes","jar","jars","tomato puree","tomato purée","sundried tomato","sun dried tomato","coconut milk","evaporated milk","condensed milk","sweetcorn","tuna chunks","bean salad","salsa jar","borscht","minestrone","tomato soup","mushroom soup"
+          "tin","tins","tinned","canned","passata","soup","soups","pesto","pickle","olives","capers","pasta sauce","curry sauce","baked beans","chopped tomatoes","jar","jars","tomato puree","tomato purée","sundried tomato","sun dried tomato","coconut milk","evaporated milk","condensed milk","sweetcorn","tuna chunks","bean salad","salsa jar","borscht","minestrone","tomato soup","mushroom soup","gherkin","gherkins","pickled gherkins"
         ],
         "Frozen Foods": [
           "frozen","sorbet","gelato","popsicle","lolly","ice cream","pizza","chips","fries","hash browns","nuggets","dumplings","gyoza","spring rolls","ice lolly","frozen peas","frozen veg","frozen vegetables","ice lollies"
         ],
         "Snacks": [
-          "biscuit","biscuits","cookie","cookies","chocolate","crisps","crisp","chips","popcorn","pretzel","flapjack","nuts","trail mix","candy","sweet","sweets","granola bar","cereal bar","protein bar","energy bar","snack bar","rice cake","tart","tarts","brownie","muffin bites","cracker","crackers","nachos","marshmallow","jelly sweets"
+          "biscuit","biscuits","cookie","cookies","chocolate","crisps","crisp","chips","popcorn","pretzel","flapjack","nuts","trail mix","candy","sweet","sweets","granola bar","cereal bar","protein bar","energy bar","snack bar","rice cake","tart","tarts","brownie","muffin bites","cracker","crackers","nachos","marshmallow","jelly sweets","bars","wafer bar","wafer bars","toffee bars","rocher","pink and whites","pink & whites"
         ],
         "Beverages": [
           "juice","cola","tea","coffee","squash","cordial","smoothie","lemonade","cider","beer","wine","vodka","gin","rum","whisky","whiskey","fizz","tonic","water","sparkling","hot chocolate","coke","pepsi","fanta","sprite","kombucha","milkshake","espresso","latte","herbal tea","iced tea","orange juice","apple juice"
         ],
         "Condiments & Oils": [
-          "oil","olive oil","vegetable oil","mayo","mayonnaise","mustard","vinegar","ketchup","bbq","hot sauce","soy sauce","worcestershire","fish sauce","oyster sauce","hoisin","sriracha","pesto","hummus","tahini","aioli","guacamole","sauce","dressing","teriyaki","tamari","chutney","relish","salad cream"
+          "oil","olive oil","vegetable oil","mayo","mayonnaise","mustard","vinegar","ketchup","bbq","hot sauce","soy sauce","worcestershire","fish sauce","oyster sauce","hoisin","sriracha","pesto","hummus","houmous","hummous","tahini","aioli","guacamole","sauce","dressing","teriyaki","tamari","chutney","relish","salad cream","fry light","spray oil","cooking spray"
         ],
         "Household & Cleaning": [
-          "cleaning","detergent","washing powder","washing tablet","laundry","bleach","disinfectant","wipes","toilet paper","tissues","bin bags","bin liner","kitchen roll","paper towel","sponge","cloth","napkins","foil","cling film","washing up liquid","fabric softener","antibacterial","surface cleaner","multi surface","dish soap","soap pads","rubber gloves","toilet cleaner","limescale remover","air freshener"
+          "cleaning","detergent","washing powder","washing tablet","laundry","bleach","disinfectant","wipes","toilet paper","tissues","bin bags","bin liner","kitchen roll","paper towel","sponge","cloth","napkins","foil","cling film","washing up liquid","fabric softener","antibacterial","surface cleaner","multi surface","dish soap","soap pads","rubber gloves","toilet cleaner","limescale remover","air freshener","dishwasher","dishwasher cleaner","dishwasher tablet","dishwasher tablets","rinse aid","caddy liners","compostable liners","liners","tie top liners"
         ],
         "Personal Care & Pharmacy": [
-          "medicine","vitamins","vitamin","supplement","paracetamol","ibuprofen","aspirin","antihistamine","shampoo","conditioner","soap","lotion","moisturiser","moisturizer","deodorant","toothpaste","toothbrush","mouthwash","floss","sunscreen","cold","flu","cough","antacid","allergy","cream","plasters","bandage","bandages","pain relief","lip balm","hand cream","face wash","body wash","sanitiser","sanitizer"
+          "medicine","vitamins","vitamin","supplement","paracetamol","ibuprofen","aspirin","antihistamine","shampoo","conditioner","soap","lotion","moisturiser","moisturizer","deodorant","toothpaste","toothbrush","mouthwash","floss","sunscreen","cold","flu","cough","antacid","allergy","cream","plasters","bandage","bandages","pain relief","lip balm","hand cream","face wash","body wash","sanitiser","sanitizer","razor","razors","gillette","shaving"
         ]
       };
 
