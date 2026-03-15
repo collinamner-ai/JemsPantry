@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -693,6 +695,8 @@
     }
     .modal-header{
       position:sticky;top:0;
+      touch-action:none;
+      user-select:none;
       background:
         radial-gradient(circle at top right, rgba(255,255,255,0.12), transparent 28%),
         linear-gradient(135deg,var(--primary) 0%, var(--primary-dark) 100%);
@@ -866,7 +870,9 @@
       background: #fff;
       border-color: #EF4444;
     }
-    .field textarea{min-height:76px;resize:vertical;}
+    .field textarea{min-height:54px;resize:vertical;}
+    #deleteRow{justify-content:center;}
+    #deleteRow .btn-wide{width:100%;max-width:100%;margin:0 auto;display:block;}
     .form-actions{display:flex;gap:10px;margin-top:8px;}
     .btn-wide{
       flex:1;
@@ -1500,6 +1506,7 @@
     }
 
     .coach-mark-content {
+      min-height: 430px;
       position: relative;
       display: grid;
       place-items: center;
@@ -1515,6 +1522,7 @@
 
     .coach-mark-panel {
       grid-area: 1 / 1;
+      min-height: 100%;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -1917,6 +1925,7 @@
       .region-btn{padding:0 10px;font-size:12px;}
       .form-row-2{grid-template-columns:1fr 1fr;}
       .coach-mark-container{width:min(95vw, 360px);max-height:calc(100vh - 60px);}
+      .coach-mark-content{min-height:390px;}
       .coach-mark-content{padding:28px 20px 24px;}
       .help-menu-container{width:min(95vw, 320px);padding:24px 18px;}
       .help-region-row{gap:8px;}
@@ -3670,6 +3679,78 @@
       editingId = null;
     }
 
+    function setupDrawerSwipeToClose(){
+      const drawerConfigs = [
+        { overlayId: 'shoppingModal' },
+        { overlayId: 'itemModal', onClose: () => { editingId = null; } }
+      ];
+
+      drawerConfigs.forEach(({ overlayId, onClose }) => {
+        const overlay = document.getElementById(overlayId);
+        if (!overlay) return;
+        const header = overlay.querySelector('.modal-header');
+        const sheet = overlay.querySelector('.modal-content');
+        if (!header || !sheet) return;
+        if (header.dataset.swipeBound === '1') return;
+        header.dataset.swipeBound = '1';
+
+        let startY = 0;
+        let currentY = 0;
+        let dragging = false;
+
+        const resetSheet = () => {
+          sheet.style.transition = 'transform .24s ease, opacity .24s ease';
+          sheet.style.transform = 'translateY(0)';
+          sheet.style.opacity = '1';
+          setTimeout(() => {
+            sheet.style.transition = '';
+          }, 260);
+        };
+
+        header.addEventListener('touchstart', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          if (!e.touches || !e.touches.length) return;
+          dragging = true;
+          startY = e.touches[0].clientY;
+          currentY = startY;
+          sheet.style.transition = 'none';
+        }, { passive: true });
+
+        header.addEventListener('touchmove', (e) => {
+          if (!dragging || !e.touches || !e.touches.length) return;
+          currentY = e.touches[0].clientY;
+          const deltaY = Math.max(0, currentY - startY);
+          sheet.style.transform = `translateY(${deltaY}px)`;
+          sheet.style.opacity = String(Math.max(0.78, 1 - (deltaY / 500)));
+        }, { passive: true });
+
+        header.addEventListener('touchend', () => {
+          if (!dragging) return;
+          dragging = false;
+          const deltaY = Math.max(0, currentY - startY);
+          if (deltaY > 72) {
+            sheet.style.transition = 'transform .22s ease, opacity .22s ease';
+            sheet.style.transform = 'translateY(100%)';
+            sheet.style.opacity = '0.88';
+            setTimeout(() => {
+              overlay.classList.remove('active');
+              sheet.style.transition = '';
+              sheet.style.transform = '';
+              sheet.style.opacity = '';
+              if (typeof onClose === 'function') onClose();
+            }, 220);
+          } else {
+            resetSheet();
+          }
+        });
+
+        header.addEventListener('touchcancel', () => {
+          dragging = false;
+          resetSheet();
+        });
+      });
+    }
+
     function validateUnsortedItem(){
       // Only validate if editing an unsorted item
       if (!editingId) return true;
@@ -4073,6 +4154,7 @@
       render();
       updateHeaderHeight();
       setupFieldErrorListeners();
+      setupDrawerSwipeToClose();
     }
 
     window.addEventListener('load', () => {
