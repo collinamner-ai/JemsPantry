@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -482,7 +480,6 @@
     .item-row.cupboard{background:linear-gradient(180deg,#FFF7E8 0%, #FFF0D2 100%);}
     .item-row.freezer{background:linear-gradient(180deg,#E7FBFF 0%, #D7F3FB 100%);}
     .item-row.expired {
-      border-left: 4px solid var(--expired);
       background: rgba(220, 38, 38, 0.08) !important;
     }
 
@@ -2085,10 +2082,6 @@
             <label>Store</label>
             <input id="f_store" type="text" placeholder="e.g. Tesco, Iceland" autocomplete="off">
           </div>
-          <div class="field">
-            <label>Quantity</label>
-            <input id="f_qty" type="number" min="0" step="1" value="1">
-          </div>
         </div>
 
         <div class="form-row-2">
@@ -2115,6 +2108,13 @@
             <select id="f_category">
               <option value="">Auto (recommended)</option>
             </select>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label>Quantity</label>
+            <input id="f_qty" type="number" min="0" step="1" value="1">
           </div>
           <div class="field">
             <label>Expiry Date</label>
