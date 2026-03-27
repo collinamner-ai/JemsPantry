@@ -233,6 +233,8 @@
     .help-menu-btn { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; padding:18px 16px; min-height:96px; border:1px solid rgba(31,86,50,0.8); border-radius:18px; cursor:pointer; transition:all 0.2s ease; background:var(--primary-dark); color:#fff; text-align:center; font-weight:900; font-size:14px; text-transform:uppercase; letter-spacing:0.3px; }
     .help-menu-btn:hover { background:var(--primary); border-color:var(--primary); } .help-menu-btn:active { transform: scale(0.95); background: var(--primary-dark); color:#fff; } .help-menu-btn:active .help-menu-btn-icon, .help-menu-btn:active .help-menu-btn-icon svg, .help-menu-btn:active .help-menu-btn-icon path { color:#fff !important; stroke:#fff !important; fill:#fff !important; }
     .help-menu-btn-icon { font-size:32px; width:28px; height:28px; display:flex; align-items:center; justify-content:center; color:#fff; stroke:#fff; fill:#fff; flex-shrink:0; } .help-menu-btn-icon svg { width:100%; height:100%; stroke:#fff; color:#fff; fill:#fff; }
+.help-menu-btn.help-menu-btn-text-only{min-height:72px;gap:0;padding:18px 16px;} .help-menu-btn.help-menu-btn-text-only .help-menu-btn-icon{display:none;}
+    .getting-started-hero{position:relative;overflow:hidden;border-radius:22px;padding:22px 18px 18px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);color:#fff;box-shadow:var(--shadow-md);margin-bottom:16px;} .getting-started-hero h3{margin:0 0 8px;font-size:24px;line-height:1;font-weight:900;letter-spacing:-0.5px;} .getting-started-hero p{margin:0;color:rgba(255,255,255,0.88);line-height:1.45;font-size:14px;font-weight:600;} .getting-started-section-title{margin:0 0 12px;font-size:13px;font-weight:900;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.35px;} .getting-started-faq-card{background:linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.82));border-radius:20px;overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid rgba(255,255,255,0.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);margin-bottom:12px;} .getting-started-faq-question{width:100%;border:none;background:linear-gradient(135deg, rgba(45,122,79,0.10) 0%, rgba(45,122,79,0.03) 100%);color:var(--text-primary);padding:17px 16px;display:flex;align-items:center;justify-content:space-between;gap:14px;text-align:left;font:inherit;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s ease;} .getting-started-faq-card.open .getting-started-faq-question{background:linear-gradient(135deg,var(--primary) 0%, var(--primary-dark) 100%);color:#fff;} .getting-started-faq-icon{flex-shrink:0;width:32px;height:32px;border-radius:999px;display:grid;place-items:center;font-size:18px;font-weight:900;color:var(--primary);background:rgba(255,255,255,0.78);box-shadow:var(--shadow-sm);} .getting-started-faq-card.open .getting-started-faq-icon{color:#fff;background:rgba(255,255,255,0.18);} .getting-started-faq-answer{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s ease;} .getting-started-faq-card.open .getting-started-faq-answer{grid-template-rows:1fr;} .getting-started-faq-answer-inner{overflow:hidden;display:flex;align-items:center;justify-content:center;} .getting-started-faq-answer p{margin:0;padding:18px 16px 18px;color:var(--text-secondary);line-height:1.55;font-size:14px;font-weight:600;display:flex;align-items:center;min-height:92px;} .getting-started-footer-note{margin-top:8px;text-align:center;color:var(--text-secondary);font-size:12px;font-weight:700;padding:0 8px 4px;}
     .help-region-title { font-size: 14px; font-weight: 900; color: var(--text-primary); margin: 20px 0 12px; text-align: center; text-transform: uppercase; letter-spacing: 0.3px; }
     .help-region-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
     .help-region-btn { width: 50px; height: 50px; border-radius: 50%; border: 2px solid rgba(0,0,0,0.15); background: #FAFBFC; color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 12px; transition: all 0.2s ease; }
@@ -683,7 +685,6 @@ html,body{
 }
 </style>
 
-
 <style id="jp-final-refinements">
 .undo-btn,.redo-btn{display:none !important;}
 
@@ -802,7 +803,6 @@ html,body{
 }
 </style>
 
-
 <style id="jp-header-expiry-fix">
 /* Solid green area behind search + cart */
 .search-row{
@@ -845,7 +845,6 @@ html,body{
   box-shadow:0 8px 18px rgba(207,69,69,0.18) !important;
 }
 </style>
-
 
 <style id="jp-solid-green-strip-fix">
 .search-row{
@@ -890,7 +889,6 @@ html,body{
   margin-right:0 !important;
 }
 </style>
-
 
 <style id="jp-cart-animation-smoothing">
 /* Stop the card 'flinch' and replace with gentler feedback */
@@ -996,7 +994,6 @@ html,body{
   }
 }
 </style>
-
 
 <style id="jp-no-jitter-layout-fix">
 /* Freeze card layout so updates don't make the whole list wobble */
@@ -1112,7 +1109,6 @@ html{
 }
 </style>
 
-
 <style id="jp-targeted-ui-updates">
 .search-input-wrapper{
   border-radius:999px !important;
@@ -1158,7 +1154,6 @@ html{
 }
 </style>
 
-
 <style id="jp-uncategorised-priority-safe">
 .category-card.unsorted-items.has-items{
   border:1px solid rgba(244,184,74,0.42) !important;
@@ -1184,7 +1179,6 @@ html{
   border:1px solid rgba(240,195,90,0.45);
 }
 </style>
-
 
 <style id="jp-unsorted-final-safe">
 /* Only the unsorted category header text should be red */
@@ -1256,7 +1250,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-
 <style id="jp-unsorted-red-override-final">
 /* Force only the unsorted category header title red in both closed and open states */
 .category-card.unsorted-items .cat-title,
@@ -1293,7 +1286,6 @@ document.addEventListener('DOMContentLoaded', function () {
   observer.observe(document.body, { childList: true, subtree: true, characterData: true });
 });
 </script>
-
 
 <style id="jp-unsorted-attention-pill">
 /* Unsorted accordion header title red */
@@ -1345,7 +1337,6 @@ document.addEventListener('DOMContentLoaded', function () {
   observer.observe(document.body, { childList: true, subtree: true, characterData: true });
 });
 </script>
-
 
 <style id="jp-unsorted-header-only-final-fix">
 /* Reset item card title/meta inside unsorted section back to normal */
@@ -1425,7 +1416,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-
 <style id="jp-uncategorised-expired-warning-style">
 /* Uncategorised category only: make item cards use expired styling */
 .category-card.unsorted-items .item-row,
@@ -1449,7 +1439,6 @@ document.addEventListener('DOMContentLoaded', function () {
 .category-card.unsorted-items .ref-alert-pill::before{
   content:none !important;
 }
-
 
 /* Open accordion icon state */
 .accordion-item.open .category-icon,
@@ -1507,7 +1496,6 @@ document.addEventListener('DOMContentLoaded', function () {
   observer.observe(document.body, { childList: true, subtree: true, characterData: true });
 });
 </script>
-
 
 <style id="jp-uncategorised-direct-fix">
 /* Expired-style item card ONLY inside uncategorised accordion */
@@ -1604,7 +1592,6 @@ document.addEventListener('DOMContentLoaded', function () {
   observer.observe(document.body, { childList: true, subtree: true, characterData: true });
 });
 </script>
-
 
 <style id="jp-mobile-header-height-fix">
 html, body{
@@ -1735,7 +1722,6 @@ html, body{
 }
 </style>
 
-
 <style id="jp-search-strip-solid-green-fix">
 /* Make the whole area behind the search bar a solid green block */
 .search-row{
@@ -1801,8 +1787,6 @@ html, body{
 
 </style>
 
-
-
 <style id="jp-category-icons-50-opacity-only">
 /* Category icons only: 50% opacity in closed state */
 .category-icon,
@@ -1857,7 +1841,6 @@ body{
 }
 </style>
 
-
 <style id="jp-accordion-header-radius-fix">
 .category-card > .cat-header,
 .category-card.open > .cat-header,
@@ -1877,7 +1860,6 @@ body{
   background-clip:padding-box !important;
 }
 </style>
-
 
 <style id="jp-safe-v47-merge">
   body.preload-main .expiry-filter-btn{visibility:hidden;}
@@ -1904,8 +1886,6 @@ body{
   .category-card.due-to-expire-card .delete-btn{display:inline-flex !important;align-items:center !important;justify-content:center !important;text-align:center !important;}
   .cart-badge{border:none !important;}
 </style>
-
-
 
 <style id="jp-item-menu-updates">
 .item-row{padding:11px 14px !important;border-radius:20px !important;min-height:auto !important;}
@@ -1967,7 +1947,6 @@ body{
   .qty-display{font-size:18px !important;}
 }
 </style>
-
 
 <style id="jp-cart-expiry-fix-final">
 .cart-badge{
@@ -2057,9 +2036,10 @@ body{
       <button class="help-menu-close" onclick="closeHelpMenu()">✕</button>
       <h2 class="help-menu-title">How can we help?</h2>
       <div class="help-menu-buttons">
-        <button class="help-menu-btn" onclick="openUserGuide()"><svg class="help-menu-btn-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M560-564v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-600q-38 0-73 9.5T560-564Zm0 220v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-380q-38 0-73 9t-67 27Zm0-110v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-490q-38 0-73 9.5T560-454ZM260-320q47 0 91.5 10.5T440-278v-394q-41-24-87-36t-93-12q-36 0-71.5 7T120-692v396q35-12 69.5-18t70.5-6Zm260 42q44-21 88.5-31.5T700-320q36 0 70.5 6t69.5 18v-396q-33-14-68.5-21t-71.5-7q-47 0-93 12t-87 36v394Zm-40 118q-48-38-104-59t-116-21q-42 0-82.5 11T100-198q-21 11-40.5-1T40-234v-482q0-11 5.5-21T62-752q46-24 96-36t102-12q58 0 113.5 15T480-740q51-30 106.5-45T700-800q52 0 102 12t96 36q11 5 16.5 15t5.5 21v482q0 23-19.5 35t-40.5 1q-37-20-77.5-31T700-240q-60 0-116 21t-104 59ZM280-494Z"/></svg><div>User Guide</div></button>
-        <button class="help-menu-btn" onclick="openDataManager()"><svg class="help-menu-btn-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg><div>Backup & Data</div></button>
-        <button class="help-menu-btn" onclick="openAbout()"><svg class="help-menu-btn-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M440-280h80v-240h-80v240Zm68.5-331.5Q520-623 520-640t-11.5-28.5Q497-680 480-680t-28.5 11.5Q440-657 440-640t11.5 28.5Q463-600 480-600t28.5-11.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg><div>About</div></button>
+        <button class="help-menu-btn help-menu-btn-text-only" onclick="openWelcomeGuide()"><div>Welcome</div></button>
+        <button class="help-menu-btn" onclick="openGettingStarted()"><svg class="help-menu-btn-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f" aria-hidden="true"><path d="M560-564v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-600q-38 0-73 9.5T560-564Zm0 220v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-380q-38 0-73 9t-67 27Zm0-110v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-490q-38 0-73 9.5T560-454ZM260-320q47 0 91.5 10.5T440-278v-394q-41-24-87-36t-93-12q-36 0-71.5 7T120-692v396q35-12 69.5-18t70.5-6Zm260 42q44-21 88.5-31.5T700-320q36 0 70.5 6t69.5 18v-396q-33-14-68.5-21t-71.5-7q-47 0-93 12t-87 36v394Zm-40 118q-48-38-104-59t-116-21q-42 0-82.5 11T100-198q-21 11-40.5-1T40-234v-482q0-11 5.5-21T62-752q46-24 96-36t102-12q58 0 113.5 15T480-740q51-30 106.5-45T700-800q52 0 102 12t96 36q11 5 16.5 15t5.5 21v482q0 23-19.5 35t-40.5 1q-37-20-77.5-31T700-240q-60 0-116 21t-104 59ZM280-494Z"/></svg><div>Getting Started</div></button>
+        <button class="help-menu-btn" onclick="openDataManager()"><svg class="help-menu-btn-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f" aria-hidden="true"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg><div>Backup & Data</div></button>
+        <button class="help-menu-btn" onclick="openAbout()"><svg class="help-menu-btn-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f" aria-hidden="true"><path d="M440-280h80v-240h-80v240Zm68.5-331.5Q520-623 520-640t-11.5-28.5Q497-680 480-680t-28.5 11.5Q440-657 440-640t11.5 28.5Q463-600 480-600t28.5-11.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg><div>About</div></button>
       </div>
       <div class="help-region-title">Region Select</div>
       <div class="help-region-row">
@@ -2079,7 +2059,7 @@ body{
         <div class="about-section"><h3>About</h3><p>JemsPantry is a smart pantry management app designed to help you organize your kitchen, reduce food waste, and save time and money.</p></div>
         <div class="about-section"><h3>Features</h3><div class="about-feature-list"><div class="about-feature-item">Track items & expiry dates</div><div class="about-feature-item">Reduce food waste</div><div class="about-feature-item">Manage shopping lists</div><div class="about-feature-item">100% local privacy - no data uploaded</div><div class="about-feature-item">Search and filter items easily</div><div class="about-feature-item">Smart categorization</div></div></div>
         <div class="about-section"><h3>Privacy</h3><p>All your pantry data is stored locally on your device. Nothing is uploaded to external servers. Your data, your control.</p></div>
-        <div class="about-section"><h3>Support</h3><p>For help or feedback, use the User Guide in the help menu or contact us through the app.</p></div>
+        <div class="about-section"><h3>Support</h3><p>For help or feedback, open Welcome or Getting Started from the help menu, or contact us through the app.</p></div>
       </div>
     </div>
   </div>
@@ -2103,6 +2083,80 @@ body{
   </div>
 
   <input type="file" id="importFile" accept=".csv" onchange="handleImport(event)">
+
+  <div class="modal-sheet-overlay" id="gettingStartedOverlay" onclick="closeGettingStarted(event)">
+    <div class="modal-sheet-content" onclick="event.stopPropagation()">
+      <div class="modal-sheet-header"><h2>Getting Started</h2><button class="modal-sheet-close" onclick="closeGettingStarted()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6L18 18M18 6L6 18"></path></svg></button></div>
+      <div class="modal-sheet-body">
+        <section class="getting-started-hero">
+          <h3>FAQs</h3>
+          <p>Quick answers to the questions most people ask when getting started with JemsPantry.</p>
+        </section>
+        <h3 class="getting-started-section-title">How to Guide FAQs</h3>
+        <div class="getting-started-faq-card open">
+          <button class="getting-started-faq-question" type="button" aria-expanded="true">
+            <span>What is JemsPantry?</span>
+            <span class="getting-started-faq-icon">−</span>
+          </button>
+          <div class="getting-started-faq-answer">
+            <div class="getting-started-faq-answer-inner">
+              <p>JemsPantry is a simple home inventory app that helps you keep track of pantry, fridge, freezer, household and everyday essentials in one place.</p>
+            </div>
+          </div>
+        </div>
+        <div class="getting-started-faq-card">
+          <button class="getting-started-faq-question" type="button" aria-expanded="false">
+            <span>How do I add an item?</span>
+            <span class="getting-started-faq-icon">+</span>
+          </button>
+          <div class="getting-started-faq-answer"><div class="getting-started-faq-answer-inner"><p>Tap the green plus button, then add the item name, location, storage type, quantity and expiry date if needed.</p></div></div>
+        </div>
+        <div class="getting-started-faq-card">
+          <button class="getting-started-faq-question" type="button" aria-expanded="false">
+            <span>Can I search and filter items?</span>
+            <span class="getting-started-faq-icon">+</span>
+          </button>
+          <div class="getting-started-faq-answer"><div class="getting-started-faq-answer-inner"><p>Yes. Use the search bar to find items quickly, then narrow things down with the location and storage type filters at the top.</p></div></div>
+        </div>
+        <div class="getting-started-faq-card">
+          <button class="getting-started-faq-question" type="button" aria-expanded="false">
+            <span>What does “Due to Expire” mean?</span>
+            <span class="getting-started-faq-icon">+</span>
+          </button>
+          <div class="getting-started-faq-answer"><div class="getting-started-faq-answer-inner"><p>This section shows items that are close to their expiry date, so you can use them first and cut down on waste.</p></div></div>
+        </div>
+        <div class="getting-started-faq-card">
+          <button class="getting-started-faq-question" type="button" aria-expanded="false">
+            <span>Can I edit items and change quantities?</span>
+            <span class="getting-started-faq-icon">+</span>
+          </button>
+          <div class="getting-started-faq-answer"><div class="getting-started-faq-answer-inner"><p>Yes. You can edit any item and use the plus and minus controls on the card to keep quantities up to date.</p></div></div>
+        </div>
+        <div class="getting-started-faq-card">
+          <button class="getting-started-faq-question" type="button" aria-expanded="false">
+            <span>Does it have a shopping list?</span>
+            <span class="getting-started-faq-icon">+</span>
+          </button>
+          <div class="getting-started-faq-answer"><div class="getting-started-faq-answer-inner"><p>Yes. Add items to the shopping list from the item cards, then open the cart icon to review or tick them off.</p></div></div>
+        </div>
+        <div class="getting-started-faq-card">
+          <button class="getting-started-faq-question" type="button" aria-expanded="false">
+            <span>Is my data private?</span>
+            <span class="getting-started-faq-icon">+</span>
+          </button>
+          <div class="getting-started-faq-answer"><div class="getting-started-faq-answer-inner"><p>Yes. JemsPantry is designed to store your data locally on your device rather than sending it elsewhere.</p></div></div>
+        </div>
+        <div class="getting-started-faq-card">
+          <button class="getting-started-faq-question" type="button" aria-expanded="false">
+            <span>Can I back up my pantry list?</span>
+            <span class="getting-started-faq-icon">+</span>
+          </button>
+          <div class="getting-started-faq-answer"><div class="getting-started-faq-answer-inner"><p>Yes. You can import and export your pantry data as CSV, which makes backup and transfer easy.</p></div></div>
+        </div>
+        <p class="getting-started-footer-note">.</p>
+      </div>
+    </div>
+  </div>
 
   <div class="coach-mark-overlay" id="coachMarkOverlay" onclick="closeCoachMarks(event)" role="dialog" aria-modal="true" aria-labelledby="coachMarkTitle">
     <div class="coach-mark-container" onclick="event.stopPropagation()">
@@ -2523,7 +2577,11 @@ body{
     function openHelpMenu() { const overlay = document.getElementById('helpMenuOverlay'); if (overlay) { overlay.classList.add('active'); updateRegionButtons(); } }
     function closeHelpMenu(event) { if (event && event.target !== document.getElementById('helpMenuOverlay')) return; const overlay = document.getElementById('helpMenuOverlay'); if (overlay) overlay.classList.remove('active'); }
     function updateRegionButtons() { document.querySelectorAll('.help-region-btn').forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-region') === region)); }
-    function openUserGuide() { const helpOverlay = document.getElementById('helpMenuOverlay'); if (helpOverlay) helpOverlay.classList.remove('active'); setTimeout(() => { const overlay = document.getElementById('coachMarkOverlay'); currentCoachMarkStep = 0; isStartupCoachMark = false; const prefSection = document.getElementById('coachMarkStartupPref'); if (prefSection) prefSection.classList.remove('show'); renderCoachMark(); overlay.classList.add('active'); }, 300); }
+    function openWelcomeGuide() { const helpOverlay = document.getElementById('helpMenuOverlay'); if (helpOverlay) helpOverlay.classList.remove('active'); setTimeout(() => { const overlay = document.getElementById('coachMarkOverlay'); currentCoachMarkStep = 0; isStartupCoachMark = false; const prefSection = document.getElementById('coachMarkStartupPref'); if (prefSection) prefSection.classList.remove('show'); renderCoachMark(); overlay.classList.add('active'); }, 300); }
+    function openUserGuide() { openWelcomeGuide(); }
+    function openGettingStarted() { const helpOverlay = document.getElementById('helpMenuOverlay'); if (helpOverlay) helpOverlay.classList.remove('active'); setTimeout(() => { const overlay = document.getElementById('gettingStartedOverlay'); if (overlay) { overlay.classList.add('active'); initGettingStartedFaq(); } }, 300); }
+    function closeGettingStarted(event) { if (event && event.target !== document.getElementById('gettingStartedOverlay')) return; const overlay = document.getElementById('gettingStartedOverlay'); if (overlay) overlay.classList.remove('active'); }
+    function initGettingStartedFaq() { const cards = document.querySelectorAll('#gettingStartedOverlay .getting-started-faq-card'); if (!cards.length) return; cards.forEach(card => { const button = card.querySelector('.getting-started-faq-question'); const icon = card.querySelector('.getting-started-faq-icon'); if (!button || button.dataset.bound === 'true') return; button.dataset.bound = 'true'; button.addEventListener('click', () => { const isOpen = card.classList.contains('open'); cards.forEach(other => { other.classList.remove('open'); const otherButton = other.querySelector('.getting-started-faq-question'); const otherIcon = other.querySelector('.getting-started-faq-icon'); if (otherButton) otherButton.setAttribute('aria-expanded', 'false'); if (otherIcon) otherIcon.textContent = '+'; }); if (!isOpen) { card.classList.add('open'); button.setAttribute('aria-expanded', 'true'); if (icon) icon.textContent = '−'; } }); }); }
     function openAbout() { const helpOverlay = document.getElementById('helpMenuOverlay'); if (helpOverlay) helpOverlay.classList.remove('active'); setTimeout(() => { const overlay = document.getElementById('aboutModalOverlay'); if (overlay) overlay.classList.add('active'); }, 300); }
     function closeAboutModal(event) { if (event && event.target !== document.getElementById('aboutModalOverlay')) return; const overlay = document.getElementById('aboutModalOverlay'); if (overlay) overlay.classList.remove('active'); }
     function openDataManager() { const helpOverlay = document.getElementById('helpMenuOverlay'); if (helpOverlay) helpOverlay.classList.remove('active'); setTimeout(() => { const overlay = document.getElementById('dataManagerOverlay'); if (overlay) overlay.classList.add('active'); }, 300); }
@@ -2752,7 +2810,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-
 <script id="jp-uncategorised-priority-safe-script">
 document.addEventListener('DOMContentLoaded', function () {
   function applyUncategorisedPriority() {
@@ -2799,7 +2856,6 @@ document.addEventListener('DOMContentLoaded', function () {
   observer.observe(document.body, { childList: true, subtree: true, characterData: true });
 });
 </script>
-
 
 <style id="jp-popup-unification-20260324">
   :root{
@@ -3195,7 +3251,6 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   }
 
-
   document.querySelectorAll('.help-menu-close').forEach(function(btn){
     btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6L18 18M18 6L6 18"></path></svg>';
     btn.setAttribute('aria-label','Close help');
@@ -3332,7 +3387,6 @@ document.addEventListener('DOMContentLoaded', function(){
   };
 });
 </script>
-
 
   <div class="modal-sheet-overlay item-action-overlay" id="itemActionMenuOverlay" onclick="closeItemActionMenu(event)">
     <div class="item-action-sheet" onclick="event.stopPropagation()">
