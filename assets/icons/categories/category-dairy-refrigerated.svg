@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke-width: 3.5px;
+      }
+
+      .cls-1, .cls-2 {
+        fill: none;
+        stroke: #d4a85a;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-3 {
+        opacity: .3;
+      }
+
+      .cls-2 {
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.7.3, SVG Export Plug-In . SVG Version: 1.2.0 Build 164)  -->
+  <g>
+    <g id="Layer_1">
+      <image class="cls-3" width="1280" height="1024" transform="translate(-117.2 -17.8) scale(.4)" xlink:href="../../../../file_00000000d04c720abc06b7919c0f71fc(1).png"/>
+      <ellipse class="cls-2" cx="20.5" cy="18.2" rx="3.7" ry="2.3"/>
+      <circle class="cls-2" cx="17.5" cy="38.8" r="3.9"/>
+      <path class="cls-1" d="M27.4,55.7c0-3.1,2.5-5.6,5.6-5.6s5.6,2.5,5.6,5.6"/>
+      <path class="cls-1" d="M3,38.9c2.1,0,3.8,1.7,3.8,3.8s-1.7,3.8-3.8,3.8"/>
+      <ellipse class="cls-2" cx="40.3" cy="30.5" rx="6" ry="3.6"/>
+      <circle class="cls-2" cx="49.8" cy="44.7" r="3.5"/>
+      <line class="cls-1" x1="46.3" y1="30.9" x2="59.9" y2="30.9"/>
+      <line class="cls-1" x1="4.8" y1="30.9" x2="34.2" y2="30.9"/>
+      <path class="cls-1" d="M4.8,39.4v-8.5s.7-19.9,19.8-19.3l33.5,17.9c1.1.6,1.8,1.8,1.8,3.1v17.4c0,2.2-1.8,3.9-3.9,3.9h-17.4"/>
+      <path class="cls-1" d="M27.4,53.9H8.7c-2.2,0-3.9-1.8-3.9-3.9v-4"/>
+    </g>
+  </g>
+</svg>
