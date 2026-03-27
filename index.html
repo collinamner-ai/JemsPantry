@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,8 +25,8 @@
       --shadow-md:0 14px 30px rgba(15,23,42,0.10);
       --shadow-lg:0 24px 60px rgba(15,23,42,0.16);
       --storage-fridge:#FFFFFF;
-      --storage-cupboard:#FFF3DB;
-      --storage-freezer:#D4F7FF;
+      --storage-cupboard:#FFF7E0;
+      --storage-freezer:#ADD8E6;
       --radius-sm:12px;
       --radius-md:16px;
       --radius-lg:22px;
@@ -48,7 +50,10 @@
       color:var(--text-primary);
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
+      min-height:100vh;
+      min-height:100dvh;
       height:100vh;
+      height:100dvh;
       overflow:hidden;
     }
 
@@ -110,7 +115,7 @@
     .cart-badge{position:absolute;top:-4px;right:-4px;background:var(--danger);color:#fff;border-radius:50%;width:20px;height:20px;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;border:2px solid #fff;}
     .cart-badge.hidden{display:none;}
 
-    .content-wrapper{position:absolute;top:0;left:0;right:0;bottom:0;padding-top:calc(var(--header-height, 200px) + 4px);overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:max(92px, env(safe-area-inset-bottom));}
+    .content-wrapper{position:absolute;top:0;left:0;right:0;bottom:0;padding-top:calc(var(--header-height, 200px) + 4px);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:max(180px, calc(env(safe-area-inset-bottom) + 140px));overscroll-behavior:contain;}
     .container{padding:14px 14px 24px;max-width:880px;margin:0 auto;}
     .empty-state{text-align:center;padding:60px 20px;color:var(--text-secondary);} .empty-icon{font-size:64px;margin-bottom:16px;opacity:.5;} .empty-state h2{margin:0 0 8px;font-size:16px;color:var(--text-primary);} .empty-state p{margin:0;font-size:14px;}
     .clear-filters-btn { background: var(--primary-light); color: var(--primary); border: none; border-radius: 10px; padding: 10px 20px; font-weight: 900; font-size: 13px; cursor: pointer; transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 0.3px; margin-top: 14px; }
@@ -122,14 +127,32 @@
     .category-card.unsorted-items .cat-header { background: linear-gradient(135deg, rgba(255, 165, 0, 0.1) 0%, rgba(255, 165, 0, 0.05) 100%); }
     .category-card.open .cat-header{background:linear-gradient(135deg,var(--primary) 0%, var(--primary-dark) 100%);color:#fff;}
     .cat-title{margin:0;font-size:16px;font-weight:800;color:var(--primary);flex:1;} .category-card.unsorted-items .cat-title { color: #FF8C00; } .category-card.open .cat-title{color:#fff;}
+    .cat-icon{width:38px;height:38px;margin-right:8px;flex:0 0 38px;color:#184c42;display:inline-flex;align-items:center;justify-content:center;}
+    .cat-icon svg,.cat-icon img{width:32px;height:32px;display:block;flex:0 0 32px;transform-origin:center center;}
+    .cat-icon svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;overflow:visible;}
+    .cat-icon img{object-fit:contain;filter:brightness(0) saturate(100%) invert(20%) sepia(28%) saturate(1228%) hue-rotate(128deg) brightness(94%) contrast(90%);}
+    .category-card.open .cat-icon, .category-card.open .cat-icon svg{color:#fff;stroke:#fff;}
+    .category-card.open .cat-icon img{filter:brightness(0) invert(1);}
+
+  /* Slightly larger icons for Pantry and Snacks via scale, not stroke thickness */
+  .category-card[data-category="Pantry & Dry Goods"] > .cat-header .cat-icon svg,
+  .category-card[data-category="Pantry & Dry Goods"] > .cat-header .cat-icon img,
+  .category-card[data-category="Snacks"] > .cat-header .cat-icon svg,
+  .category-card[data-category="Snacks"] > .cat-header .cat-icon img{
+    transform:scale(1.12);
+  }
+
+.cat-icon.uncategorised-icon{color:#d92d20;}
+.category-card.open .cat-icon.uncategorised-icon, .category-card.open .cat-icon.uncategorised-icon svg{color:#fff;stroke:#fff;}
+
     .cat-count{font-size:12px;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--primary) 0%, var(--primary-dark) 100%);padding:6px 10px;border-radius:999px;min-width:32px;text-align:center;}
     .category-card.unsorted-items .cat-count { background: #FFA500; color: #fff; } .category-card.open .cat-count{background:rgba(255,255,255,0.3);} 
-    .cat-toggle-icon{width:20px;height:20px;margin-left:8px;flex-shrink:0;transition:transform .3s ease;} .category-card.open .cat-toggle-icon{transform:rotate(180deg);} 
+    .cat-toggle-icon{width:20px;height:20px;margin-left:8px;flex-shrink:0;transition:transform .3s ease;color:var(--primary);} .category-card.open .cat-toggle-icon{transform:rotate(180deg);color:#fff;} 
     .cat-content{display:none;padding:10px 10px 12px;max-height:0;overflow:hidden;transition:max-height .3s ease;} .category-card.open .cat-content{display:block;max-height:10000px;}
 
     .item-row{display:flex;justify-content:space-between;align-items:flex-start;padding:12px 12px;gap:12px;border-radius:18px;transition:all .15s ease;margin-bottom:12px;box-shadow:var(--shadow-sm);border:1px solid rgba(15,23,42,0.05);} 
     .item-row:hover{transform:translateY(-1px);box-shadow:var(--shadow-md);} .cat-content .item-row:last-of-type{margin-bottom:0;}
-    .item-row.fridge{background:linear-gradient(180deg,#ffffff 0%, #f9fbfa 100%);border:1px solid #E5E7EB;} .item-row.cupboard{background:linear-gradient(180deg,#FFF7E8 0%, #FFF0D2 100%);} .item-row.freezer{background:linear-gradient(180deg,#E7FBFF 0%, #D7F3FB 100%);} 
+    .item-row.fridge{background:linear-gradient(180deg,#ffffff 0%, #f9fbfa 100%);border:1px solid #E5E7EB;} .item-row.cupboard{background:linear-gradient(180deg,#FFFBF0 0%, #FFF7E0 100%);} .item-row.freezer{background:linear-gradient(180deg,#DDF2FB 0%, #ADD8E6 100%);} 
     .item-row.expired{background:rgba(220,38,38,0.12) !important;border:1px solid rgba(220,38,38,0.22) !important;}
     .expiry-badge{display:inline-flex;align-items:center;justify-content:center;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.2px;margin-top:6px;line-height:1.2;box-shadow:var(--shadow-sm);}
     .expiry-badge.date-only,.expiry-badge.expiring-soon{background:var(--expiring-soon);color:#111827;}
@@ -152,7 +175,7 @@
     #shoppingModal .modal-content{max-height:90vh;height:auto;min-height:0;padding-bottom:max(20px, env(safe-area-inset-bottom));animation:none;transform:none;}
     .modal-header{position:sticky;top:0;touch-action:none;user-select:none;background:radial-gradient(circle at top right, rgba(255,255,255,0.12), transparent 28%),linear-gradient(135deg,var(--primary) 0%, var(--primary-dark) 100%);color:#fff;padding:18px 18px;border-radius:28px 28px 0 0;display:flex;justify-content:space-between;align-items:center;z-index:1502;}
     .modal-header::before{content:"";position:absolute;top:8px;left:50%;transform:translateX(-50%);width:42px;height:4px;border-radius:999px;background:rgba(255,255,255,0.28);pointer-events:none;} 
-    .modal-header h2{margin:0;font-size:18px;font-weight:900;} .modal-close{width:32px;height:32px;border:none;background:rgba(255,255,255,0.2);border-radius:8px;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s ease;padding:0;line-height:0;} .modal-close svg{width:16px;height:16px;display:block;stroke:currentColor;stroke-width:2.4;fill:none;overflow:visible;} .modal-close:active{transform:scale(.9);} .modal-body{padding:16px;}
+    .modal-header h2{margin:0;font-size:24px;font-weight:900;color:#fff;letter-spacing:-0.5px;} .modal-close,.modal-sheet-close{width:32px;height:32px;border:none;background:rgba(255,255,255,0.2);border-radius:8px;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s ease;padding:0;line-height:0;} .modal-close svg,.modal-sheet-close svg{width:16px;height:16px;display:block;stroke:currentColor;stroke-width:2.4;fill:none;overflow:visible;} .modal-close:hover,.modal-sheet-close:hover{background:rgba(255,255,255,0.3);transform:translateY(-1px);} .modal-close:active,.modal-sheet-close:active{transform:scale(.9);} .modal-body{padding:16px;}
 
     .shopping-list-empty{text-align:center;padding:40px 20px;color:var(--text-secondary);} .shopping-list-empty-icon{font-size:48px;margin-bottom:12px;} .shopping-list-grouped{margin-bottom:20px;} .shopping-store-header{font-size:13px;font-weight:900;color:#fff;padding:10px 12px;border-radius:10px;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;}
     .shopping-list-item{background:rgba(255,255,255,0.78);border:1px solid rgba(15,23,42,0.05);border-radius:16px;padding:12px;margin-bottom:10px;display:flex;gap:10px;align-items:flex-start;} .shopping-item-checkbox{width:20px;height:20px;margin-top:2px;cursor:pointer;accent-color:var(--primary);flex-shrink:0;} .shopping-item-info{flex:1;min-width:0;} .shopping-item-name{display:block;font-size:14px;font-weight:800;color:var(--text-primary);margin-bottom:4px;}
@@ -165,7 +188,7 @@
     #deleteRow{justify-content:center;} #deleteRow .btn-wide{width:100%;max-width:100%;margin:0 auto;display:block;} .form-actions{display:flex;gap:10px;margin-top:8px;}
     .btn-wide{flex:1;border:none;border-radius:16px;padding:13px 14px;font-weight:900;cursor:pointer;transition:all .2s ease;text-transform:uppercase;letter-spacing:.4px;font-size:13px;} .btn-wide.primary{background:var(--primary);color:#fff;} .btn-wide.primary:active{transform:scale(.97);background:var(--primary-dark);} .btn-wide.secondary{background:rgba(107,114,128,0.15);color:var(--text-primary);} .btn-wide.secondary:active{transform:scale(.97);opacity:.9;} .btn-wide.danger{background:var(--danger);color:#fff;} .btn-wide.danger:active{transform:scale(.97);opacity:.9;}
 
-    .fab{position:fixed;right:16px;bottom:var(--fab-bottom);z-index:1200;width:58px;height:58px;border-radius:20px;border:none;cursor:pointer;background:linear-gradient(135deg,#34D399 0%, #2D7A4F 100%);color:#fff;box-shadow:0 20px 40px rgba(45,122,79,0.32), inset 0 1px 0 rgba(255,255,255,0.22);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;transition:transform .15s ease;} .fab:active{transform:scale(.92);} 
+    .fab{position:fixed;right:16px;bottom:var(--fab-bottom);z-index:1200;width:72px;height:72px;border-radius:24px;border:none;cursor:pointer;background:#0D3820;color:#7FE843;box-shadow:0 20px 40px rgba(45,122,79,0.32), inset 0 1px 0 rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:900;transition:transform .15s ease;transform-origin:bottom left;} .fab:active{transform:scale(.92);} 
 
     .confirm-sheet{position:absolute;left:12px;right:12px;bottom:max(20px, calc(env(safe-area-inset-bottom) + 12px));min-height:198px;background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.94));border-radius:24px;border:1px solid rgba(255,255,255,0.8);box-shadow:var(--shadow-lg);padding:20px 16px 18px;animation:slideUpModal .22s ease;display:flex;flex-direction:column;} 
     .confirm-title{margin:0 0 6px;font-size:16px;font-weight:900;color:var(--text-primary);letter-spacing:-.2px;} .confirm-message{margin:0 0 14px;font-size:14px;font-weight:600;color:var(--text-secondary);line-height:1.35;} .confirm-actions{display:flex;gap:10px;margin-top:auto;} 
@@ -177,8 +200,8 @@
     body.preload-main .header, body.preload-main .content-wrapper, body.preload-main .fab{visibility:hidden;}
     .splash-overlay{position:fixed !important;top:0 !important;left:0 !important;width:100% !important;height:100% !important;z-index:99999 !important;display:none;align-items:center;justify-content:center;padding:22px;background:#00442f;opacity:0;transition:opacity .45s ease;} .splash-overlay.active{display:flex;opacity:1;} .splash-overlay.active.fading{opacity:0;}
     .splash-card{width:min(520px,100%);height:100%;max-height:calc(100vh - 44px);color:#fff;background:transparent;border:none;box-shadow:none;display:flex;flex-direction:column;padding-bottom:max(18px, env(safe-area-inset-bottom));} .splash-logo-wrap{flex:1;display:flex;align-items:center;justify-content:center;} .splash-logo{width:min(360px,86%);height:auto;display:block;}
-    .splash-loading{margin-top:-6px;margin-bottom:16px;text-align:center;font-size:14px;font-weight:800;letter-spacing:.2px;color:#EAD9B5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;opacity:.95;display:flex;align-items:center;justify-content:center;gap:12px;height:60px;}
-    .splash-loading-dot { width: 16px; height: 16px; border-radius: 50%; background: #EAD9B5; animation: waveDot 1.4s ease-in-out infinite; }
+    .splash-loading{margin-top:-22px;margin-bottom:16px;text-align:center;font-size:14px;font-weight:800;letter-spacing:.2px;color:#EAD9B5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;opacity:.95;display:flex;align-items:center;justify-content:center;gap:10px;height:46px;}
+    .splash-loading-dot { width: 10px; height: 10px; border-radius: 50%; background: #EAD9B5; animation: waveDot 1.4s ease-in-out infinite; }
     .splash-loading-dot:nth-child(1) { animation-delay: 0s; } .splash-loading-dot:nth-child(2) { animation-delay: 0.2s; } .splash-loading-dot:nth-child(3) { animation-delay: 0.4s; } .splash-loading-dot:nth-child(4) { animation-delay: 0.6s; }
     @keyframes waveDot { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(-20px); opacity: 0.6; } }
     .splash-bottom{display:flex;flex-direction:column;align-items:center;gap:12px;padding-bottom:6px;} .splash-version{margin:0;font-size:12px;font-weight:800;opacity:.85;letter-spacing:.6px;text-transform:uppercase;text-align:center;}
@@ -188,6 +211,8 @@
     .coach-mark-container { width: min(520px, 95vw); height: min(720px, 90vh); background: #FFFFFF; border-radius: 28px; box-shadow: var(--shadow-lg); border: 1px solid rgba(0,0,0,0.08); overflow: hidden; display: flex; flex-direction: column; animation: coachMarkIn 0.4s ease; padding-bottom: 0; position: relative; }
     .coach-mark-image-area { width: 100%; height: 390px; min-height: 390px; max-height: 390px; background: linear-gradient(135deg, #F0F4F8 0%, #E8EEF4 100%); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; border-bottom: 1px solid rgba(0,0,0,0.06); position: relative; }
     .coach-mark-image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 96px; position: relative; background-size: cover; background-position: center; background-repeat: no-repeat; }
+    .coach-mark-image-placeholder picture, .coach-mark-image-placeholder img { width: 100%; height: 100%; display: block; }
+    .coach-mark-image-placeholder img { object-fit: cover; object-position: center; }
     .coach-mark-container.welcome-image-only .coach-mark-image-area { flex: 1; height: auto; min-height: 0; max-height: none; border-bottom: none; background: #FFFFFF; padding: 0; }
     .coach-mark-container.welcome-image-only .coach-mark-image-placeholder { background-size: cover !important; background-position: center; }
     .coach-mark-container.welcome-image-only .coach-mark-content { display: none; }
@@ -203,7 +228,7 @@
 
     .help-menu-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,23,42,0.26); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(6px); z-index: 3000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; } .help-menu-overlay.active { display: flex; opacity: 1; }
     .help-menu-container { width: min(480px, 95vw); background: #FFFFFF; border-radius: 28px; box-shadow: var(--shadow-lg); border: 1px solid rgba(0,0,0,0.08); padding: 32px 28px; animation: coachMarkIn 0.4s ease; position: relative; }
-    .help-menu-title { font-size: 24px; font-weight: 900; color: var(--text-primary); margin: 0 0 24px; text-align: center; letter-spacing: -0.3px; }
+    .help-menu-title { font-size: 24px; font-weight: 900; color: #1C1C1E; margin: 0 0 24px; text-align: center; letter-spacing: -0.5px; }
     .help-menu-buttons { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
     .help-menu-btn { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; padding:18px 16px; min-height:96px; border:1px solid rgba(31,86,50,0.8); border-radius:18px; cursor:pointer; transition:all 0.2s ease; background:var(--primary-dark); color:#fff; text-align:center; font-weight:900; font-size:14px; text-transform:uppercase; letter-spacing:0.3px; }
     .help-menu-btn:hover { background:var(--primary); border-color:var(--primary); } .help-menu-btn:active { transform: scale(0.95); background: var(--primary-dark); color:#fff; } .help-menu-btn:active .help-menu-btn-icon, .help-menu-btn:active .help-menu-btn-icon svg, .help-menu-btn:active .help-menu-btn-icon path { color:#fff !important; stroke:#fff !important; fill:#fff !important; }
@@ -221,7 +246,7 @@
     .modal-sheet-content { width: 100%; max-width: 600px; background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.94)); border-radius: 28px 28px 0 0; border: 1px solid rgba(255,255,255,0.8); border-bottom: none; box-shadow: var(--shadow-lg); max-height: 90vh; overflow-y: auto; -webkit-overflow-scrolling: touch; animation: slideUpModal 0.44s cubic-bezier(0.16,1,0.3,1); padding-bottom: max(20px, env(safe-area-inset-bottom)); }
     .modal-sheet-header { position: sticky; top: 0; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: #fff; padding: 18px 18px; border-radius: 28px 28px 0 0; display: flex; justify-content: space-between; align-items: center; z-index: 1502; }
     .modal-sheet-header::before { content: ""; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 42px; height: 4px; border-radius: 999px; background: rgba(255,255,255,0.28); pointer-events: none; }
-    .modal-sheet-header h2 { margin: 0; font-size: 18px; font-weight: 900; } .modal-sheet-close svg { width: 16px; height: 16px; display: block; stroke: currentColor; stroke-width: 2.4; fill: none; overflow: visible; } .modal-sheet-close:active { transform: scale(0.9); }
+    .modal-sheet-header h2 { margin: 0; font-size: 24px; font-weight: 900; color: #fff; letter-spacing: -0.5px; }
     .modal-sheet-body { padding: 16px; }
     .about-section { margin-bottom: 24px; } .about-section h3 { font-size: 14px; font-weight: 900; color: var(--text-primary); margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.3px; } .about-section p { margin: 0 0 10px; font-size: 14px; line-height: 1.6; color: var(--text-secondary); } .about-section p:last-child { margin-bottom: 0; }
     .about-feature-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; } .about-feature-item { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--text-secondary); line-height: 1.5; } .about-feature-item::before { content: "✓"; color: var(--primary); font-weight: 900; flex-shrink: 0; }
@@ -288,8 +313,8 @@
   --field-shadow:0 0 0 4px rgba(31,111,95,0.10);
   --field-idle-bg:rgba(31,111,95,0.07);
   --storage-fridge:#ffffff;
-  --storage-cupboard:#fbf7ee;
-  --storage-freezer:#edf8f8;
+  --storage-cupboard:#FFF7E0;
+  --storage-freezer:#ADD8E6;
 }
 
 html,body{
@@ -467,10 +492,10 @@ html,body{
   background:linear-gradient(180deg,#ffffff 0%, #fbfcfc 100%) !important;
 }
 .item-row.cupboard{
-  background:linear-gradient(180deg,#fffdf8 0%, #fbf7ee 100%) !important;
+  background:linear-gradient(180deg,#FFFBF0 0%, #FFF7E0 100%) !important;
 }
 .item-row.freezer{
-  background:linear-gradient(180deg,#f7fcfc 0%, #eef7f7 100%) !important;
+  background:linear-gradient(180deg,#DDF2FB 0%, #ADD8E6 100%) !important;
 }
 .item-row.expired{
   background:linear-gradient(180deg, rgba(255,243,243,0.98), rgba(255,238,238,0.92)) !important;
@@ -521,7 +546,7 @@ html,body{
 }
 .qty-btn.minus:hover,.qty-btn.plus:hover{transform:translateY(-1px);}
 .qty-display{
-  font-size:14px !important;
+  font-size:13px !important;
   font-weight:800 !important;
 }
 
@@ -572,14 +597,17 @@ html,body{
 }
 
 .fab{
-  width:60px !important;
-  height:60px !important;
-  border-radius:22px !important;
-  background:linear-gradient(180deg,#1f6f5f 0%, #184c42 100%) !important;
-  box-shadow:0 18px 36px rgba(31,111,95,0.28), inset 0 1px 0 rgba(255,255,255,0.16) !important;
+  width:74px !important;
+  height:74px !important;
+  border-radius:24px !important;
+  background:linear-gradient(180deg,#1F5632 0%, #0D3820 100%) !important;
+  box-shadow:0 18px 36px rgba(31,111,95,0.28), inset 0 1px 0 rgba(255,255,255,0.12) !important;
+  color:#7FE843 !important;
 }
 .fab:hover{transform:translateY(-2px);}
 .fab svg,.fab span{filter:none !important;}
+.fab .fab-plus{font-weight:300 !important; font-size:44px; line-height:1; transform:translateY(-1px); display:block;}
+.fab{transform-origin:bottom left !important;}
 
 .modal-sheet,
 .modal-card,
@@ -1183,6 +1211,48 @@ document.addEventListener('DOMContentLoaded', function () {
     updateUnsortedHeader();
   });
   observer.observe(document.body, { childList: true, subtree: true });
+
+  window.activeItemActionRow = null;
+
+  window.openItemActionMenu = function(rowNumber){
+    var item = inventory.find(function(x){ return x.rowNumber === rowNumber; });
+    var overlay = document.getElementById('itemActionMenuOverlay');
+    var name = document.getElementById('itemActionMenuName');
+    if (!item || !overlay || !name) return;
+    window.activeItemActionRow = rowNumber;
+    name.textContent = item.item || 'Item';
+    overlay.classList.add('active');
+  };
+
+  window.closeItemActionMenu = function(event){
+    var overlay = document.getElementById('itemActionMenuOverlay');
+    if (!overlay) return;
+    if (event && event.target !== overlay) return;
+    overlay.classList.remove('active');
+    window.activeItemActionRow = null;
+  };
+
+  window.handleItemActionEdit = function(){
+    if (!window.activeItemActionRow) return;
+    var rowNumber = window.activeItemActionRow;
+    window.closeItemActionMenu();
+    openItemEditor(rowNumber);
+  };
+
+  window.handleItemActionRemove = async function(){
+    if (!window.activeItemActionRow) return;
+    var rowNumber = window.activeItemActionRow;
+    window.closeItemActionMenu();
+    await window.deleteItem(rowNumber);
+  };
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') {
+      var overlay = document.getElementById('itemActionMenuOverlay');
+      if (overlay && overlay.classList.contains('active')) window.closeItemActionMenu();
+    }
+  });
+
 });
 </script>
 
@@ -1380,6 +1450,19 @@ document.addEventListener('DOMContentLoaded', function () {
   content:none !important;
 }
 
+
+/* Open accordion icon state */
+.accordion-item.open .category-icon,
+.accordion-item.open .category-icon svg,
+.accordion-item.open .category-icon img,
+.accordion-item.open .accordion-icon,
+.accordion-item.open .accordion-icon svg {
+  color:#fff !important;
+  fill:#fff !important;
+  stroke:#fff !important;
+  filter: brightness(0) invert(1);
+}
+
 /* Closed-state accordion warning icon */
 .category-card.unsorted-items > .cat-header .cat-title{
   position:relative !important;
@@ -1522,11 +1605,388 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
+
+<style id="jp-mobile-header-height-fix">
+html, body{
+  overflow-x:hidden !important;
+}
+
+:root{
+  --mobile-safe-top: max(12px, env(safe-area-inset-top));
+}
+
+.header{
+  padding-top: var(--mobile-safe-top) !important;
+  padding-bottom: 8px !important;
+  min-height: auto !important;
+}
+
+.header-content{
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.header-top{
+  margin-bottom: 8px !important;
+  align-items:flex-start !important;
+}
+
+.header h1{
+  font-size:18px !important;
+  line-height:1.1 !important;
+  margin-top:0 !important;
+  padding-top:2px !important;
+}
+
+.filter-group{
+  margin-bottom:8px !important;
+}
+
+.filter-label{
+  font-size:10px !important;
+  margin-bottom:4px !important;
+}
+
+.filter-chips{
+  gap:4px !important;
+  padding:0 !important;
+}
+
+.chip{
+  padding:8px 12px !important;
+  font-size:12px !important;
+  border-radius:999px !important;
+}
+
+.search-row{
+  margin-top:6px !important;
+  padding:8px 14px !important;
+}
+
+#search{
+  padding-top:9px !important;
+  padding-bottom:9px !important;
+  font-size:15px !important;
+}
+
+.cart-btn,
+.help-btn{
+  width:40px !important;
+  height:40px !important;
+}
+
+.content-wrapper{
+  padding-top: calc(var(--header-height, 150px) + 2px) !important;
+}
+
+@media (max-width: 640px){
+  .header{
+    padding-top:max(10px, env(safe-area-inset-top)) !important;
+    padding-bottom:6px !important;
+  }
+
+  .header-content{
+    padding-left:12px !important;
+    padding-right:12px !important;
+  }
+
+  .header-top{
+    margin-bottom:6px !important;
+  }
+
+  .header h1{
+    font-size:17px !important;
+  }
+
+  .filter-group{
+    margin-bottom:6px !important;
+  }
+
+  .filter-label{
+    font-size:9px !important;
+    margin-bottom:3px !important;
+  }
+
+  .chip{
+    padding:7px 11px !important;
+    font-size:11px !important;
+  }
+
+  .search-row{
+    padding:6px 12px !important;
+    margin-top:4px !important;
+  }
+
+  #search{
+    padding-top:8px !important;
+    padding-bottom:8px !important;
+    font-size:13px !important;
+  }
+
+  .cart-btn,
+  .help-btn{
+    width:38px !important;
+    height:38px !important;
+  }
+
+  .content-wrapper{
+    padding-top: calc(var(--header-height, 138px) + 2px) !important;
+  }
+}
+</style>
+
+
+<style id="jp-search-strip-solid-green-fix">
+/* Make the whole area behind the search bar a solid green block */
+.search-row{
+  background:#184c42 !important;
+  background-image:none !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  margin-left:0 !important;
+  margin-right:0 !important;
+  padding:8px 14px !important;
+  width:100% !important;
+  position:relative !important;
+}
+
+.search-row::before,
+.search-row::after{
+  display:none !important;
+  content:none !important;
+}
+
+.header-content{
+  padding-left:0 !important;
+  padding-right:0 !important;
+}
+
+.header-top,
+.filter-group{
+  padding-left:14px !important;
+  padding-right:14px !important;
+}
+
+/* Search field itself */
+.search-container{
+  margin:0 !important;
+  padding:0 !important;
+  background:transparent !important;
+}
+
+.search-input-wrapper{
+  background:#ffffff !important;
+  border-radius:999px !important;
+  border:none !important;
+  box-shadow:0 10px 24px rgba(13,25,22,0.14) !important;
+  margin:0 !important;
+}
+
+/* Remove any leftover pale/white divider artefacts around the bar */
+.header::before,
+.header::after{
+  display:none !important;
+}
+
+/* Category icons match add-item plus color */
+.category-icon,
+.category-icon svg,
+.category-icon img,
+.accordion-icon,
+.accordion-icon svg {
+  color:#7FE843 !important;
+  fill:#7FE843 !important;
+  stroke:#7FE843 !important;
+}
+
+</style>
+
+
+
+<style id="jp-category-icons-50-opacity-only">
+/* Category icons only: 50% opacity in closed state */
+.category-icon,
+.category-icon svg,
+.category-icon img {
+  opacity: 0.5 !important;
+}
+
+/* Restore full opacity when the corresponding accordion is open */
+.accordion-item.open .category-icon,
+.accordion-item.open .category-icon svg,
+.accordion-item.open .category-icon img {
+  opacity: 1 !important;
+}
+</style>
+
+<style id="jp-category-scroll-fix">
+html, body{
+  min-height:100vh !important;
+  min-height:100dvh !important;
+  height:100vh !important;
+  height:100dvh !important;
+}
+
+body{
+  overflow:hidden !important;
+}
+
+.content-wrapper{
+  bottom:0 !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  -webkit-overflow-scrolling:touch !important;
+  padding-bottom:max(220px, calc(env(safe-area-inset-bottom) + 160px)) !important;
+}
+
+.container,
+#main{
+  padding-bottom:max(220px, calc(env(safe-area-inset-bottom) + 160px)) !important;
+}
+
+.category-card,
+.category-card.open,
+.cat-content,
+.category-card.open .cat-content{
+  overflow:visible !important;
+  max-height:none !important;
+}
+
+.fab{
+  z-index:1002 !important;
+}
+</style>
+
+
+<style id="jp-accordion-header-radius-fix">
+.category-card > .cat-header,
+.category-card.open > .cat-header,
+.accordion-item > .cat-header,
+.accordion-item.open > .cat-header{
+  border-top-left-radius:24px !important;
+  border-top-right-radius:24px !important;
+}
+.category-card.open,
+.accordion-item.open{
+  border-top-left-radius:24px !important;
+  border-top-right-radius:24px !important;
+}
+.category-card.open > .cat-header,
+.accordion-item.open > .cat-header{
+  overflow:hidden !important;
+  background-clip:padding-box !important;
+}
+</style>
+
+
+<style id="jp-safe-v47-merge">
+  body.preload-main .expiry-filter-btn{visibility:hidden;}
+  .expiry-filter-btn{position:fixed;right:16px;bottom:calc(var(--fab-bottom) + 88px);z-index:1200;width:58px;height:58px;border:1px solid rgba(255,255,255,.18);border-radius:18px;display:flex;align-items:center;justify-content:center;background:rgba(166,81,58,.72);color:#F7DDD3;box-shadow:0 10px 22px rgba(0,0,0,.16);cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:background .18s ease,opacity .18s ease,transform .18s ease,box-shadow .18s ease;}
+  .expiry-filter-btn.active{background:rgba(166,81,58,.96);color:#fff;opacity:1;box-shadow:0 12px 24px rgba(0,0,0,.18);}
+  .expiry-filter-btn-icon,.expiry-filter-btn svg,.expiry-filter-btn svg *{color:inherit;stroke:currentColor;}
+  .expiry-filter-btn svg{width:24px;height:24px;display:block;}
+  .back-to-top-wrap{display:flex;justify-content:center;padding:18px 0 4px;}
+  .back-to-top-btn{border:none;border-radius:999px;padding:11px 18px;background:#0D3820;color:#fff;font-weight:800;font-size:13px;box-shadow:0 8px 18px rgba(13,56,32,.16);}
+  .category-card[data-category="Due to Expire"] > .cat-header{background:linear-gradient(135deg,#D07A5E 0%,#A6513A 100%) !important;color:#fff !important;}
+  .category-card[data-category="Due to Expire"]:not(.open) > .cat-header .cat-icon,.category-card[data-category="Due to Expire"]:not(.open) > .cat-header .cat-icon svg,.category-card[data-category="Due to Expire"]:not(.open) > .cat-header .cat-icon svg *{color:#E8A35E !important;stroke:#E8A35E !important;fill:none !important;}
+  .category-card[data-category="Due to Expire"].open > .cat-header .cat-icon,.category-card[data-category="Due to Expire"].open > .cat-header .cat-icon svg,.category-card[data-category="Due to Expire"].open > .cat-header .cat-icon svg *{color:#fff !important;stroke:#fff !important;}
+  .category-card:not([data-category="Due to Expire"]):not(.open) > .cat-header .cat-icon,.category-card:not([data-category="Due to Expire"]):not(.open) > .cat-header .cat-icon svg,.category-card:not([data-category="Due to Expire"]):not(.open) > .cat-header .cat-icon svg *{color:#B8860B !important;stroke:#B8860B !important;}
+  .category-card:not([data-category="Due to Expire"]):not(.open) > .cat-header .cat-icon img{filter: sepia(1) saturate(4) hue-rotate(2deg) brightness(.84);}  
+  .item-row.cupboard{background:#FFF8EA !important;border-color:#F0E2C0 !important;}
+  .item-row.freezer{background:#F3F9FC !important;border-color:#DDEDF4 !important;}
+  .item-row.expired{background:#FFF4F1 !important;border-color:#E9C6BE !important;}
+  .category-card.due-to-expire-card .qty-control,.category-card.due-to-expire-card .qty-display,.category-card.due-to-expire-card .edit-btn{display:none !important;}
+  .category-card.due-to-expire-card .item-row{align-items:stretch !important;}
+  .category-card.due-to-expire-card .item-info{display:flex !important;flex-direction:column !important;justify-content:flex-start !important;}
+  .category-card.due-to-expire-card .item-actions{align-self:stretch !important;}
+  .category-card.due-to-expire-card .item-controls{height:100% !important;justify-content:space-between !important;}
+  .category-card.due-to-expire-card .item-footer-actions{display:flex !important;justify-content:flex-end !important;margin-top:auto !important;}
+  .category-card.due-to-expire-card .delete-btn{display:inline-flex !important;align-items:center !important;justify-content:center !important;text-align:center !important;}
+  .cart-badge{border:none !important;}
+</style>
+
+
+
+<style id="jp-item-menu-updates">
+.item-row{padding:11px 14px !important;border-radius:20px !important;min-height:auto !important;}
+.item-main{display:flex;flex-direction:column;gap:8px;width:100%;}
+.item-top-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;width:100%;}
+.item-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;}
+.item-label{display:block;font-size:20px !important;line-height:1.02 !important;font-weight:900 !important;letter-spacing:-0.025em !important;color:var(--text-primary);margin:0 !important;word-break:break-word;max-width:none;}
+.item-meta{font-size:11px !important;font-weight:900 !important;letter-spacing:.05em !important;color:#9ca3af !important;text-transform:uppercase;line-height:1.2;}
+.item-cat{display:none !important;}
+.item-submeta{display:none !important;}
+.item-actions{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;width:auto !important;min-width:0 !important;}
+.item-top-actions{display:flex;align-items:center;gap:6px;justify-content:flex-end;}
+.add-to-shop{display:inline-flex !important;align-items:center;justify-content:center;width:48px;height:48px;padding:0 !important;border-radius:999px !important;border:1px solid rgba(34,139,70,.12) !important;background:linear-gradient(180deg,#16a34a 0%, #15803d 100%) !important;color:#fff !important;box-shadow:0 5px 12px rgba(22,163,74,.16) !important;cursor:pointer;transition:transform .16s ease, box-shadow .16s ease, background .16s ease;}
+.add-to-shop.show{display:inline-flex !important;}
+.add-to-shop.in-cart{background:#93C572 !important;color:#ffffff !important;box-shadow:0 5px 12px rgba(147,197,114,.24) !important;border-color:rgba(147,197,114,.38) !important;}
+.add-to-shop svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
+.add-to-shop:active{transform:scale(.94);} 
+.item-menu-btn{width:44px;height:44px;border-radius:999px;border:1px solid #d5d9df;background:#f8f8f8;color:#9ca3af;display:inline-flex;align-items:center;justify-content:center;gap:4px;cursor:pointer;box-shadow:none;}
+.item-menu-btn span{display:block;width:5px;height:5px;border-radius:999px;background:currentColor;}
+.item-menu-btn:active{transform:scale(.95);} 
+.item-bottom-row{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;width:100%;}
+.item-expiry-block{display:flex;flex-direction:column;align-items:flex-start;gap:0;min-width:0;flex:1;justify-content:flex-end;}
+.item-expiry-label{display:none !important;}
+.expiry-badge{margin-top:0 !important;font-size:13px !important;font-weight:900 !important;padding:5px 14px !important;border-radius:999px !important;min-height:28px;display:inline-flex;align-items:center;max-width:100%;}
+.expiry-badge.date-only{background:#AFE1AF !important;color:#111827 !important;border:1px solid #9CA3AF !important;}
+.item-side-stack{display:flex;flex-direction:column;align-items:flex-end;justify-content:flex-end;gap:6px;flex-shrink:0;}
+.qty-control{display:flex;align-items:center;justify-content:space-between;background:#fff !important;border:1px solid #dadddf !important;border-radius:999px !important;padding:2px 4px !important;gap:2px !important;min-width:128px;box-shadow:none !important;width:auto !important;}
+.qty-btn{width:28px !important;height:28px !important;border-radius:999px !important;font-size:20px !important;line-height:1 !important;box-shadow:none !important;}
+.qty-btn.minus{background:transparent !important;color:#b7bec8 !important;}
+.qty-btn.plus{background:linear-gradient(180deg,#0f766e 0%, #115e59 100%) !important;color:#fff !important;}
+.qty-display-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-width:30px;}
+.qty-caption{display:none !important;}
+.qty-display{width:auto !important;min-width:0 !important;font-size:18px !important;line-height:1 !important;font-weight:600 !important;color:#111827 !important;}
+.item-footer-actions,.edit-btn,.delete-btn{display:none !important;}
+.item-row.out-of-stock .item-label{text-decoration:line-through;opacity:.75;}
+.item-row.out-of-stock .add-to-shop,.item-row.out-of-stock .item-menu-btn,.item-row.out-of-stock .qty-control{opacity:1 !important;}
+.modal-sheet-overlay.item-action-overlay{z-index:3600;}
+.item-action-sheet{width:100%;max-width:600px;background:linear-gradient(180deg, rgba(255,255,255,0.99), rgba(248,250,249,0.98));border-radius:28px 28px 0 0;border:1px solid rgba(255,255,255,0.8);border-bottom:none;box-shadow:var(--shadow-lg);padding:14px 16px calc(18px + env(safe-area-inset-bottom));animation:slideUpModal .3s cubic-bezier(.16,1,.3,1);}
+.item-action-sheet::before{content:"";display:block;width:44px;height:5px;border-radius:999px;background:rgba(107,114,128,0.28);margin:0 auto 14px;}
+.item-action-title{font-size:12px;font-weight:900;letter-spacing:.45px;text-transform:uppercase;color:var(--text-secondary);margin:0 0 8px;}
+.item-action-name{font-size:20px;font-weight:900;color:var(--text-primary);margin:0 0 16px;line-height:1.15;word-break:break-word;}
+.item-action-list{display:flex;flex-direction:column;gap:10px;}
+.item-action-btn{width:100%;display:flex;align-items:center;gap:12px;border:none;border-radius:18px;padding:16px;background:#fff;color:var(--text-primary);font-size:16px;font-weight:800;box-shadow:var(--shadow-sm);border:1px solid #e7ece8;cursor:pointer;text-align:left;}
+.item-action-btn svg{width:22px;height:22px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:2.2;overflow:visible;}
+.item-action-btn.remove{color:var(--danger);}
+.item-action-btn:active{transform:scale(.98);} 
+@media (max-width:640px){
+  .item-row{padding:10px 12px !important;border-radius:18px !important;}
+  .item-label{font-size:18px !important;max-width:none;}
+  .item-top-actions{gap:6px;}
+  .add-to-shop{width:44px;height:44px;}
+  .add-to-shop svg{width:20px;height:20px;}
+  .item-menu-btn{width:40px;height:40px;gap:4px;}
+  .item-menu-btn span{width:5px;height:5px;}
+  .item-bottom-row{align-items:flex-end;gap:8px;}
+  .expiry-badge{font-size:13px !important;padding:5px 12px !important;min-height:28px;}
+  .qty-control{min-width:122px;padding:3px 4px !important;}
+  .qty-btn{width:28px !important;height:28px !important;font-size:19px !important;}
+  .qty-display{font-size:18px !important;}
+}
+</style>
+
+
+<style id="jp-cart-expiry-fix-final">
+.cart-badge{
+  background:#93C572 !important;
+  color:#FFFFFF !important;
+}
+
+.expiry-filter-btn.active{
+  border:1px solid #93C572 !important;
+  box-shadow:0 12px 24px rgba(0,0,0,.18), 0 0 0 1px rgba(147,197,114,0.35) inset !important;
+}
+</style>
+
 </head>
 <body class="splash-showing preload-main">
   <div class="splash-overlay" id="splash" aria-hidden="true">
     <div class="splash-card">
-      <div class="splash-logo-wrap"><img src="JP_logo.png" class="splash-logo" alt="JemsPantry logo"></div>
+      <div class="splash-logo-wrap"><img src="assets/branding/jemspantry-splash-logo.svg" class="splash-logo" alt="JemsPantry logo"></div>
+      <!-- Replace assets/branding/jemspantry-splash-logo.svg with your custom splash logo SVG -->
       <div class="splash-loading" aria-live="polite" aria-label="Loading your pantry">
         <div class="splash-loading-dot"></div><div class="splash-loading-dot"></div><div class="splash-loading-dot"></div><div class="splash-loading-dot"></div>
       </div>
@@ -1560,7 +2020,8 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
 
   <div class="content-wrapper" id="contentWrapper"><div class="container" id="main"></div><div id="toast"></div></div>
-  <button class="fab" onclick="openItemEditor(null)" aria-label="Add item">+</button>
+  <button class="expiry-filter-btn" id="expiryFilterBtn" onclick="toggleExpiryFilter()" aria-label="Show due to expire items" aria-pressed="false"><span class="expiry-filter-btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="7" stroke="currentColor" stroke-width="1.8"></circle><path d="M12 9.5v4.2l2.8 1.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 3.5v1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></span></button>
+  <button class="fab" onclick="openItemEditor(null)" aria-label="Add item"><span class="fab-plus" aria-hidden="true">+</span></button>
 
   <div class="modal-overlay" id="shoppingModal" onclick="closeShoppingList(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
@@ -1630,8 +2091,11 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="data-manager-section">
           <h3>Manage Your Data</h3>
           <div class="data-manager-buttons">
-            <button class="data-btn" onclick="exportInventoryAsCSV()"><svg viewBox="0 -960 960 960" aria-hidden="true" fill="currentColor"><path d="m720-120 160-160-56-56-64 64v-167h-80v167l-64-64-56 56 160 160ZM560 0v-80h320V0H560ZM240-160q-33 0-56.5-23.5T160-240v-560q0-33 23.5-56.5T240-880h280l240 240v121h-80v-81H480v-200H240v560h240v80H240Zm0-80v-560 560Z"/></svg>Export Items Data (.csv)</button>
-            <button class="data-btn" onclick="triggerImport()"><svg viewBox="0 -960 960 960" aria-hidden="true" fill="currentColor"><path d="m480-280 160-160-56-56-64 62v-166h-80v166l-64-62-56 56 160 160ZM240-80q-33 0-56.5-23.5T160-160v-480l240-240h320q33 0 56.5 23.5T800-800v640q0 33-23.5 56.5T720-80H240Zm0-80h480v-640H434L240-606v446Zm0 0h480-480Z"/></svg>Import Items Data (.csv)</button>
+            <button class="data-btn" onclick="exportInventoryAsCSV()"><svg class="help-menu-btn-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f" aria-hidden="true"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>Export Items Data (.csv)</button>
+            <button class="data-btn" onclick="triggerImport()"><svg class="help-menu-btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <path d="M12 6.5V17.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M6.5 12H17.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+</svg>Import Items Data (.csv)</button>
           </div>
         </div>
       </div>
@@ -1663,13 +2127,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   <script>
     const COACH_MARKS = [
-      { title: "Welcome to JemsPantry", text: "", imageUrl: "jp_welcome.png", welcomeImageOnly: true },
-      { title: "Adding Items", text: "Easily add new items, allocated where you store them and how many you have. It's that easy!", imageUrl: "jp_add.png" },
-      { title: "Find Items Quickly", text: "Use the quick search or smart filters to find what you're looking for.", imageUrl: "placeholder:Find Items Quickly" },
-      { title: "Smart Categories", text: "Items are automatically categorised based on your chosen region. Expand categories to see all your items organised by type.", imageUrl: "jp_sort.png" },
-      { title: "Plan your Shop", text: "Track items when you are running low. Simply add them to your shopping list. Expiry date alerts help you reduce waste.", imageUrl: "jp_add.png" },
-      { title: "Import / Export Your Items", text: "Import or export your pantry list as a CSV file so you can back up your items data offline anytime.", imageUrl: "jp_add.png" },
-      { title: "100% Privacy", text: "All your pantry data is stored locally on your device. Nothing is uploaded to external servers.", imageUrl: "jp_add.png" }
+      { title: "Welcome to JemsPantry", text: "", imageSources: ["assets/welcome/01-welcome.webp", "assets/welcome/01-welcome.png"], imageUrl: "placeholder:Welcome", welcomeImageOnly: true },
+      { title: "Adding Items", text: "Easily add new items, allocated where you store them and how many you have. It's that easy!", imageSources: ["assets/pages/02-adding-items.webp", "assets/pages/02-adding-items.png"], imageUrl: "placeholder:Adding Items" },
+      { title: "Find Items Quickly", text: "Use the quick search or smart filters to find what you're looking for.", imageSources: ["assets/pages/03-find-items.webp", "assets/pages/03-find-items.png"], imageUrl: "placeholder:Find Items Quickly" },
+      { title: "Smart Categories", text: "Items are automatically categorised based on your chosen region. Expand categories to see all your items organised by type.", imageSources: ["assets/pages/04-smart-categories.webp", "assets/pages/04-smart-categories.png"], imageUrl: "placeholder:Smart Categories" },
+      { title: "Plan your Shop", text: "Track items when you are running low. Simply add them to your shopping list. Expiry date alerts help you reduce waste.", imageSources: ["assets/pages/05-plan-your-shop.webp", "assets/pages/05-plan-your-shop.png"], imageUrl: "placeholder:Plan your Shop" },
+      { title: "Import / Export Your Items", text: "Import or export your pantry list as a CSV file so you can back up your items data offline anytime.", imageSources: ["assets/pages/06-import-export.webp", "assets/pages/06-import-export.png"], imageUrl: "placeholder:Import / Export" },
+      { title: "100% Privacy", text: "All your pantry data is stored locally on your device. Nothing is uploaded to external servers.", imageSources: ["assets/pages/07-privacy.webp", "assets/pages/07-privacy.png"], imageUrl: "placeholder:Privacy" }
     ];
 
     const APP_VERSION = "1.0.0";
@@ -1684,6 +2148,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let editingId = null;
     let pendingImportItems = [];
     let startupGuideShown = false;
+    const DUE_TO_EXPIRE_CATEGORY = "Due to Expire";
+    let expiryFilterActive = false;
+    let previousOpenCats = new Set();
 
     const INVENTORY_STORAGE_KEY = "jemspantry_inventory_v1";
     const SHOPPING_STORAGE_KEY = "jemspantry_shoppingList_v1";
@@ -1691,6 +2158,93 @@ document.addEventListener('DOMContentLoaded', function () {
     const REGION_KEY = "jemspantry_region_v1";
     const STORE_COLORS_KEY = "jemspantry_storeColors_v1";
     const CATEGORIES = ["Fruit & Veg","Meat, Poultry & Seafood","Dairy & Refrigerated","Bakery & Bread","Pantry & Dry Goods","Herbs & Spices","Cereals & Breakfast","Canned Goods & Sauces","Frozen Foods","Snacks","Beverages","Condiments & Oils","Household & Cleaning","Personal Care & Pharmacy"];
+
+        // Asset placeholders for custom SVG files
+    // Put your files in these folders:
+    //   assets/branding/jemspantry-splash-logo.svg
+    //   assets/icons/categories/category-fruit-veg.svg
+    //   assets/icons/categories/category-dairy-refrigerated.svg
+    //   assets/icons/categories/category-bakery-bread.svg
+    //   assets/icons/categories/category-meat-poultry-seafood.svg
+    //   assets/icons/categories/category-snacks.svg
+    //   assets/icons/categories/category-beverages.svg
+    //   assets/icons/categories/category-cereals-breakfast.svg
+    //   assets/icons/categories/category-frozen-foods.svg
+    //   assets/icons/categories/category-pantry-dry-goods.svg
+    //   assets/icons/categories/category-canned-goods-sauces.svg
+    //   assets/icons/categories/category-condiments-oils.svg
+    //   assets/icons/categories/category-herbs-spices.svg
+    //   assets/icons/categories/category-household-cleaning.svg
+    //   assets/icons/categories/category-personal-care-pharmacy.svg
+    //   assets/icons/categories/category-due-to-expire.svg
+    //   assets/icons/categories/category-uncategorised.svg
+    // If a file is missing, the app will fall back to the built-in icon.
+    const ASSET_PATHS = {
+      splashLogo: 'assets/branding/jemspantry-splash-logo.svg',
+      categoryIconsBase: 'assets/icons/categories/'
+    };
+    const CATEGORY_ICON_ASSETS = {
+      "Fruit & Veg": `${ASSET_PATHS.categoryIconsBase}category-fruit-veg.svg`,
+      "Dairy & Refrigerated": `${ASSET_PATHS.categoryIconsBase}category-dairy-refrigerated.svg`,
+      "Dairy": `${ASSET_PATHS.categoryIconsBase}category-dairy-refrigerated.svg`,
+      "Bakery & Bread": `${ASSET_PATHS.categoryIconsBase}category-bakery-bread.svg`,
+      "Meat, Poultry & Seafood": `${ASSET_PATHS.categoryIconsBase}category-meat-poultry-seafood.svg`,
+      "Snacks": `${ASSET_PATHS.categoryIconsBase}category-snacks.svg`,
+      "Beverages": `${ASSET_PATHS.categoryIconsBase}category-beverages.svg`,
+      "Cereals & Breakfast": `${ASSET_PATHS.categoryIconsBase}category-cereals-breakfast.svg`,
+      "Frozen Foods": `${ASSET_PATHS.categoryIconsBase}category-frozen-foods.svg`,
+      "Pantry & Dry Goods": `${ASSET_PATHS.categoryIconsBase}category-pantry-dry-goods.svg`,
+      "Canned Goods & Sauces": `${ASSET_PATHS.categoryIconsBase}category-canned-goods-sauces.svg`,
+      "Condiments & Oils": `${ASSET_PATHS.categoryIconsBase}category-condiments-oils.svg`,
+      "Herbs & Spices": `${ASSET_PATHS.categoryIconsBase}category-herbs-spices.svg`,
+      "Household & Cleaning": `${ASSET_PATHS.categoryIconsBase}category-household-cleaning.svg`,
+      "Personal Care & Pharmacy": `${ASSET_PATHS.categoryIconsBase}category-personal-care-pharmacy.svg`,
+      "Due to Expire": `${ASSET_PATHS.categoryIconsBase}category-due-to-expire.svg`,
+      "Uncategorised": `${ASSET_PATHS.categoryIconsBase}category-uncategorised.svg`
+    };
+
+        // Category to Icon mapping
+    const CLOSED_CATEGORY_ICON_HEX = "B8860B";
+    const imageIcon = (src) => {
+      const tintedSrc = String(src).replace(/%231f1f1f/gi, `%23${CLOSED_CATEGORY_ICON_HEX}`).replace(/%23111111/gi, `%23${CLOSED_CATEGORY_ICON_HEX}`);
+      return `<span class="cat-icon" aria-hidden="true"><img src="${tintedSrc}" alt=""></span>`;
+    };
+    const svgIcon = (svg) => `<span class="cat-icon" aria-hidden="true">${svg}</span>`;
+    const CATEGORY_ICONS = {
+      "Fruit & Veg": imageIcon("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224px%22%20viewBox%3D%220%20-960%20960%20960%22%20width%3D%2224px%22%20fill%3D%22%231f1f1f%22%3E%3Cpath%20d%3D%22M281.5-201.5Q200-283%20200-400q0-94%2055.5-168.5T401-669q-20-5-39-14.5T328-708q-33-33-42.5-78.5T281-879q47-5%2092.5%204.5T452-832q23%2023%2033.5%2052t13.5%2061q13-31%2031.5-58.5T572-828q11-11%2028-11t28%2011q11%2011%2011%2028t-11%2028q-22%2022-39%2048.5T564-667q88%2028%20142%20101.5T760-400q0%20117-81.5%20198.5T480-120q-117%200-198.5-81.5Zm340-57Q680-317%20680-400t-58.5-141.5Q563-600%20480-600t-141.5%2058.5Q280-483%20280-400t58.5%20141.5Q397-200%20480-200t141.5-58.5ZM480-400Z%22%2F%3E%3C%2Fsvg%3E"),
+            "Meat, Poultry & Seafood": svgIcon(`<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M5.1 15.9c-1.1-1.1-1.8-2.8-1.8-5 0-5.2 4.6-9 10.4-9 3.2 0 6 .7 7.5 2.1 1 .9 1.6 2.1 1.6 3.8 0 2.1-.9 3.6-2.8 4.9-1.6 1.2-3 2.1-4.1 4.1-1.3 2.3-2.4 4.3-6 4.3-3.2 0-5-2.2-5-5.2Z"></path>
+  <path d="M6.9 14.7c-.5-.7-.9-1.8-.9-3.1 0-4 3.5-6.9 8-6.9 2.5 0 4.7.5 5.8 1.6.8.7 1.2 1.5 1.2 2.8 0 1.6-.7 2.8-2.2 3.7-1.2.8-2.3 1.5-3.2 3.1-1 1.8-1.8 3.4-4.7 3.4-2.6 0-4-1.7-4-4.6Z"></path>
+  <circle cx="10.5" cy="14.7" r="1.45"></circle>
+</svg>`),
+            "Dairy & Refrigerated": imageIcon("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23111111%22%20stroke-width%3D%221.9%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M9%204h5l2%203v11a2%202%200%200%201-2%202H9a2%202%200%200%201-2-2V7l2-3Z%22%2F%3E%3Cpath%20d%3D%22M9%204v3h7%22%2F%3E%3Cpath%20d%3D%22M9%207h7%22%2F%3E%3Cpath%20d%3D%22M11%2011h2.8%22%2F%3E%3Cpath%20d%3D%22M11%2014h2%22%2F%3E%3C%2Fsvg%3E"),
+            "Dairy": imageIcon("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23111111%22%20stroke-width%3D%221.9%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M9%204h5l2%203v11a2%202%200%200%201-2%202H9a2%202%200%200%201-2-2V7l2-3Z%22%2F%3E%3Cpath%20d%3D%22M9%204v3h7%22%2F%3E%3Cpath%20d%3D%22M9%207h7%22%2F%3E%3Cpath%20d%3D%22M11%2011h2.8%22%2F%3E%3Cpath%20d%3D%22M11%2014h2%22%2F%3E%3C%2Fsvg%3E"),
+      "Bakery & Bread": imageIcon("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23111111%22%20stroke-width%3D%221.9%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%2010.5c0-2.8%202-4.5%206-4.5s6%201.7%206%204.5V17a2%202%200%200%201-2%202H8a2%202%200%200%201-2-2v-6.5Z%22%2F%3E%3Cpath%20d%3D%22M6%2011h12%22%2F%3E%3Cpath%20d%3D%22M9%208.5V6.8%22%2F%3E%3Cpath%20d%3D%22M12%208V6%22%2F%3E%3Cpath%20d%3D%22M15%208.5V6.8%22%2F%3E%3C%2Fsvg%3E"),
+            "Pantry & Dry Goods": svgIcon(`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4.5h6"></path><rect x="8.2" y="5.5" width="7.6" height="13" rx="2.2"></rect><path d="M9 8h6"></path><path d="M10 11.2h4"></path><path d="M10 14h4"></path></svg>`),
+      "Herbs & Spices": imageIcon("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224px%22%20viewBox%3D%220%20-960%20960%20960%22%20width%3D%2224px%22%20fill%3D%22%231f1f1f%22%3E%3Cpath%20d%3D%22M216-176q-45-45-70.5-104T120-402q0-63%2024-124.5T222-642q35-35%2086.5-60t122-39.5Q501-756%20591.5-759t202.5%207q8%20106%205%20195t-16.5%20160.5q-13.5%2071.5-38%20125T684-182q-53%2053-112.5%2077.5T450-80q-65%200-127-25.5T216-176Zm112-16q29%2017%2059.5%2024.5T450-160q46%200%2091-18.5t86-59.5q18-18%2036.5-50.5t32-85Q709-426%20716-500.5t2-177.5q-49-2-110.5-1.5T485-670q-61%209-116%2029t-90%2055q-45%2045-62%2089t-17%2085q0%2059%2022.5%20103.5T262-246q42-80%20111-153.5T534-520q-72%2063-125.5%20142.5T328-192Zm0%200Zm0%200Z%22%2F%3E%3C%2Fsvg%3E"),
+      "Cereals & Breakfast": imageIcon("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23111111%22%20stroke-width%3D%221.9%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%0A%3Cpath%20d%3D%22M4.8%2012.2h14.4c0%204.1-3%206.8-7.2%206.8s-7.2-2.7-7.2-6.8Z%22%2F%3E%0A%3Cpath%20d%3D%22M6.7%2012.2h10.6%22%2F%3E%0A%3Ccircle%20cx%3D%228.4%22%20cy%3D%2210.1%22%20r%3D%22.75%22%20fill%3D%22%23111111%22%20stroke%3D%22none%22%2F%3E%0A%3Ccircle%20cx%3D%2210.8%22%20cy%3D%229.4%22%20r%3D%22.72%22%20fill%3D%22%23111111%22%20stroke%3D%22none%22%2F%3E%0A%3Ccircle%20cx%3D%2213.1%22%20cy%3D%2210.3%22%20r%3D%22.7%22%20fill%3D%22%23111111%22%20stroke%3D%22none%22%2F%3E%0A%3Ccircle%20cx%3D%2215.4%22%20cy%3D%229.2%22%20r%3D%22.78%22%20fill%3D%22%23111111%22%20stroke%3D%22none%22%2F%3E%0A%3Ccircle%20cx%3D%2212.1%22%20cy%3D%228.1%22%20r%3D%22.68%22%20fill%3D%22%23111111%22%20stroke%3D%22none%22%2F%3E%0A%3C%2Fsvg%3E"),
+      "Canned Goods & Sauces": imageIcon("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23111111%22%20stroke-width%3D%221.9%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%227%22%20y%3D%225%22%20width%3D%2210%22%20height%3D%2214%22%20rx%3D%222.5%22%2F%3E%3Cpath%20d%3D%22M7%208h10%22%2F%3E%3Cpath%20d%3D%22M7%2016h10%22%2F%3E%3Cpath%20d%3D%22M10%2012h4%22%2F%3E%3C%2Fsvg%3E"),
+            "Frozen Foods": imageIcon("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224px%22%20viewBox%3D%220%20-960%20960%20960%22%20width%3D%2224px%22%20fill%3D%22%231f1f1f%22%3E%3Cpath%20d%3D%22M440-80v-73l-64%2054-52-61%20116-98v-152l-132%2076-27%20149-79-14%2015-83-64%2037-40-69%2064-37-79-29%2027-75%20143%2051%20132-76-132-76-143%2052-27-76%2079-28-64-37%2040-69%2064%2037-15-83%2079-14%2027%20149%20132%2076v-152l-116-98%2052-61%2064%2054v-74h80v74l64-54%2052%2061-116%2098v152l131-76%2027-149%2079%2014-15%2083%2064-37%2040%2069-64%2037%2079%2028-27%2076-143-52-131%2076%20131%2076%20143-51%2027%2075-79%2029%2064%2037-40%2069-64-37%2015%2083-79%2014-27-149-131-76v152l116%2098-52%2061-64-54v73h-80Z%22%2F%3E%3C%2Fsvg%3E"),
+            "Snacks": svgIcon(`<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4.8 12c-2.1 0-2.3-4.2-.2-6.3 1.8-1.8 3.7-.6 5.8 1.8 2.1 2.4 5.4 2.4 5.4 6 0 3.2-2.8 4.4-4.9 2.2-1.8-1.8-1.9-5.1 0-5.1m0 0c2 0 2-3.2 0-4.8"></path></g></svg>`),
+      "Beverages": imageIcon("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23111111%22%20stroke-width%3D%221.9%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M8%205h8l-1%2014a2%202%200%200%201-2%202h-2a2%202%200%200%201-2-2L8%205Z%22%2F%3E%3Cpath%20d%3D%22M7%205h10%22%2F%3E%3Cpath%20d%3D%22M11%205V3h2v2%22%2F%3E%3Cpath%20d%3D%22M10%2010h4%22%2F%3E%3C%2Fsvg%3E"),
+      "Condiments & Oils": imageIcon("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224px%22%20viewBox%3D%220%20-960%20960%20960%22%20width%3D%2224px%22%20fill%3D%22%231f1f1f%22%3E%3Cpath%20d%3D%22M480-100q-133%200-226.5-92T160-416q0-63%2024.5-120.5T254-638l226-222%20226%20222q45%2044%2069.5%20101.5T800-416q0%20132-93.5%20224T480-100Zm170-148.5Q720-317%20720-416q0-47-18-89.5T650-580L480-748%20310-580q-34%2032-52%2074.5T240-416q0%2099%2070%20167.5T480-180q100%200%20170-68.5Z%22%2F%3E%3C%2Fsvg%3E"),
+      "Household & Cleaning": imageIcon("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224px%22%20viewBox%3D%220%20-960%20960%20960%22%20width%3D%2224px%22%20fill%3D%22%231f1f1f%22%3E%3Cpath%20d%3D%22M320-80q-33%200-56.5-23.5T240-160v-172q0-74%2021-142.5T327-611q-38-9-62.5-41T240-724v-42q0-48%2041.5-80.5T368-874l356%2035q17%202%2026.5%2013.5T760-799v119q0%2015-10.5%2026.5T724-640l-36%204q14%2049%2037%2088t55%2056l-40%2070q-53-31-82-85.5T612-629l-44%204q8%2050%2030.5%20101t45.5%2092q18%2032%2027%2067t9%2071v134q0%2033-23.5%2056.5T600-80H320Zm0-676v32q0%2018%2013%2029t31%209l316-30v-48l-316-30q-18-2-31%209t-13%2029Zm0%20596h280v-134q0-26-6.5-51T574-393q-31-54-54-111.5T488-617l-60%205-26%2034q-40%2053-61%20116.5T320-332v172Zm0%200h280-280Z%22%2F%3E%3C%2Fsvg%3E"),
+      "Personal Care & Pharmacy": imageIcon("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224px%22%20viewBox%3D%220%20-960%20960%20960%22%20width%3D%2224px%22%20fill%3D%22%231f1f1f%22%3E%3Cpath%20d%3D%22M160-80q-33%200-56.5-23.5T80-160v-480q0-33%2023.5-56.5T160-720h160v-80q0-33%2023.5-56.5T400-880h160q33%200%2056.5%2023.5T640-800v80h160q33%200%2056.5%2023.5T880-640v480q0%2033-23.5%2056.5T800-80H160Zm0-80h640v-480H160v480Zm240-560h160v-80H400v80ZM160-160v-480%20480Zm280-200v120h80v-120h120v-80H520v-120h-80v120H320v80h120Z%22%2F%3E%3C%2Fsvg%3E"),
+      "Due to Expire": svgIcon(`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="7"></circle><path d="M12 9.5v4.2l2.8 1.7"></path><path d="M12 3.5v1.5"></path></svg>`),
+      "Uncategorised": `<span class="cat-icon uncategorised-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4 20 18H4L12 4Z"></path><path d="M12 9.5v4.5"></path><circle cx="12" cy="16.5" r=".9" fill="currentColor" stroke="none"></circle></svg></span>`,
+    };
+
+    function getCategoryIcon(category) {
+      const assetPath = CATEGORY_ICON_ASSETS[category];
+      if (assetPath) {
+        const safeCategory = escapeHtml(category);
+        return `<span class="cat-icon" aria-hidden="true"><img src="${assetPath}" alt="" data-category-icon="${safeCategory}" onerror="this.onerror=null;this.closest('span').outerHTML = window.__getFallbackCategoryIcon('${String(category).replace(/'/g, "\'")}');"></span>`;
+      }
+      return CATEGORY_ICONS[category] || CATEGORY_ICONS["Uncategorised"];
+    }
+    window.__getFallbackCategoryIcon = function(category) {
+      return CATEGORY_ICONS[category] || CATEGORY_ICONS["Uncategorised"];
+    };
     const DEFAULT_STORE_COLORS = ["#2D7A4F","#3B82F6","#EF4444","#F59E0B","#8B5CF6","#06B6D4","#EC4899"];
     const STORE_BRAND_STYLES = {
       UK: {"tesco": { bg: "#2F6FD6", text: "#FFFFFF" },"sainsbury's": { bg: "#F68B1F", text: "#111111" },"asda": { bg: "#78BE20", text: "#111111" },"aldi": { bg: "#00539F", text: "#FFFFFF" },"lidl": { bg: "#0050AA", text: "#FFFFFF" },"morrisons": { bg: "#1B5E20", text: "#FFFFFF" },"co-op": { bg: "#00A1E0", text: "#111111" },"waitrose": { bg: "#3E6F31", text: "#FFFFFF" },"iceland": { bg: "#D7261E", text: "#FFFFFF" },"ocado": { bg: "#7F3FBF", text: "#FFFFFF" }},
@@ -1714,8 +2268,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function storeKey(store){ return normalizeText(store); }
 
     function updateHeaderHeight(){ const header = document.querySelector('.header'); document.documentElement.style.setProperty('--header-height', header.offsetHeight + 'px'); }
-    function maybeOpenStartupGuide(){ if (startupGuideShown || getHideCoachMarks()) return; startupGuideShown = true; openCoachMarks(true); }
-    function showSplashIfNeeded(){ const splash = document.getElementById("splash"); const ver = document.getElementById("splashVersion"); if (ver) ver.textContent = `Version ${APP_VERSION}`; splash.classList.add("active"); splash.setAttribute("aria-hidden", "false"); document.body.classList.add('splash-showing'); setTimeout(() => { splash.classList.add("fading"); setTimeout(() => { splash.classList.remove("active", "fading"); splash.setAttribute("aria-hidden", "true"); document.body.classList.remove("splash-showing", "preload-main"); setTimeout(maybeOpenStartupGuide, 120); }, 470); }, 2500); }
+    function maybeOpenStartupGuide(){ if (startupGuideShown) return; startupGuideShown = true; openCoachMarks(true); }
+    function showSplashIfNeeded(){ const splash = document.getElementById("splash"); const ver = document.getElementById("splashVersion"); if (ver) ver.textContent = `Version ${APP_VERSION}`; splash.classList.add("active"); splash.setAttribute("aria-hidden", "false"); document.body.classList.add('splash-showing'); setTimeout(() => { splash.classList.add("fading"); setTimeout(() => { splash.classList.remove("active", "fading"); splash.setAttribute("aria-hidden", "true"); maybeOpenStartupGuide(); document.body.classList.remove("splash-showing"); requestAnimationFrame(() => document.body.classList.remove("preload-main")); }, 470); }, 3600); }
     function clearSearch(){ document.getElementById('search').value = ''; document.querySelector('.search-clear').classList.remove('active'); render(); }
     function setFilter(type,val,el){ filters[type].has(val) ? filters[type].delete(val) : filters[type].add(val); el.classList.toggle('active'); render(); }
     function clearFilters() { filters.loc.clear(); filters.stor.clear(); document.querySelectorAll('.filter-chips .chip').forEach(chip => chip.classList.remove('active')); render(); toast('Filters cleared'); }
@@ -1795,10 +2349,36 @@ document.addEventListener('DOMContentLoaded', function () {
       const formattedDate = `${String(parts[2]).padStart(2, '0')}-${String(parts[1]).padStart(2, '0')}-${parts[0]}`;
 
       if (diffDays < 0) return { state: 'expired', label: `${formattedDate} • expired` };
-      if (diffDays === 0) return { state: 'expiring-soon', label: `${formattedDate} • 0 days left` };
-      if (diffDays === 1) return { state: 'expiring-soon', label: `${formattedDate} • 1 day left` };
-      if (diffDays === 2) return { state: 'expiring-soon', label: `${formattedDate} • 2 days left` };
+      if (diffDays === 0) return { state: 'expiring-soon', label: `${formattedDate} • 0 days` };
+      if (diffDays === 1) return { state: 'expiring-soon', label: `${formattedDate} • 1 day` };
+      if (diffDays === 2) return { state: 'expiring-soon', label: `${formattedDate} • 2 days` };
       return { state: 'date-only', label: formattedDate };
+    }
+    function isExpiryRelatedItem(item){ const status = getExpiryStatus(item.expiry); return !!status && (status.state === 'expired' || status.state === 'expiring-soon'); }
+    function updateExpiryFilterButton(){ const btn = document.getElementById('expiryFilterBtn'); if (!btn) return; btn.classList.toggle('active', expiryFilterActive); btn.setAttribute('aria-pressed', expiryFilterActive ? 'true' : 'false'); }
+    function scrollToDueToExpireCard(){ requestAnimationFrame(() => { const card = document.querySelector('.category-card.due-to-expire-card'); const header = card ? card.querySelector('.cat-header') : null; const scrollHost = document.getElementById('contentWrapper'); if (!card || !header || !scrollHost) return; const hostRect = scrollHost.getBoundingClientRect(); const headerRect = header.getBoundingClientRect(); const headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 140; const targetTop = scrollHost.scrollTop + (headerRect.top - hostRect.top) - headerHeight - 10; scrollHost.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' }); }); }
+    function toggleExpiryFilter(){ expiryFilterActive = !expiryFilterActive; if (expiryFilterActive){ previousOpenCats = new Set(openCats); openCats = new Set([DUE_TO_EXPIRE_CATEGORY]); } else { openCats = previousOpenCats instanceof Set ? new Set(previousOpenCats) : new Set(); } saveOpenCatsToStorage(); updateExpiryFilterButton(); render(); if (expiryFilterActive) scrollToDueToExpireCard(); }
+    function scrollToTopCategoryHeader(){ requestAnimationFrame(() => { const scrollHost = document.getElementById('contentWrapper'); if (!scrollHost) return; scrollHost.scrollTo({ top: 0, behavior: 'smooth' }); }); }
+    function buildBackToTopButton(){ const wrap = document.createElement('div'); wrap.className = 'back-to-top-wrap'; wrap.innerHTML = '<button class="back-to-top-btn" type="button">Back to Top</button>'; wrap.querySelector('button').addEventListener('click', scrollToTopCategoryHeader, { passive: true }); return wrap; }
+    function buildItemRow(i, simpleExpiryView = false){
+      const isInCart = shoppingList.some(x => x.rowNumber === i.rowNumber);
+      const expiryStatus = getExpiryStatus(i.expiry);
+      const row = document.createElement('div');
+      const storageClass = i.storage === "Fridge" ? "fridge" : i.storage === "Cupboard" ? "cupboard" : "freezer";
+      row.className = `item-row ${storageClass} ${(i.quantity ?? 0) === 0 ? 'out-of-stock' : ''} ${expiryStatus && expiryStatus.state === 'expired' ? 'expired' : ''}`;
+
+      const addIcon = isInCart
+        ? `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>`
+        : `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>`;
+
+      const menuButton = `<button class="item-menu-btn" onclick="event.stopPropagation(); openItemActionMenu(${i.rowNumber})" aria-label="Open item menu" title="More actions"><span></span><span></span><span></span></button>`;
+      const addButton = `<button class="add-to-shop show ${isInCart ? 'in-cart' : ''}" onclick="event.stopPropagation(); addToShoppingList(${i.rowNumber})" aria-label="${isInCart ? 'Remove from shopping list' : 'Add to shopping list'}" title="${isInCart ? 'In shopping list' : 'Add to shopping list'}">${addIcon}</button>`;
+      const qtyControls = simpleExpiryView ? '' : `<div class="qty-control"><button class="qty-btn minus" onclick="event.stopPropagation(); updateQty(${i.rowNumber}, -1)">−</button><div class="qty-display-wrap"><div class="qty-display">${i.quantity ?? 0}</div></div><button class="qty-btn plus" onclick="event.stopPropagation(); updateQty(${i.rowNumber}, 1)">+</button></div>`;
+      const expiryHtml = expiryStatus ? `<div class="item-expiry-block"><div class="expiry-badge ${expiryStatus.state}">${escapeHtml(expiryStatus.label)}</div></div>` : `<div class="item-expiry-block"></div>`;
+      const notesHtml = i.notes ? `<div class="item-submeta">${escapeHtml(i.notes)}</div>` : "";
+
+      row.innerHTML = `<div class="item-main"><div class="item-top-row"><div class="item-info"><div class="item-label">${escapeHtml(i.item)}</div><div class="item-meta">${escapeHtml(i.store || 'Store')}</div>${notesHtml}</div><div class="item-actions"><div class="item-top-actions">${addButton}${menuButton}</div></div></div><div class="item-bottom-row">${expiryHtml}<div class="item-side-stack">${qtyControls}</div></div></div>`;
+      return row;
     }
 
     function buildGuidePlaceholder(label) {
@@ -1820,33 +2400,114 @@ document.addEventListener('DOMContentLoaded', function () {
       return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
     }
 
+    const coachMarkImageResolutionCache = new Map();
+    function findFirstAvailableImage(candidates = []) {
+      const validCandidates = candidates.filter(Boolean);
+      if (!validCandidates.length) return Promise.resolve(null);
+      const cacheKey = validCandidates.join('|');
+      if (coachMarkImageResolutionCache.has(cacheKey)) return coachMarkImageResolutionCache.get(cacheKey);
+      const resolution = new Promise((resolve) => {
+        const tryNext = (index) => {
+          if (index >= validCandidates.length) {
+            resolve(null);
+            return;
+          }
+          const img = new Image();
+          img.onload = () => resolve(validCandidates[index]);
+          img.onerror = () => tryNext(index + 1);
+          img.src = validCandidates[index];
+        };
+        tryNext(0);
+      });
+      coachMarkImageResolutionCache.set(cacheKey, resolution);
+      return resolution;
+    }
+
+    function getCoachMarkFallbackImage(step) {
+      if (!step.imageUrl) return 'none';
+      if (step.imageUrl.startsWith("placeholder:")) {
+        const label = step.imageUrl.replace("placeholder:", "");
+        return `url('${buildGuidePlaceholder(label)}')`;
+      }
+      if (step.imageUrl.startsWith("emoji:")) return 'emoji';
+      return `url('${step.imageUrl}')`;
+    }
+
     function renderImageArea(step) {
       const placeholder = document.getElementById("coachMarkImagePlaceholder");
       const container = document.querySelector('.coach-mark-container');
       if (!placeholder || !container) return;
 
       container.classList.toggle('welcome-image-only', !!step.welcomeImageOnly);
+      placeholder.innerHTML = "";
       placeholder.textContent = "";
       placeholder.style.fontSize = "0";
+      placeholder.style.backgroundImage = "none";
       placeholder.style.backgroundRepeat = "no-repeat";
       placeholder.style.backgroundPosition = "center center";
       placeholder.style.backgroundSize = "cover";
 
-      if (step.imageUrl) {
-        if (step.imageUrl.startsWith("placeholder:")) {
-          const label = step.imageUrl.replace("placeholder:", "");
-          placeholder.style.backgroundImage = `url('${buildGuidePlaceholder(label)}')`;
-        } else if (step.imageUrl.startsWith("emoji:")) {
-          const emoji = step.imageUrl.replace("emoji:", "");
-          placeholder.textContent = emoji;
-          placeholder.style.fontSize = step.welcomeImageOnly ? "140px" : "96px";
-          placeholder.style.backgroundImage = "none";
-        } else {
-          placeholder.style.backgroundImage = `url('${step.imageUrl}')`;
-        }
-      } else {
-        placeholder.style.backgroundImage = "none";
+      const fallback = getCoachMarkFallbackImage(step);
+      if (fallback === 'emoji') {
+        const emoji = step.imageUrl.replace("emoji:", "");
+        placeholder.textContent = emoji;
+        placeholder.style.fontSize = step.welcomeImageOnly ? "140px" : "96px";
+        return;
       }
+
+      const useFallback = () => {
+        placeholder.innerHTML = "";
+        if (fallback === 'none') {
+          placeholder.style.backgroundImage = 'none';
+        } else {
+          placeholder.style.backgroundImage = fallback;
+        }
+      };
+
+      if (Array.isArray(step.imageSources) && step.imageSources.length) {
+        const webpSrc = step.imageSources.find(src => /\.webp($|\?)/i.test(src));
+        const pngSrc = step.imageSources.find(src => /\.png($|\?)/i.test(src));
+        const imgSrc = pngSrc || step.imageSources[0];
+        const currentStepTitle = step.title;
+
+        findFirstAvailableImage(step.imageSources).then((resolvedSrc) => {
+          if (!resolvedSrc) {
+            useFallback();
+            return;
+          }
+          if (!(COACH_MARKS[currentCoachMarkStep] && COACH_MARKS[currentCoachMarkStep].title === currentStepTitle)) return;
+
+          const picture = document.createElement('picture');
+          if (webpSrc) {
+            const source = document.createElement('source');
+            source.srcset = webpSrc;
+            source.type = 'image/webp';
+            picture.appendChild(source);
+          }
+
+          const img = document.createElement('img');
+          img.alt = step.title || 'Coach mark image';
+          img.loading = 'eager';
+          img.decoding = 'async';
+          img.src = /\.png($|\?)/i.test(resolvedSrc) ? resolvedSrc : (imgSrc || resolvedSrc);
+          img.onerror = () => {
+            if (resolvedSrc !== img.src) {
+              img.onerror = () => useFallback();
+              img.src = resolvedSrc;
+            } else {
+              useFallback();
+            }
+          };
+
+          placeholder.innerHTML = '';
+          placeholder.style.backgroundImage = 'none';
+          picture.appendChild(img);
+          placeholder.appendChild(picture);
+        });
+        return;
+      }
+
+      useFallback();
     }
     function buildCoachMarkInner(step, stepIndex) { if (step.welcomeImageOnly) return ''; const isMission = step.isMission || false; let textHTML = ''; if (isMission) { const textParts = step.text.split('\n\n'); textHTML = textParts.map((part, idx) => idx === 0 ? `<p class="coach-mark-text welcome" style="font-weight: 900; margin-bottom: 8px;">${escapeHtml(part)}</p>` : `<p class="coach-mark-text welcome">${escapeHtml(part)}</p>`).join(''); } else textHTML = `<p class="coach-mark-text">${escapeHtml(step.text).replace(/\n/g, "<br>")}</p>`; return `<h2 class="coach-mark-title${isMission ? ' welcome' : ''}">${escapeHtml(step.title)}</h2>${textHTML}`; }
     function renderCoachMark() { const step = COACH_MARKS[currentCoachMarkStep]; if (!step) return; const content = document.getElementById('coachMarkContent'); content.innerHTML = `<div class="coach-mark-panel">${buildCoachMarkInner(step, currentCoachMarkStep)}</div>`; content.setAttribute('tabindex', '0'); content.setAttribute('aria-label', `${escapeHtml(step.title)} - Step ${currentCoachMarkStep + 1} of ${COACH_MARKS.length}`); const dotsContainer = document.getElementById('coachMarkDots'); dotsContainer.innerHTML = ''; for (let i = 0; i < COACH_MARKS.length; i++) { const dot = document.createElement('div'); dot.className = `coach-mark-dot ${i === currentCoachMarkStep ? 'active' : ''}`; dot.onclick = () => goToCoachMark(i); dot.setAttribute('aria-label', `Step ${i + 1}${i === currentCoachMarkStep ? ' - current' : ''}`); dot.setAttribute('role', 'button'); dot.setAttribute('tabindex', i === currentCoachMarkStep ? '0' : '-1'); dotsContainer.appendChild(dot); } const nextBtn = document.getElementById('coachMarkNextBtn'); if (nextBtn) nextBtn.textContent = currentCoachMarkStep === COACH_MARKS.length - 1 ? 'Done' : 'Next'; renderImageArea(step); attachCoachMarkInteractions(); }
@@ -1923,7 +2584,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       if (choice === "merge") {
         let matched = 0, created = 0;
-        pendingImportItems.forEach(newItem => {
+        pendingImportItems.filter(item => item && item.item).forEach(newItem => {
           const existing = inventory.find(oldItem => normalizeText(oldItem.item) === normalizeText(newItem.item) && normalizeText(oldItem.store) === normalizeText(newItem.store) && normalizeText(oldItem.location) === normalizeText(newItem.location) && normalizeText(oldItem.storage) === normalizeText(newItem.storage));
           if (existing) { existing.quantity = (existing.quantity || 0) + (newItem.quantity || 0); if (!existing.notes && newItem.notes) existing.notes = newItem.notes; if (!existing.expiry && newItem.expiry) existing.expiry = newItem.expiry; if (!existing.category && newItem.category) existing.category = newItem.category; matched++; }
           else { inventory.push({ ...newItem }); ensureStoreHasColor(newItem.store); created++; }
@@ -1948,7 +2609,50 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function populateCategoryDropdown(){ const sel = document.getElementById('f_category'); let html = `<option value="">Auto (recommended)</option>`; CATEGORIES.forEach(c => html += `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`); sel.innerHTML = html; }
-    function openItemEditor(rowNumber){ populateCategoryDropdown(); const modal = document.getElementById('itemModal'); const title = document.getElementById('itemModalTitle'); const delRow = document.getElementById('deleteRow'); editingId = rowNumber; if (!rowNumber){ title.textContent = "Add Item"; delRow.style.display = "none"; document.getElementById('f_item').value = ""; document.getElementById('f_store').value = ""; document.getElementById('f_qty').value = 1; document.getElementById('f_location').value = "Kitchen"; document.getElementById('f_storage').value = "Cupboard"; document.getElementById('f_category').value = ""; document.getElementById('f_expiry').value = ""; document.getElementById('f_notes').value = ""; modal.classList.add('active'); setTimeout(() => document.getElementById('f_item').focus(), 60); return; } const item = inventory.find(x => x.rowNumber === rowNumber); if (!item) return; title.textContent = "Edit Item"; delRow.style.display = "block"; document.getElementById('f_item').value = item.item || ""; document.getElementById('f_store').value = item.store || ""; document.getElementById('f_qty').value = Number.isFinite(item.quantity) ? item.quantity : 1; document.getElementById('f_location').value = item.location || "Kitchen"; document.getElementById('f_storage').value = item.storage || "Cupboard"; document.getElementById('f_category').value = CATEGORIES.includes(item.category) ? item.category : ""; document.getElementById('f_expiry').value = item.expiry || ""; document.getElementById('f_notes').value = item.notes || ""; modal.classList.add('active'); setTimeout(() => document.getElementById('f_item').focus(), 60); }
+    function openItemEditor(rowNumber){ 
+      populateCategoryDropdown(); 
+      const modal = document.getElementById('itemModal'); 
+      const title = document.getElementById('itemModalTitle'); 
+      const delRow = document.getElementById('deleteRow'); 
+      editingId = rowNumber; 
+      if (!rowNumber){ 
+        title.textContent = "Add Item"; 
+        delRow.style.display = "none"; 
+        document.getElementById('f_item').value = ""; 
+        document.getElementById('f_store').value = ""; 
+        document.getElementById('f_qty').value = 1; 
+        document.getElementById('f_location').value = "Kitchen"; 
+        document.getElementById('f_storage').value = "Cupboard"; 
+        // Auto-select the first open category
+        let autoCategory = "";
+        for (const cat of openCats) {
+          if (CATEGORIES.includes(cat)) {
+            autoCategory = cat;
+            break;
+          }
+        }
+        document.getElementById('f_category').value = autoCategory; 
+        document.getElementById('f_expiry').value = ""; 
+        document.getElementById('f_notes').value = ""; 
+        modal.classList.add('active'); 
+        setTimeout(() => document.getElementById('f_item').focus(), 60); 
+        return; 
+      } 
+      const item = inventory.find(x => x.rowNumber === rowNumber); 
+      if (!item) return; 
+      title.textContent = "Edit Item"; 
+      delRow.style.display = "block"; 
+      document.getElementById('f_item').value = item.item || ""; 
+      document.getElementById('f_store').value = item.store || ""; 
+      document.getElementById('f_qty').value = Number.isFinite(item.quantity) ? item.quantity : 1; 
+      document.getElementById('f_location').value = item.location || "Kitchen"; 
+      document.getElementById('f_storage').value = item.storage || "Cupboard"; 
+      document.getElementById('f_category').value = CATEGORIES.includes(item.category) ? item.category : ""; 
+      document.getElementById('f_expiry').value = item.expiry || ""; 
+      document.getElementById('f_notes').value = item.notes || ""; 
+      modal.classList.add('active'); 
+      setTimeout(() => document.getElementById('f_item').focus(), 60); 
+    }
     function closeItemEditor(event){ if (event && event.target !== document.getElementById('itemModal')) return; document.getElementById('itemModal').classList.remove('active'); editingId = null; }
     function saveItemFromModal(){ const itemName = document.getElementById('f_item').value.trim(); if (!itemName){ toast("Item name required"); return; } const selectedCategory = document.getElementById('f_category').value; const payload = { item: itemName, store: document.getElementById('f_store').value.trim(), quantity: Math.max(0, parseInt(document.getElementById('f_qty').value || "0", 10)), location: document.getElementById('f_location').value, storage: document.getElementById('f_storage').value, category: CATEGORIES.includes(selectedCategory) ? selectedCategory : "", expiry: document.getElementById('f_expiry').value, notes: document.getElementById('f_notes').value.trim() }; ensureStoreHasColor(payload.store); if (!editingId){ const newId = Date.now() + Math.floor(Math.random()*1000); inventory.push({ rowNumber: newId, ...payload }); toast("Item added"); } else { const idx = inventory.findIndex(x => x.rowNumber === editingId); if (idx !== -1) { inventory[idx] = { ...inventory[idx], ...payload }; toast("Item updated"); } } saveInventoryToStorage(); reconcileShoppingListWithInventory(); updateCartBadge(); render(); closeItemEditor(); }
     function deleteItemFromModal(){ if (!editingId) return; const item = inventory.find(x => x.rowNumber === editingId); if (!item) return; if(confirm(`Remove "${item.item}" from this device?`)){ inventory = inventory.filter(x => x.rowNumber !== editingId); shoppingList = shoppingList.filter(x => x.rowNumber !== editingId); saveInventoryToStorage(); saveShoppingList(); updateCartBadge(); render(); closeItemEditor(); toast("Item removed"); } }
@@ -1956,22 +2660,46 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateQty(row, delta){ const item = inventory.find(x => x.rowNumber === row); if (!item) return; item.quantity = Math.max(0, (item.quantity ?? 0) + delta); const inCart = shoppingList.find(x => x.rowNumber === row); if (inCart){ inCart.quantity = item.quantity; saveShoppingList(); } saveInventoryToStorage(); render(); }
 
     function render(){
-      const container = document.getElementById('main'); const query = document.getElementById('search').value.toLowerCase(); const searchBtn = document.querySelector('.search-clear'); searchBtn.classList.toggle('active', query.length > 0); container.innerHTML = '';
+      const container = document.getElementById('main');
+      const query = document.getElementById('search').value.toLowerCase();
+      const searchBtn = document.querySelector('.search-clear');
+      searchBtn.classList.toggle('active', query.length > 0);
+      updateExpiryFilterButton();
+      container.innerHTML = '';
       const filtered = inventory.filter(i => { const name = (i.item || "").toLowerCase(); const store = (i.store || "").toLowerCase(); const notes = (i.notes || "").toLowerCase(); const sMatch = !query || name.includes(query) || store.includes(query) || notes.includes(query); const lMatch = filters.loc.size === 0 || filters.loc.has(i.location); const rMatch = filters.stor.size === 0 || filters.stor.has(i.storage); return sMatch && lMatch && rMatch; });
+      if (expiryFilterActive){
+        const dueItems = filtered.filter(isExpiryRelatedItem).sort((a,b)=>{ const aStatus=getExpiryStatus(a.expiry); const bStatus=getExpiryStatus(b.expiry); if ((aStatus?.state==='expired') !== (bStatus?.state==='expired')) return aStatus?.state==='expired' ? -1 : 1; const aDate=a.expiry?new Date(a.expiry).getTime():Number.MAX_SAFE_INTEGER; const bDate=b.expiry?new Date(b.expiry).getTime():Number.MAX_SAFE_INTEGER; if (aDate!==bDate) return aDate-bDate; return (a.item||'').localeCompare((b.item||''), undefined, {sensitivity:'base'}); });
+        const block = document.createElement('div'); block.className = 'category-card open due-to-expire-card'; block.setAttribute('data-category', DUE_TO_EXPIRE_CATEGORY); const catHeader = document.createElement('div'); catHeader.className = 'cat-header'; catHeader.innerHTML = `<div style="display:flex;align-items:center;flex:1;min-width:0;">${getCategoryIcon(DUE_TO_EXPIRE_CATEGORY)}<h2 class="cat-title">${escapeHtml(DUE_TO_EXPIRE_CATEGORY)}</h2></div><span class="cat-count">${dueItems.length}</span><svg class="cat-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>`; block.appendChild(catHeader); const content = document.createElement('div'); content.className = 'cat-content'; if (dueItems.length){ dueItems.forEach(i => content.appendChild(buildItemRow(i, true))); } else { content.innerHTML = '<div class="empty-state" style="padding:20px 16px;"><p>No expired or soon-to-expire items match your current filters.</p></div>'; } block.appendChild(content); container.appendChild(block); container.appendChild(buildBackToTopButton()); return;
+      }
       if (filtered.length === 0){ const hasActiveFilters = filters.loc.size > 0 || filters.stor.size > 0; const clearButtonHtml = hasActiveFilters ? `<button class="clear-filters-btn" onclick="clearFilters()">Clear Filters</button>` : ''; container.innerHTML = `<div class="empty-state"><div class="empty-icon">🧺</div><h2>No items found</h2><p>Try adjusting your filters or search</p>${clearButtonHtml}</div>`; return; }
-      const categories = [...new Set(filtered.map(i => getCategory(i) || 'Uncategorised'))];
-      categories.forEach(cat => {
-        const items = filtered.filter(i => (getCategory(i) || 'Uncategorised') === cat); if (items.length === 0) return;
-        const block = document.createElement('div'); block.className = `category-card ${openCats.has(cat) ? 'open' : ''}`;
-        const catHeader = document.createElement('div'); catHeader.className = 'cat-header'; catHeader.onclick = () => toggleCategory(cat); catHeader.innerHTML = `<h2 class="cat-title">${escapeHtml(cat)}</h2><span class="cat-count">${items.length}</span><svg class="cat-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>`; block.appendChild(catHeader);
-        const content = document.createElement('div'); content.className = 'cat-content';
-        items.forEach(i => {
-          const isInCart = shoppingList.some(x => x.rowNumber === i.rowNumber); const expiryStatus = getExpiryStatus(i.expiry); const row = document.createElement('div'); const storageClass = i.storage === "Fridge" ? "fridge" : i.storage === "Cupboard" ? "cupboard" : "freezer"; row.className = `item-row ${storageClass} ${(i.quantity ?? 0) === 0 ? 'out-of-stock' : ''} ${expiryStatus && expiryStatus.state === 'expired' ? 'expired' : ''}`;
-          row.innerHTML = `<div class="item-info"><span class="item-label">${escapeHtml(i.item)}</span><div class="item-meta">${escapeHtml(i.store || "Store")} • ${escapeHtml(i.location)} • ${escapeHtml(i.storage)}</div><div class="item-cat">${escapeHtml(getCategory(i) || "Uncategorised")}</div>${expiryStatus ? `<div class="expiry-badge ${expiryStatus.state}">${escapeHtml(expiryStatus.label)}</div>` : ""}${i.notes ? `<div class="item-submeta">Notes: ${escapeHtml(i.notes)}</div>` : ""}</div><div class="item-actions"><div class="item-controls"><button class="add-to-shop ${(i.quantity ?? 0) <= 2 ? 'show' : ''} ${isInCart ? 'in-cart' : ''}" onclick="addToShoppingList(${i.rowNumber})">${isInCart ? 'In Cart' : 'Add'}</button><div class="qty-control"><button class="qty-btn minus" onclick="updateQty(${i.rowNumber}, -1)">−</button><div class="qty-display">${i.quantity ?? 0}</div><button class="qty-btn plus" onclick="updateQty(${i.rowNumber}, 1)">+</button></div><div class="item-footer-actions"><button class="edit-btn" onclick="openItemEditor(${i.rowNumber})" title="Edit"><svg viewBox="0 -960 960 960" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button><button class="delete-btn" onclick="deleteItem(${i.rowNumber})">Remove</button></div></div></div>`;
-          content.appendChild(row);
-        });
-        block.appendChild(content); container.appendChild(block);
+      const categoryDisplayOrder = [
+        'Fruit & Veg',
+        'Dairy & Refrigerated',
+        'Bakery & Bread',
+        'Meat, Poultry & Seafood',
+        'Snacks',
+        'Beverages',
+        'Cereals & Breakfast',
+        'Frozen Foods',
+        'Pantry & Dry Goods',
+        'Canned Goods & Sauces',
+        'Condiments & Oils',
+        'Herbs & Spices',
+        'Household & Cleaning',
+        'Personal Care & Pharmacy'
+      ];
+      const categoryOrderMap = new Map(categoryDisplayOrder.map((name, index) => [name, index]));
+      const categories = [...new Set(filtered.map(i => getCategory(i) || 'Uncategorised'))].sort((a, b) => {
+        const aUncat = (a || '').toLowerCase() === 'uncategorised';
+        const bUncat = (b || '').toLowerCase() === 'uncategorised';
+        if (aUncat !== bUncat) return aUncat ? -1 : 1;
+        const aIndex = categoryOrderMap.has(a) ? categoryOrderMap.get(a) : Number.MAX_SAFE_INTEGER;
+        const bIndex = categoryOrderMap.has(b) ? categoryOrderMap.get(b) : Number.MAX_SAFE_INTEGER;
+        if (aIndex !== bIndex) return aIndex - bIndex;
+        return (a || '').localeCompare((b || ''), undefined, { sensitivity: 'base' });
       });
+      categories.forEach(cat => { const items = filtered.filter(i => (getCategory(i) || 'Uncategorised') === cat).sort((a,b)=>{ const aZero=(a.quantity ?? 0)===0; const bZero=(b.quantity ?? 0)===0; if(aZero!==bZero) return aZero-bZero; return (a.item||'').localeCompare((b.item||''), undefined, {sensitivity:'base'}); }); if (!items.length) return; const block = document.createElement('div'); block.className = `category-card ${openCats.has(cat) ? 'open' : ''}`; block.setAttribute('data-category', cat); const catHeader = document.createElement('div'); catHeader.className = 'cat-header'; catHeader.onclick = () => toggleCategory(cat); catHeader.innerHTML = `<div style="display:flex;align-items:center;flex:1;min-width:0;">${getCategoryIcon(cat)}<h2 class="cat-title">${escapeHtml(cat)}</h2></div><span class="cat-count">${items.length}</span><svg class="cat-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>`; block.appendChild(catHeader); const content = document.createElement('div'); content.className = 'cat-content'; items.forEach(i => content.appendChild(buildItemRow(i, false))); block.appendChild(content); container.appendChild(block); });
+      if (container.querySelector('.category-card')) container.appendChild(buildBackToTopButton());
     }
 
     function load(){
@@ -1981,7 +2709,7 @@ document.addEventListener('DOMContentLoaded', function () {
       inventory.forEach(i => ensureStoreHasColor(i.store)); reconcileShoppingListWithInventory(); updateCartBadge(); render(); updateHeaderHeight();
     }
 
-    window.addEventListener('load', () => { load(); updateHeaderHeight(); showSplashIfNeeded(); setTimeout(maybeOpenStartupGuide, 3400); });
+    window.addEventListener('load', () => { load(); updateHeaderHeight(); showSplashIfNeeded(); });
     window.addEventListener('resize', updateHeaderHeight);
     document.getElementById('search').addEventListener('input', () => render());
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape'){ closeShoppingList(); closeItemEditor(); closeCoachMarks(); closeImportChoice(); } });
@@ -2071,6 +2799,557 @@ document.addEventListener('DOMContentLoaded', function () {
   observer.observe(document.body, { childList: true, subtree: true, characterData: true });
 });
 </script>
+
+
+<style id="jp-popup-unification-20260324">
+  :root{
+    --jp-cream:#f7f3ee;
+    --jp-cream-2:#f4efe8;
+    --jp-ink:#11233f;
+    --jp-muted:#5f6b66;
+    --jp-overlay:rgba(17,24,39,0.22);
+    --jp-danger:#ef4b7a;
+    --jp-danger-dark:#dd3f6d;
+    --jp-cancel-bg:#f6f3ef;
+    --jp-cancel-border:#6d7a86;
+    --jp-green:#215f52;
+    --jp-green-dark:#184c42;
+    --jp-green-soft:#eef5f2;
+  }
+
+  .modal-overlay,
+  .modal-sheet-overlay,
+  .help-menu-overlay,
+  .coach-mark-overlay{
+    background:var(--jp-overlay) !important;
+    backdrop-filter:blur(12px) saturate(120%) !important;
+    -webkit-backdrop-filter:blur(12px) saturate(120%) !important;
+  }
+
+  .modal-content,
+  .modal-sheet-content,
+  .help-menu-container,
+  .coach-mark-container,
+  .confirm-sheet{
+    background:linear-gradient(180deg, rgba(255,255,255,0.985), rgba(248,246,242,0.98)) !important;
+    border:1px solid rgba(255,255,255,0.84) !important;
+    box-shadow:0 26px 64px rgba(17,24,39,0.16) !important;
+  }
+
+  .modal-header,
+  .modal-sheet-header{
+    background:linear-gradient(180deg, var(--jp-green) 0%, var(--jp-green-dark) 100%) !important;
+    color:#fff !important;
+  }
+
+  .help-menu-container{
+    width:min(500px, 94vw) !important;
+    border-radius:30px !important;
+    padding:30px 24px 24px !important;
+  }
+
+  .help-menu-title,
+  .coach-mark-title,
+  .about-section h3,
+  .data-manager-section h3{
+    color:var(--jp-ink) !important;
+  }
+
+  .help-menu-title{
+    font-size:clamp(25px, 4vw, 34px) !important;
+    line-height:1.08 !important;
+    letter-spacing:-0.7px !important;
+    margin:4px 42px 20px !important;
+  }
+
+  .modal-close,
+  .modal-sheet-close,
+  .help-menu-close{
+    width:48px !important;
+    height:48px !important;
+    min-width:48px !important;
+    min-height:48px !important;
+    border-radius:999px !important;
+    background:linear-gradient(180deg, var(--jp-green) 0%, var(--jp-green-dark) 100%) !important;
+    border:1px solid rgba(255,255,255,0.22) !important;
+    color:#fff !important;
+    box-shadow:0 12px 22px rgba(24,76,66,0.22) !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    padding:0 !important;
+    line-height:0 !important;
+  }
+  .modal-close:hover,
+  .modal-sheet-close:hover,
+  .help-menu-close:hover{
+    transform:translateY(-1px) !important;
+    background:linear-gradient(180deg, #2a7362 0%, #1c594d 100%) !important;
+  }
+  .modal-close:active,
+  .modal-sheet-close:active,
+  .help-menu-close:active{
+    transform:scale(.94) !important;
+  }
+  .modal-close svg,
+  .modal-sheet-close svg,
+  .help-menu-close svg{
+    width:19px !important;
+    height:19px !important;
+    display:block !important;
+    stroke:currentColor !important;
+    stroke-width:2.6 !important;
+    fill:none !important;
+  }
+  .help-menu-close{
+    position:absolute !important;
+    top:14px !important;
+    right:14px !important;
+    font-size:0 !important;
+  }
+
+  #importChoiceModal,
+  #jpConfirmModal{
+    align-items:center !important;
+    justify-content:center !important;
+    padding:22px !important;
+  }
+
+  #importChoiceModal .confirm-sheet,
+  #jpConfirmModal .confirm-sheet{
+    position:relative !important;
+    left:auto !important;
+    right:auto !important;
+    bottom:auto !important;
+    width:min(100%, 760px) !important;
+    min-height:auto !important;
+    border-radius:30px !important;
+    padding:32px 28px 24px !important;
+    display:flex !important;
+    flex-direction:column !important;
+    gap:0 !important;
+    animation:coachMarkIn .28s ease !important;
+  }
+
+  #importChoiceModal .confirm-sheet::before,
+  #jpConfirmModal .confirm-sheet::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:30px;
+    pointer-events:none;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.85);
+  }
+
+  #importChoiceModal .confirm-title,
+  #jpConfirmModal .confirm-title{
+    color:var(--jp-ink) !important;
+    font-size:clamp(24px, 3vw, 40px) !important;
+    line-height:1.08 !important;
+    letter-spacing:-0.8px !important;
+    text-align:center !important;
+    margin:0 32px 14px !important;
+    font-weight:900 !important;
+  }
+
+  #importChoiceModal .confirm-message,
+  #jpConfirmModal .confirm-message{
+    font-size:clamp(15px, 2vw, 18px) !important;
+    line-height:1.5 !important;
+    color:var(--jp-muted) !important;
+    text-align:center !important;
+    margin:0 auto 24px !important;
+    max-width:560px !important;
+    font-weight:600 !important;
+  }
+
+  #importChoiceModal .confirm-actions,
+  #jpConfirmModal .confirm-actions{
+    display:grid !important;
+    grid-template-columns:repeat(2, minmax(0,1fr)) !important;
+    gap:14px !important;
+    margin-top:0 !important;
+  }
+
+  #importChoiceModal .confirm-btn,
+  #jpConfirmModal .confirm-btn{
+    min-height:60px !important;
+    border-radius:16px !important;
+    font-size:18px !important;
+    font-weight:900 !important;
+    letter-spacing:-0.2px !important;
+    text-transform:none !important;
+    padding:16px 18px !important;
+    transition:transform .18s ease, box-shadow .18s ease, opacity .18s ease !important;
+  }
+
+  #importChoiceModal .confirm-btn:active,
+  #jpConfirmModal .confirm-btn:active{
+    transform:scale(.97) !important;
+  }
+
+  #importChoiceModal .confirm-btn.no,
+  #jpConfirmModal .confirm-btn.no{
+    background:linear-gradient(180deg, #faf7f3 0%, #f1ece5 100%) !important;
+    color:#4d5b66 !important;
+    border:2px solid var(--jp-cancel-border) !important;
+    box-shadow:0 8px 18px rgba(17,24,39,0.06) !important;
+  }
+
+  #importChoiceModal .confirm-btn.yes,
+  #jpConfirmModal .confirm-btn.yes{
+    background:linear-gradient(180deg, #ef4b7a 0%, #dd3f6d 100%) !important;
+    color:#fff !important;
+    border:none !important;
+    box-shadow:0 14px 28px rgba(239,75,122,0.24) !important;
+  }
+
+  #importChoiceModal .confirm-btn.jp-merge{
+    background:linear-gradient(180deg, var(--jp-green) 0%, var(--jp-green-dark) 100%) !important;
+    box-shadow:0 14px 28px rgba(24,76,66,0.22) !important;
+  }
+
+  #importChoiceModal .confirm-btn.jp-replace{
+    background:linear-gradient(180deg, #ef4b7a 0%, #dd3f6d 100%) !important;
+    color:#fff !important;
+  }
+
+  #importChoiceModal .confirm-btn.jp-cancel{
+    grid-column:1 / -1 !important;
+    max-width:280px !important;
+    justify-self:center !important;
+  }
+
+  #jpConfirmModal .confirm-btn.jp-cancel{
+    background:linear-gradient(180deg, #faf7f3 0%, #f1ece5 100%) !important;
+    color:#4d5b66 !important;
+    border:2px solid var(--jp-cancel-border) !important;
+    box-shadow:0 8px 18px rgba(17,24,39,0.06) !important;
+  }
+
+  #jpConfirmModal .confirm-btn.jp-danger{
+    background:linear-gradient(180deg, #ef4b7a 0%, #dd3f6d 100%) !important;
+    color:#fff !important;
+    box-shadow:0 14px 28px rgba(239,75,122,0.24) !important;
+  }
+
+  .help-menu-container,
+  .coach-mark-container{
+    background:linear-gradient(180deg, rgba(255,255,255,0.985), rgba(248,246,242,0.98)) !important;
+  }
+
+  .help-menu-buttons{
+    gap:12px !important;
+    margin-bottom:18px !important;
+  }
+
+  .help-menu-btn{
+    background:linear-gradient(180deg, var(--jp-green) 0%, var(--jp-green-dark) 100%) !important;
+    color:#fff !important;
+    border:none !important;
+    box-shadow:0 12px 24px rgba(24,76,66,0.18) !important;
+    border-radius:20px !important;
+    min-height:94px !important;
+    padding:18px 18px !important;
+    display:grid !important;
+    grid-template-columns:32px 1fr !important;
+    align-items:center !important;
+    justify-items:start !important;
+    text-align:left !important;
+    gap:14px !important;
+    text-transform:none !important;
+    font-size:16px !important;
+    letter-spacing:-0.2px !important;
+  }
+  .help-menu-btn:hover{
+    background:linear-gradient(180deg, #2a7362 0%, #1c594d 100%) !important;
+    transform:translateY(-1px) !important;
+  }
+  .help-menu-btn > div{
+    font-weight:900 !important;
+    line-height:1.15 !important;
+  }
+  .help-menu-btn-icon{
+    width:28px !important;
+    height:28px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    color:#fff !important;
+    stroke:#fff !important;
+    fill:#fff !important;
+  }
+  .help-menu-btn svg{
+    width:100% !important;
+    height:100% !important;
+    color:#fff !important;
+    stroke:#fff !important;
+    fill:#fff !important;
+  }
+
+  .help-region-title{
+    color:var(--jp-muted) !important;
+    font-size:13px !important;
+    letter-spacing:1.2px !important;
+    margin:16px 0 12px !important;
+  }
+
+  .help-region-row{
+    gap:12px !important;
+  }
+
+  .help-region-btn{
+    width:54px !important;
+    height:54px !important;
+    border-radius:999px !important;
+    border:1.5px solid rgba(24,76,66,0.12) !important;
+    background:linear-gradient(180deg, #ffffff 0%, var(--jp-cream) 100%) !important;
+    color:var(--jp-green-dark) !important;
+    box-shadow:0 10px 18px rgba(17,24,39,0.06) !important;
+    font-weight:900 !important;
+  }
+  .help-region-btn.active{
+    background:linear-gradient(180deg, var(--jp-green) 0%, var(--jp-green-dark) 100%) !important;
+    color:#fff !important;
+    border-color:transparent !important;
+    box-shadow:0 12px 22px rgba(24,76,66,0.18) !important;
+  }
+  .help-region-btn svg{
+    stroke:currentColor !important;
+  }
+
+  .data-btn,
+  .coach-mark-button,
+  .btn-wide.primary,
+  .btn-action.primary{
+    background:linear-gradient(180deg, var(--jp-green) 0%, var(--jp-green-dark) 100%) !important;
+    color:#fff !important;
+    border:none !important;
+    box-shadow:0 12px 24px rgba(24,76,66,0.18) !important;
+  }
+
+  .btn-wide.secondary,
+  .clear-filters-btn{
+    background:linear-gradient(180deg, #faf7f3 0%, #f1ece5 100%) !important;
+    color:#4d5b66 !important;
+    border:1px solid rgba(77,91,102,0.18) !important;
+  }
+
+  .btn-wide.danger,
+  .btn-action.danger,
+  .shopping-item-remove{
+    background:linear-gradient(180deg, #ef4b7a 0%, #dd3f6d 100%) !important;
+    color:#fff !important;
+    border:none !important;
+  }
+
+  @media (max-width: 640px){
+    .help-menu-container{
+      width:min(100%, 92vw) !important;
+      padding:26px 18px 20px !important;
+      border-radius:26px !important;
+    }
+
+    #importChoiceModal .confirm-sheet,
+    #jpConfirmModal .confirm-sheet{
+      width:min(100%, 560px) !important;
+      padding:28px 20px 20px !important;
+      border-radius:26px !important;
+    }
+
+    #importChoiceModal .confirm-actions,
+    #jpConfirmModal .confirm-actions{
+      grid-template-columns:1fr !important;
+    }
+
+    #importChoiceModal .confirm-btn.jp-cancel,
+    #jpConfirmModal .confirm-btn.jp-cancel{
+      grid-column:auto !important;
+      max-width:none !important;
+      justify-self:stretch !important;
+    }
+  }
+</style>
+
+<script id="jp-popup-unification-20260324-script">
+document.addEventListener('DOMContentLoaded', function(){
+  var importModal = document.getElementById('importChoiceModal');
+  if (importModal) {
+    var mergeBtn = importModal.querySelector("button[onclick*=\"merge\"]");
+    var replaceBtn = importModal.querySelector("button[onclick*=\"replace\"]");
+    var cancelBtn = importModal.querySelector("button[onclick*=\"cancel\"]");
+    if (mergeBtn) {
+      mergeBtn.classList.add('jp-merge');
+      mergeBtn.style.removeProperty('background');
+      mergeBtn.textContent = 'Merge items';
+    }
+    if (replaceBtn) {
+      replaceBtn.classList.add('jp-replace');
+      replaceBtn.style.removeProperty('background');
+      replaceBtn.style.removeProperty('color');
+      replaceBtn.textContent = 'Replace all items';
+    }
+    if (cancelBtn) {
+      cancelBtn.classList.add('jp-cancel');
+      cancelBtn.textContent = 'Cancel';
+    }
+  }
+
+
+  document.querySelectorAll('.help-menu-close').forEach(function(btn){
+    btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6L18 18M18 6L6 18"></path></svg>';
+    btn.setAttribute('aria-label','Close help');
+  });
+
+  document.querySelectorAll('.modal-close, .modal-sheet-close').forEach(function(btn){
+    if (!btn.querySelector('svg')) {
+      btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6L18 18M18 6L6 18"></path></svg>';
+    }
+  });
+
+  if (!document.getElementById('jpConfirmModal')) {
+    var modal = document.createElement('div');
+    modal.id = 'jpConfirmModal';
+    modal.className = 'modal-overlay';
+    modal.innerHTML = '' +
+      '<div class="confirm-sheet" role="dialog" aria-modal="true" aria-labelledby="jpConfirmTitle" onclick="event.stopPropagation()">' +
+        '<h3 class="confirm-title" id="jpConfirmTitle">Are you sure?</h3>' +
+        '<p class="confirm-message" id="jpConfirmMessage">This action cannot be undone.</p>' +
+        '<div class="confirm-actions">' +
+          '<button type="button" class="confirm-btn no jp-cancel" id="jpConfirmCancel">Cancel</button>' +
+          '<button type="button" class="confirm-btn yes jp-danger" id="jpConfirmOk">Delete</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(modal);
+  }
+
+  var confirmModal = document.getElementById('jpConfirmModal');
+  var confirmTitle = document.getElementById('jpConfirmTitle');
+  var confirmMessage = document.getElementById('jpConfirmMessage');
+  var confirmCancel = document.getElementById('jpConfirmCancel');
+  var confirmOk = document.getElementById('jpConfirmOk');
+  var pendingResolver = null;
+
+  function closeConfirm(result){
+    if (confirmModal) confirmModal.classList.remove('active');
+    if (pendingResolver) {
+      var resolver = pendingResolver;
+      pendingResolver = null;
+      resolver(!!result);
+    }
+  }
+
+  window.jpShowConfirm = function(options){
+    options = options || {};
+    if (confirmTitle) confirmTitle.textContent = options.title || 'Are you sure?';
+    if (confirmMessage) confirmMessage.textContent = options.message || 'This action cannot be undone.';
+    if (confirmCancel) confirmCancel.textContent = options.cancelText || 'Cancel';
+    if (confirmOk) confirmOk.textContent = options.okText || 'Delete';
+    if (confirmModal) confirmModal.classList.add('active');
+    return new Promise(function(resolve){ pendingResolver = resolve; });
+  };
+
+  if (confirmModal) {
+    confirmModal.addEventListener('click', function(e){ if (e.target === confirmModal) closeConfirm(false); });
+  }
+  if (confirmCancel) confirmCancel.addEventListener('click', function(){ closeConfirm(false); });
+  if (confirmOk) confirmOk.addEventListener('click', function(){ closeConfirm(true); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && confirmModal && confirmModal.classList.contains('active')) closeConfirm(false);
+  });
+
+  window.clearAllItems = async function(){
+    var approved = await window.jpShowConfirm({
+      title:'Clear shopping list?',
+      message:'Are you sure you want to remove every item from your shopping list? This action cannot be undone.',
+      okText:'Clear all',
+      cancelText:'Cancel'
+    });
+    if (!approved) return;
+    shoppingList = [];
+    saveShoppingList();
+    updateCartBadge();
+    render();
+    renderShoppingList();
+    toast('Shopping list cleared');
+  };
+
+  window.deleteItemFromModal = async function(){
+    if (!editingId) return;
+    var item = inventory.find(function(x){ return x.rowNumber === editingId; });
+    if (!item) return;
+    var approved = await window.jpShowConfirm({
+      title:'Are you sure?',
+      message:'Are you sure you want to delete "' + item.item + '"? This action cannot be undone.',
+      okText:'Delete',
+      cancelText:'Cancel'
+    });
+    if (!approved) return;
+    inventory = inventory.filter(function(x){ return x.rowNumber !== editingId; });
+    shoppingList = shoppingList.filter(function(x){ return x.rowNumber !== editingId; });
+    saveInventoryToStorage();
+    saveShoppingList();
+    updateCartBadge();
+    render();
+    closeItemEditor();
+    toast('Item removed');
+  };
+
+  window.deleteItem = async function(row){
+    var item = inventory.find(function(x){ return x.rowNumber === row; });
+    if (!item) return;
+    var approved = await window.jpShowConfirm({
+      title:'Are you sure?',
+      message:'Are you sure you want to delete "' + item.item + '"? This action cannot be undone.',
+      okText:'Delete',
+      cancelText:'Cancel'
+    });
+    if (!approved) return;
+    inventory = inventory.filter(function(x){ return x.rowNumber !== row; });
+    shoppingList = shoppingList.filter(function(x){ return x.rowNumber !== row; });
+    saveInventoryToStorage();
+    saveShoppingList();
+    updateCartBadge();
+    render();
+    toast('Item removed');
+  };
+
+  window.removeFromShoppingList = async function(index){
+    if (!shoppingList[index]) return;
+    var approved = await window.jpShowConfirm({
+      title:'Remove item?',
+      message:'Are you sure you want to remove "' + shoppingList[index].item + '" from your shopping list?',
+      okText:'Remove',
+      cancelText:'Cancel'
+    });
+    if (!approved) return;
+    shoppingList.splice(index,1);
+    saveShoppingList();
+    updateCartBadge();
+    render();
+    renderShoppingList();
+    toast('Item removed from shopping list');
+  };
+});
+</script>
+
+
+  <div class="modal-sheet-overlay item-action-overlay" id="itemActionMenuOverlay" onclick="closeItemActionMenu(event)">
+    <div class="item-action-sheet" onclick="event.stopPropagation()">
+      <div class="item-action-title">Item actions</div>
+      <div class="item-action-name" id="itemActionMenuName">Item</div>
+      <div class="item-action-list">
+        <button class="item-action-btn" type="button" onclick="handleItemActionEdit()">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h6l11-11a2 2 0 0 0-6-6L3 15v6Z"></path><path d="m14 4 6 6"></path></svg>
+          <span>Edit Item</span>
+        </button>
+        <button class="item-action-btn remove" type="button" onclick="handleItemActionRemove()">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
+          <span>Remove Item</span>
+        </button>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
