@@ -2587,7 +2587,18 @@ body{
     function closeDataManager(event) { if (event && event.target !== document.getElementById('dataManagerOverlay')) return; const overlay = document.getElementById('dataManagerOverlay'); if (overlay) overlay.classList.remove('active'); }
 
     function csvEscape(value) { const str = String(value ?? ""); return `"${str.replace(/"/g, '""')}"`; }
-    async function downloadBlobToDevice(blob, filename) {
+  async function downloadBlobToDevice(blob, filename) {
+  // Simple approach: create a download link and trigger it
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  window.URL.revokeObjectURL(url);
+  document.body.removeChild(a);
+  return { status: "saved", path: filename };
+}
       const capacitor = window.Capacitor;
       const plugins = capacitor?.Plugins || {};
       const isNativeAndroid = !!(capacitor && (capacitor.getPlatform?.() === "android" || capacitor.platform === "android"));
