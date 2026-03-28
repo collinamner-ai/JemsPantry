@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2587,12 +2588,77 @@ body{
 
     function csvEscape(value) { const str = String(value ?? ""); return `"${str.replace(/"/g, '""')}"`; }
     async function downloadBlobToDevice(blob, filename) {
-      const file = new File([blob], filename, { type: blob.type });
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        try { await navigator.share({ files: [file], title: filename }); return true; } catch (err) {}
+      const capacitor = window.Capacitor;
+      const plugins = capacitor?.Plugins || {};
+      const isNativeAndroid = !!(capacitor && (capacitor.getPlatform?.() === "android" || capacitor.platform === "android"));
+      const base64FromBlob = (sourceBlob) => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const result = reader.result;
+          if (typeof result !== "string") { reject(new Error("Could not convert file")); return; }
+          const commaIndex = result.indexOf(",");
+          resolve(commaIndex > -1 ? result.slice(commaIndex + 1) : result);
+        };
+        reader.onerror = () => reject(reader.error || new Error("Could not read file"));
+        reader.readAsDataURL(sourceBlob);
+      });
+
+      if (isNativeAndroid && plugins.Filesystem && plugins.FilePicker?.pickDirectory && plugins.FilePicker?.copyFile) {
+        try {
+          if (plugins.FilePicker.requestPermissions) {
+            await plugins.FilePicker.requestPermissions({
+              permissions: ["readExternalStorage"]
+            }).catch(() => {});
+          }
+
+          const base64Data = await base64FromBlob(blob);
+          const tempDir = "JemsPantryTemp";
+          const tempPath = `${tempDir}/${Date.now()}-${filename}`;
+
+          await plugins.Filesystem.mkdir({
+            path: tempDir,
+            directory: "Cache",
+            recursive: true
+          }).catch(() => {});
+
+          await plugins.Filesystem.writeFile({
+            path: tempPath,
+            data: base64Data,
+            directory: "Cache"
+          });
+
+          const tempUriResult = await plugins.Filesystem.getUri({
+            path: tempPath,
+            directory: "Cache"
+          });
+
+          const pickedDirectory = await plugins.FilePicker.pickDirectory();
+          const targetDirectory = pickedDirectory?.path;
+          if (!targetDirectory) throw new Error("No folder selected");
+
+          const destinationPath = `${targetDirectory.replace(/\/$/, "")}/${filename}`;
+
+          await plugins.FilePicker.copyFile({
+            from: tempUriResult.uri,
+            to: destinationPath,
+            overwrite: true
+          });
+
+          await plugins.Filesystem.deleteFile({
+            path: tempPath,
+            directory: "Cache"
+          }).catch(() => {});
+
+          return { status: "saved", path: destinationPath };
+        } catch (err) {
+          const message = String(err?.message || err || "");
+          if (/cancel/i.test(message)) return { status: "cancelled" };
+          console.error("Native Android export failed:", err);
+          return { status: "failed", message };
+        }
       }
-      try { const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = filename; a.rel = "noopener"; document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(() => URL.revokeObjectURL(url), 1500); return true; } catch (err) { console.error("Download failed:", err); }
-      try { const reader = new FileReader(); reader.onloadend = function () { const a = document.createElement("a"); a.href = reader.result; a.download = filename; document.body.appendChild(a); a.click(); document.body.removeChild(a); }; reader.readAsDataURL(blob); return true; } catch (err) { console.error("Fallback download failed:", err); return false; }
+
+      return { status: "failed", message: "Native export plugins unavailable" };
     }
     async function exportInventoryAsCSV() {
       if (!inventory.length) { toast("No items to export"); return; }
@@ -2601,10 +2667,15 @@ body{
       let csv = headers.map(csvEscape).join(",") + "\n"; rows.forEach(row => { csv += row.map(csvEscape).join(",") + "\n"; });
       const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
       const filename = `JemsPantry-items-${new Date().toISOString().split("T")[0]}.csv`;
-      const ok = await downloadBlobToDevice(blob, filename);
-      toast(ok ? "CSV ready to save locally" : "Could not download CSV on this device");
+      const result = await downloadBlobToDevice(blob, filename);
+      if (result?.status === "saved") {
+        toast("CSV saved to selected folder");
+      } else if (result?.status === "cancelled") {
+        toast("Export cancelled");
+      } else {
+        toast("Could not export CSV");
+      }
     }
-    function triggerImport() { const fileInput = document.getElementById("importFile"); if (fileInput) fileInput.click(); }
     function parseCSVLine(line) { const values = []; let current = ""; let inQuotes = false; for (let i = 0; i < line.length; i++) { const char = line[i], next = line[i + 1]; if (char === '"' && inQuotes && next === '"') { current += '"'; i++; continue; } if (char === '"') { inQuotes = !inQuotes; continue; } if (char === "," && !inQuotes) { values.push(current.trim()); current = ""; continue; } current += char; } values.push(current.trim()); return values; }
     function normalizeImportedItem(raw) { return { rowNumber: Date.now() + Math.floor(Math.random() * 1000000), item: raw.item || "", store: raw.store || "", location: raw.location || "Kitchen", storage: raw.storage || "Cupboard", category: raw.category || "", quantity: Math.max(0, parseInt(raw.quantity || "0", 10) || 0), expiry: raw.expiry || "", notes: raw.notes || "" }; }
     function handleImport(event) {
