@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1958,6 +1959,19 @@ body{
 }
 </style>
 
+
+<style id="jp-help-menu-no-close-v10">
+.help-menu-head-no-close{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+.help-menu-head-no-close .help-menu-title{
+  width:100% !important;
+  text-align:center !important;
+  margin:0 !important;
+}
+</style>
 </head>
 <body class="splash-showing preload-main">
   <div class="splash-overlay" id="splash" aria-hidden="true">
@@ -2022,7 +2036,6 @@ body{
           <div class="field"><label>Quantity</label><input id="f_qty" type="number" min="0" step="1" value="1"></div>
           <div class="field"><label>Expiry Date</label><input id="f_expiry" type="date"></div>
         </div>
-        <div class="field"><label>Notes</label><textarea id="f_notes" placeholder="Optional notes..."></textarea></div>
         <div class="form-actions"><button class="btn-wide secondary" onclick="closeItemEditor()">Cancel</button><button class="btn-wide primary" onclick="saveItemFromModal()">Save</button></div>
         <div class="form-actions" id="deleteRow" style="display:none;"><button class="btn-wide danger" onclick="deleteItemFromModal()">Remove Item</button></div>
       </div>
@@ -2030,21 +2043,43 @@ body{
   </div>
 
   <div class="help-menu-overlay" id="helpMenuOverlay" onclick="closeHelpMenu(event)">
-    <div class="help-menu-container" onclick="event.stopPropagation()">
-      <button class="help-menu-close" onclick="closeHelpMenu()">✕</button>
-      <h2 class="help-menu-title">How can we help?</h2>
-      <div class="help-menu-buttons">
-        <button class="help-menu-btn help-menu-btn-text-only" onclick="openWelcomeGuide()"><div>Welcome</div></button>
-        <button class="help-menu-btn" onclick="openGettingStarted()"><svg class="help-menu-btn-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f" aria-hidden="true"><path d="M560-564v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-600q-38 0-73 9.5T560-564Zm0 220v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-380q-38 0-73 9t-67 27Zm0-110v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-490q-38 0-73 9.5T560-454ZM260-320q47 0 91.5 10.5T440-278v-394q-41-24-87-36t-93-12q-36 0-71.5 7T120-692v396q35-12 69.5-18t70.5-6Zm260 42q44-21 88.5-31.5T700-320q36 0 70.5 6t69.5 18v-396q-33-14-68.5-21t-71.5-7q-47 0-93 12t-87 36v394Zm-40 118q-48-38-104-59t-116-21q-42 0-82.5 11T100-198q-21 11-40.5-1T40-234v-482q0-11 5.5-21T62-752q46-24 96-36t102-12q58 0 113.5 15T480-740q51-30 106.5-45T700-800q52 0 102 12t96 36q11 5 16.5 15t5.5 21v482q0 23-19.5 35t-40.5 1q-37-20-77.5-31T700-240q-60 0-116 21t-104 59ZM280-494Z"/></svg><div>Getting Started</div></button>
-        <button class="help-menu-btn" onclick="openDataManager()"><svg class="help-menu-btn-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f" aria-hidden="true"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg><div>Backup & Data</div></button>
-        <button class="help-menu-btn" onclick="openAbout()"><svg class="help-menu-btn-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f" aria-hidden="true"><path d="M440-280h80v-240h-80v240Zm68.5-331.5Q520-623 520-640t-11.5-28.5Q497-680 480-680t-28.5 11.5Q440-657 440-640t11.5 28.5Q463-600 480-600t28.5-11.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg><div>About</div></button>
+    <div class="help-menu-container" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="helpMenuTitle">
+      <div class="help-menu-head help-menu-head-minimal help-menu-head-no-close">
+        <h2 class="help-menu-title" id="helpMenuTitle">How can we help?</h2>
       </div>
-      <div class="help-region-title">Region Select</div>
-      <div class="help-region-row">
+      <div class="help-menu-buttons">
+        <button class="help-menu-btn" onclick="openWelcomeGuide()">
+          <span class="help-menu-btn-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 13.8 8l4.7 1.9-4.7 1.9L12 16.5l-1.8-4.7L5.5 9.9 10.2 8 12 3.5Z"></path><path d="M18.5 15.5 19.2 17l1.5.7-1.5.6-.7 1.6-.6-1.6-1.6-.6 1.6-.7.6-1.5Z"></path></svg>
+          </span>
+          <span class="help-menu-btn-copy"><strong>Welcome</strong><small>Quick tour of the app</small></span>
+        </button>
+        <button class="help-menu-btn" onclick="openGettingStarted()">
+          <span class="help-menu-btn-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4.5 6.5A2.5 2.5 0 0 1 7 4h12.5v15H7a2.5 2.5 0 0 0-2.5 2.5V6.5Z"></path><path d="M7 4A2.5 2.5 0 0 0 4.5 6.5V20"></path><path d="M9 8h7"></path><path d="M9 11h7"></path><path d="M9 14h5"></path></svg>
+          </span>
+          <span class="help-menu-btn-copy"><strong>Getting Started</strong><small>Quick answers and help</small></span>
+        </button>
+        <button class="help-menu-btn" onclick="openDataManager()">
+          <span class="help-menu-btn-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 4v10"></path><path d="m8.5 10.5 3.5 3.5 3.5-3.5"></path><path d="M5 17.5v1A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5v-1"></path></svg>
+          </span>
+          <span class="help-menu-btn-copy"><strong>Backup &amp; Data</strong><small>Export and import items</small></span>
+        </button>
+        <button class="help-menu-btn" onclick="openAbout()">
+          <span class="help-menu-btn-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9"></circle><path d="M12 10.25v5.25"></path><path d="M12 7.75h.01"></path></svg>
+          </span>
+          <span class="help-menu-btn-copy"><strong>About</strong><small>Version and privacy info</small></span>
+        </button>
+      </div>
+      <div class="help-menu-divider" aria-hidden="true"></div>
+      <div class="help-region-title">Region</div>
+      <div class="help-region-row" role="group" aria-label="Choose region">
         <button class="help-region-btn" data-region="UK" onclick="selectRegion('UK'); updateRegionButtons();">UK</button>
         <button class="help-region-btn" data-region="US" onclick="selectRegion('US'); updateRegionButtons();">US</button>
         <button class="help-region-btn" data-region="EU" onclick="selectRegion('EU'); updateRegionButtons();">EU</button>
-        <button class="help-region-btn" data-region="Global" onclick="selectRegion('Global'); updateRegionButtons();"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></button>
+        <button class="help-region-btn" data-region="Global" onclick="selectRegion('Global'); updateRegionButtons();"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3c2.8 2.4 4.2 5.4 4.2 9S14.8 18.6 12 21c-2.8-2.4-4.2-5.4-4.2-9S9.2 5.4 12 3Z"></path></svg><span>Global</span></button>
       </div>
     </div>
   </div>
@@ -2052,12 +2087,28 @@ body{
   <div class="modal-sheet-overlay" id="aboutModalOverlay" onclick="closeAboutModal(event)">
     <div class="modal-sheet-content" onclick="event.stopPropagation()">
       <div class="modal-sheet-header"><h2>About JemsPantry</h2><button class="modal-sheet-close" onclick="closeAboutModal()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6L18 18M18 6L6 18"></path></svg></button></div>
-      <div class="modal-sheet-body">
-        <div class="about-section"><h3>Version</h3><p>JemsPantry v1.0.0</p></div>
-        <div class="about-section"><h3>About</h3><p>JemsPantry is a smart pantry management app designed to help you organize your kitchen, reduce food waste, and save time and money.</p></div>
-        <div class="about-section"><h3>Features</h3><div class="about-feature-list"><div class="about-feature-item">Track items & expiry dates</div><div class="about-feature-item">Reduce food waste</div><div class="about-feature-item">Manage shopping lists</div><div class="about-feature-item">100% local privacy - no data uploaded</div><div class="about-feature-item">Search and filter items easily</div><div class="about-feature-item">Smart categorization</div></div></div>
-        <div class="about-section"><h3>Privacy</h3><p>All your pantry data is stored locally on your device. Nothing is uploaded to external servers. Your data, your control.</p></div>
-        <div class="about-section"><h3>Support</h3><p>For help or feedback, open Welcome or Getting Started from the help menu, or contact us through the app.</p></div>
+      <div class="modal-sheet-body about-modal-body">
+        <section class="about-hero-card">
+          <div class="about-version-pill">Version 1.0.0</div>
+          <p class="about-lead">Smart pantry tracking that helps you organise food, spot expiry dates and waste less.</p>
+        </section>
+        <div class="about-section">
+          <h3>What it does</h3>
+          <div class="about-feature-list compact">
+            <div class="about-feature-item">Track pantry items and quantities</div>
+            <div class="about-feature-item">See expiry dates faster</div>
+            <div class="about-feature-item">Build and manage shopping lists</div>
+            <div class="about-feature-item">Keep everything simple and local</div>
+          </div>
+        </div>
+        <div class="about-section">
+          <h3>Privacy</h3>
+          <p>All pantry data stays on your device. Nothing is uploaded to external servers.</p>
+        </div>
+        <div class="about-section">
+          <h3>Need help?</h3>
+          <p>Open Welcome or Getting Started from the help menu for guides, tips and support.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -2069,11 +2120,18 @@ body{
         <div class="data-manager-section">
           <h3>Manage Your Data</h3>
           <div class="data-manager-buttons">
-            <button class="data-btn" onclick="exportInventoryAsCSV()"><svg class="help-menu-btn-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f" aria-hidden="true"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>Export Items Data (.csv)</button>
-            <button class="data-btn" onclick="triggerImport()"><svg class="help-menu-btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-  <path d="M12 6.5V17.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-  <path d="M6.5 12H17.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-</svg>Import Items Data (.csv)</button>
+            <button class="data-btn" type="button" onclick="exportInventoryAsCSV()">
+              <span class="data-btn-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 4v10"></path><path d="m8.5 10.5 3.5 3.5 3.5-3.5"></path><path d="M5 17.5v1A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5v-1"></path></svg>
+              </span>
+              <span class="data-btn-copy"><strong>Export CSV</strong><small>File save location: Documents/JemsPantry</small></span>
+            </button>
+            <button class="data-btn" type="button" onclick="triggerImport()">
+              <span class="data-btn-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 20V10"></path><path d="m15.5 13.5-3.5-3.5-3.5 3.5"></path><path d="M5 6.5v-1A1.5 1.5 0 0 1 6.5 4h11A1.5 1.5 0 0 1 19 5.5v1"></path></svg>
+              </span>
+              <span class="data-btn-copy"><strong>Import CSV</strong><small>Open a saved pantry file from this device</small></span>
+            </button>
           </div>
         </div>
       </div>
@@ -2325,15 +2383,99 @@ body{
     function clearSearch(){ document.getElementById('search').value = ''; document.querySelector('.search-clear').classList.remove('active'); render(); }
     function setFilter(type,val,el){ filters[type].has(val) ? filters[type].delete(val) : filters[type].add(val); el.classList.toggle('active'); render(); }
     function clearFilters() { filters.loc.clear(); filters.stor.clear(); document.querySelectorAll('.filter-chips .chip').forEach(chip => chip.classList.remove('active')); render(); toast('Filters cleared'); }
-    function saveOpenCatsToStorage(){ try { localStorage.setItem(OPENCATS_STORAGE_KEY, JSON.stringify([...openCats])); } catch(e){} }
-    function loadOpenCatsFromStorage(){ try{ const raw = localStorage.getItem(OPENCATS_STORAGE_KEY); if (!raw) return new Set(); const parsed = JSON.parse(raw); return new Set(Array.isArray(parsed) ? parsed : []); }catch(e){ return new Set(); } }
+    // Capacitor Preferences for mobile APK storage (more reliable than localStorage)
+    const useCapacitor = () => typeof CapacitorStorage !== 'undefined' || (typeof window !== 'undefined' && window.CapacitorStorage);
+    
+    async function saveWithCapacitor(key, value) {
+      try {
+        const storage = window.CapacitorStorage || CapacitorStorage;
+        if (!storage || !storage.Preferences) return false;
+        await storage.Preferences.set({ key, value });
+        console.log('✓ Saved to Capacitor:', key);
+        return true;
+      } catch(e) {
+        console.warn('Capacitor save fallback to localStorage:', e);
+        return false;
+      }
+    }
+    
+    function saveOpenCatsToStorage(){ 
+      try { 
+        const data = JSON.stringify([...openCats]);
+        localStorage.setItem(OPENCATS_STORAGE_KEY, data);
+        if (useCapacitor()) saveWithCapacitor(OPENCATS_STORAGE_KEY, data);
+      } catch(e){ console.error('Error saving categories:', e); } 
+    }
+    
+    function loadOpenCatsFromStorage(){ 
+      try{ 
+        const raw = localStorage.getItem(OPENCATS_STORAGE_KEY); 
+        if (!raw) return new Set(); 
+        const parsed = JSON.parse(raw); 
+        return new Set(Array.isArray(parsed) ? parsed : []); 
+      }catch(e){ return new Set(); } 
+    }
+    
     function toggleCategory(cat){ openCats.forEach(c => { if (c !== cat) openCats.delete(c); }); openCats.has(cat) ? openCats.delete(cat) : openCats.add(cat); saveOpenCatsToStorage(); render(); }
-    function saveInventoryToStorage(){ try { localStorage.setItem(INVENTORY_STORAGE_KEY, JSON.stringify(inventory)); } catch(e){} }
-    function loadInventoryFromStorage(){ try{ const raw = localStorage.getItem(INVENTORY_STORAGE_KEY); if (!raw) return []; const parsed = JSON.parse(raw); return Array.isArray(parsed) ? parsed : []; }catch(e){ return []; } }
-    function saveShoppingList(){ try { localStorage.setItem(SHOPPING_STORAGE_KEY, JSON.stringify(shoppingList)); } catch(e){} }
-    function loadShoppingListFromStorage(){ try{ const raw = localStorage.getItem(SHOPPING_STORAGE_KEY); if (!raw) return []; const parsed = JSON.parse(raw); return Array.isArray(parsed) ? parsed : []; }catch(e){ return []; } }
-    function saveStoreColors(){ try { localStorage.setItem(STORE_COLORS_KEY, JSON.stringify(storeColors)); } catch(e){} }
-    function loadStoreColors(){ try{ const raw = localStorage.getItem(STORE_COLORS_KEY); const parsed = raw ? JSON.parse(raw) : {}; storeColors = (parsed && typeof parsed === "object") ? parsed : {}; }catch(e){ storeColors = {}; } }
+    
+    function saveInventoryToStorage(){ 
+      try { 
+        const data = JSON.stringify(inventory);
+        localStorage.setItem(INVENTORY_STORAGE_KEY, data);
+        console.log('✓ Saved inventory to localStorage:', inventory.length, 'items');
+        // Also save to Capacitor for mobile APKs
+        if (useCapacitor()) saveWithCapacitor(INVENTORY_STORAGE_KEY, data);
+      } catch(e){ 
+        console.error('Error saving inventory:', e); 
+      } 
+    }
+    
+    function loadInventoryFromStorage(){ 
+      try{ 
+        const raw = localStorage.getItem(INVENTORY_STORAGE_KEY); 
+        if (!raw) return []; 
+        const parsed = JSON.parse(raw); 
+        console.log('✓ Loaded inventory:', parsed.length, 'items'); 
+        return Array.isArray(parsed) ? parsed : []; 
+      }catch(e){ 
+        console.error('Error loading inventory:', e); 
+        return []; 
+      } 
+    }
+    
+    function saveShoppingList(){ 
+      try { 
+        const data = JSON.stringify(shoppingList);
+        localStorage.setItem(SHOPPING_STORAGE_KEY, data);
+        console.log('✓ Saved shopping list');
+        if (useCapacitor()) saveWithCapacitor(SHOPPING_STORAGE_KEY, data);
+      } catch(e){ console.error('Error saving shopping list:', e); } 
+    }
+    
+    function loadShoppingListFromStorage(){ 
+      try{ 
+        const raw = localStorage.getItem(SHOPPING_STORAGE_KEY); 
+        if (!raw) return []; 
+        const parsed = JSON.parse(raw); 
+        return Array.isArray(parsed) ? parsed : []; 
+      }catch(e){ console.error('Error loading shopping list:', e); return []; } 
+    }
+    
+    function saveStoreColors(){ 
+      try { 
+        const data = JSON.stringify(storeColors);
+        localStorage.setItem(STORE_COLORS_KEY, data);
+        if (useCapacitor()) saveWithCapacitor(STORE_COLORS_KEY, data);
+      } catch(e){ console.error('Error saving store colors:', e); } 
+    }
+    
+    function loadStoreColors(){ 
+      try{ 
+        const raw = localStorage.getItem(STORE_COLORS_KEY); 
+        const parsed = raw ? JSON.parse(raw) : {}; 
+        storeColors = (parsed && typeof parsed === "object") ? parsed : {}; 
+      }catch(e){ storeColors = {}; } 
+    }
     function reconcileShoppingListWithInventory(){ const byRow = new Map(inventory.map(i => [i.rowNumber, i])); shoppingList = shoppingList.filter(x => byRow.has(x.rowNumber)).map(x => { const inv = byRow.get(x.rowNumber); return { ...x, item: inv.item, store: inv.store, quantity: inv.quantity, category: inv.category }; }); saveShoppingList(); }
     function updateCartBadge(){ const badge = document.getElementById('cartBadge'); const count = shoppingList.length; if (count === 0) badge.classList.add('hidden'); else { badge.classList.remove('hidden'); badge.textContent = count; } }
     function getContrastingTextColor(hexColor){ const hex = String(hexColor || "").replace("#", ""); if (hex.length !== 6) return "#FFFFFF"; const r = parseInt(hex.substring(0,2),16); const g = parseInt(hex.substring(2,4),16); const b = parseInt(hex.substring(4,6),16); const luminance = (0.299*r + 0.587*g + 0.114*b) / 255; return luminance > 0.62 ? "#000000" : "#FFFFFF"; }
@@ -2427,7 +2569,7 @@ body{
       const addButton = `<button class="add-to-shop show ${isInCart ? 'in-cart' : ''}" onclick="event.stopPropagation(); addToShoppingList(${i.rowNumber})" aria-label="${isInCart ? 'Remove from shopping list' : 'Add to shopping list'}" title="${isInCart ? 'In shopping list' : 'Add to shopping list'}">${addIcon}</button>`;
       const qtyControls = simpleExpiryView ? '' : `<div class="qty-control"><button class="qty-btn minus" onclick="event.stopPropagation(); updateQty(${i.rowNumber}, -1)">−</button><div class="qty-display-wrap"><div class="qty-display">${i.quantity ?? 0}</div></div><button class="qty-btn plus" onclick="event.stopPropagation(); updateQty(${i.rowNumber}, 1)">+</button></div>`;
       const expiryHtml = expiryStatus ? `<div class="item-expiry-block"><div class="expiry-badge ${expiryStatus.state}">${escapeHtml(expiryStatus.label)}</div></div>` : `<div class="item-expiry-block"></div>`;
-      const notesHtml = i.notes ? `<div class="item-submeta">${escapeHtml(i.notes)}</div>` : "";
+      const notesHtml = "";
 
       row.innerHTML = `<div class="item-main"><div class="item-top-row"><div class="item-info"><div class="item-label">${escapeHtml(i.item)}</div><div class="item-meta">${escapeHtml(i.store || 'Store')}</div>${notesHtml}</div><div class="item-actions"><div class="item-top-actions">${addButton}${menuButton}</div></div></div><div class="item-bottom-row">${expiryHtml}<div class="item-side-stack">${qtyControls}</div></div></div>`;
       return row;
@@ -2587,78 +2729,21 @@ body{
 
     function csvEscape(value) { const str = String(value ?? ""); return `"${str.replace(/"/g, '""')}"`; }
   async function downloadBlobToDevice(blob, filename) {
-    try {
-      // Convert blob to base64
-      const base64Data = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const result = reader.result;
-          if (typeof result === 'string') {
-            // Extract base64 part (remove data:...;base64, prefix)
-            const base64 = result.includes(',') ? result.split(',')[1] : result;
-            resolve(base64);
-          } else {
-            reject(new Error('Could not convert blob to base64'));
-          }
-        };
-        reader.onerror = () => reject(reader.error || new Error('FileReader error'));
-        reader.readAsDataURL(blob);
-      });
-
-      // Check if Capacitor Filesystem is available
-      if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Filesystem) {
-        const Filesystem = window.Capacitor.Plugins.Filesystem;
-        
-        // Try to write to Documents directory (where user can access)
-        try {
-          const result = await Filesystem.writeFile({
-            path: filename,
-            data: base64Data,
-            directory: window.Capacitor.Plugins.Filesystem.Directory.Documents,
-            encoding: window.Capacitor.Plugins.Filesystem.Encoding.UTF8
-          });
-          
-          return { status: "saved", path: result.uri || filename };
-        } catch (docError) {
-          console.warn("Documents directory write failed, trying Downloads:", docError);
-          
-          // Fallback to Downloads directory
-          try {
-            const result = await Filesystem.writeFile({
-              path: filename,
-              data: base64Data,
-              directory: window.Capacitor.Plugins.Filesystem.Directory.Downloads,
-              encoding: window.Capacitor.Plugins.Filesystem.Encoding.UTF8
-            });
-            
-            return { status: "saved", path: result.uri || filename };
-          } catch (dlError) {
-            console.warn("Downloads directory also failed:", dlError);
-          }
-        }
-      }
-
-      // Fallback: Use blob URL (works in some cases)
-      console.log("Capacitor Filesystem not available, using blob URL fallback");
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-      
-      return { status: "saved", path: filename };
-    } catch (error) {
-      console.error("downloadBlobToDevice error:", error);
-      return { status: "failed", message: error.message || "Unknown error" };
-    }
-  }
+  // Simple approach: create a download link and trigger it
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  window.URL.revokeObjectURL(url);
+  document.body.removeChild(a);
+  return { status: "saved", path: filename };
+}
     async function exportInventoryAsCSV() {
       if (!inventory.length) { toast("No items to export"); return; }
-      const headers = ["Item","Store","Location","Storage","Category","Quantity","Expiry","Notes"];
-      const rows = inventory.map(item => [item.item || "", item.store || "", item.location || "", item.storage || "", getCategory(item) || "", item.quantity ?? 0, item.expiry || "", item.notes || ""]);
+      const headers = ["Item","Store","Location","Storage","Category","Quantity","Expiry"];
+      const rows = inventory.map(item => [item.item || "", item.store || "", item.location || "", item.storage || "", getCategory(item) || "", item.quantity ?? 0, item.expiry || ""]);
       let csv = headers.map(csvEscape).join(",") + "\n"; rows.forEach(row => { csv += row.map(csvEscape).join(",") + "\n"; });
       const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
       const filename = `JemsPantry-items-${new Date().toISOString().split("T")[0]}.csv`;
@@ -2736,6 +2821,7 @@ body{
       const modal = document.getElementById('itemModal'); 
       const title = document.getElementById('itemModalTitle'); 
       const delRow = document.getElementById('deleteRow'); 
+      const notesField = document.getElementById('f_notes');
       editingId = rowNumber; 
       if (!rowNumber){ 
         title.textContent = "Add Item"; 
@@ -2755,7 +2841,7 @@ body{
         }
         document.getElementById('f_category').value = autoCategory; 
         document.getElementById('f_expiry').value = ""; 
-        document.getElementById('f_notes').value = ""; 
+        if (notesField) notesField.value = "";
         modal.classList.add('active'); 
         setTimeout(() => document.getElementById('f_item').focus(), 60); 
         return; 
@@ -2771,15 +2857,53 @@ body{
       document.getElementById('f_storage').value = item.storage || "Cupboard"; 
       document.getElementById('f_category').value = CATEGORIES.includes(item.category) ? item.category : ""; 
       document.getElementById('f_expiry').value = item.expiry || ""; 
-      document.getElementById('f_notes').value = item.notes || ""; 
+      if (notesField) notesField.value = "";
       modal.classList.add('active'); 
       setTimeout(() => document.getElementById('f_item').focus(), 60); 
     }
     function closeItemEditor(event){ if (event && event.target !== document.getElementById('itemModal')) return; document.getElementById('itemModal').classList.remove('active'); editingId = null; }
-    function saveItemFromModal(){ const itemName = document.getElementById('f_item').value.trim(); if (!itemName){ toast("Item name required"); return; } const selectedCategory = document.getElementById('f_category').value; const payload = { item: itemName, store: document.getElementById('f_store').value.trim(), quantity: Math.max(0, parseInt(document.getElementById('f_qty').value || "0", 10)), location: document.getElementById('f_location').value, storage: document.getElementById('f_storage').value, category: CATEGORIES.includes(selectedCategory) ? selectedCategory : "", expiry: document.getElementById('f_expiry').value, notes: document.getElementById('f_notes').value.trim() }; ensureStoreHasColor(payload.store); if (!editingId){ const newId = Date.now() + Math.floor(Math.random()*1000); inventory.push({ rowNumber: newId, ...payload }); toast("Item added"); } else { const idx = inventory.findIndex(x => x.rowNumber === editingId); if (idx !== -1) { inventory[idx] = { ...inventory[idx], ...payload }; toast("Item updated"); } } saveInventoryToStorage(); reconcileShoppingListWithInventory(); updateCartBadge(); render(); closeItemEditor(); }
+    function saveItemFromModal(){ const itemName = document.getElementById('f_item').value.trim(); if (!itemName){ toast("Item name required"); return; } const selectedCategory = document.getElementById('f_category').value; const notesField = document.getElementById('f_notes'); const existingItem = editingId ? inventory.find(x => x.rowNumber === editingId) : null; const payload = { item: itemName, store: document.getElementById('f_store').value.trim(), quantity: Math.max(0, parseInt(document.getElementById('f_qty').value || "0", 10)), location: document.getElementById('f_location').value, storage: document.getElementById('f_storage').value, category: CATEGORIES.includes(selectedCategory) ? selectedCategory : "", expiry: document.getElementById('f_expiry').value, notes: '' }; ensureStoreHasColor(payload.store); if (!editingId){ const newId = Date.now() + Math.floor(Math.random()*1000); inventory.push({ rowNumber: newId, ...payload }); toast("Item added"); } else { const idx = inventory.findIndex(x => x.rowNumber === editingId); if (idx !== -1) { inventory[idx] = { ...inventory[idx], ...payload }; toast("Item updated"); } } saveInventoryToStorage(); reconcileShoppingListWithInventory(); updateCartBadge(); render(); closeItemEditor(); }
     function deleteItemFromModal(){ if (!editingId) return; const item = inventory.find(x => x.rowNumber === editingId); if (!item) return; if(confirm(`Remove "${item.item}" from this device?`)){ inventory = inventory.filter(x => x.rowNumber !== editingId); shoppingList = shoppingList.filter(x => x.rowNumber !== editingId); saveInventoryToStorage(); saveShoppingList(); updateCartBadge(); render(); closeItemEditor(); toast("Item removed"); } }
     function deleteItem(row){ const item = inventory.find(x => x.rowNumber === row); if (!item) return; if(confirm(`Remove "${item.item}" from this device?`)){ inventory = inventory.filter(x => x.rowNumber !== row); shoppingList = shoppingList.filter(x => x.rowNumber !== row); saveInventoryToStorage(); saveShoppingList(); updateCartBadge(); render(); toast("Item removed"); } }
-    function updateQty(row, delta){ const item = inventory.find(x => x.rowNumber === row); if (!item) return; item.quantity = Math.max(0, (item.quantity ?? 0) + delta); const inCart = shoppingList.find(x => x.rowNumber === row); if (inCart){ inCart.quantity = item.quantity; saveShoppingList(); } saveInventoryToStorage(); render(); }
+    function updateQty(row, delta){ const item = inventory.find(x => x.rowNumber === row); if (!item) return; item.quantity = Math.max(0, (item.quantity ?? 0) + delta); const inCart = shoppingList.find(x => x.rowNumber === row); if (inCart){ inCart.quantity = item.quantity; saveShoppingList(); } saveInventoryToStorage(); render(); } 
+    
+    // ===== CRITICAL: MULTIPLE AUTO-SAVE MECHANISMS =====
+    // 1. Save when page is about to unload (most reliable)
+    window.addEventListener('beforeunload', (e) => { 
+      saveInventoryToStorage(); 
+      saveShoppingList(); 
+      console.log('BEFOREUNLOAD: Saving all data');
+    });
+    
+    // 2. Save when page is hidden (tab switch, minimize)
+    document.addEventListener('visibilitychange', () => { 
+      if (document.hidden) { 
+        saveInventoryToStorage(); 
+        saveShoppingList(); 
+        console.log('VISIBILITY CHANGE: Page hidden - saving');
+      } 
+    });
+    
+    // 3. Save when page is about to be hidden (unload event)
+    window.addEventListener('unload', (e) => { 
+      saveInventoryToStorage(); 
+      saveShoppingList(); 
+      console.log('UNLOAD: Saving before page closes');
+    });
+    
+    // 4. Save when page is hidden (pagehide - works on iOS/Safari)
+    window.addEventListener('pagehide', (e) => { 
+      saveInventoryToStorage(); 
+      saveShoppingList(); 
+      console.log('PAGEHIDE: Saving before page hidden');
+    });
+    
+    // 5. Periodic auto-save every 30 seconds (safety net)
+    setInterval(() => {
+      saveInventoryToStorage();
+      saveShoppingList();
+      console.log('PERIODIC AUTO-SAVE: Interval save');
+    }, 30000);
 
     function render(){
       const container = document.getElementById('main');
@@ -2788,7 +2912,7 @@ body{
       searchBtn.classList.toggle('active', query.length > 0);
       updateExpiryFilterButton();
       container.innerHTML = '';
-      const filtered = inventory.filter(i => { const name = (i.item || "").toLowerCase(); const store = (i.store || "").toLowerCase(); const notes = (i.notes || "").toLowerCase(); const sMatch = !query || name.includes(query) || store.includes(query) || notes.includes(query); const lMatch = filters.loc.size === 0 || filters.loc.has(i.location); const rMatch = filters.stor.size === 0 || filters.stor.has(i.storage); return sMatch && lMatch && rMatch; });
+      const filtered = inventory.filter(i => { const name = (i.item || "").toLowerCase(); const store = (i.store || "").toLowerCase(); const sMatch = !query || name.includes(query) || store.includes(query); const lMatch = filters.loc.size === 0 || filters.loc.has(i.location); const rMatch = filters.stor.size === 0 || filters.stor.has(i.storage); return sMatch && lMatch && rMatch; });
       if (expiryFilterActive){
         const dueItems = filtered.filter(isExpiryRelatedItem).sort((a,b)=>{ const aStatus=getExpiryStatus(a.expiry); const bStatus=getExpiryStatus(b.expiry); if ((aStatus?.state==='expired') !== (bStatus?.state==='expired')) return aStatus?.state==='expired' ? -1 : 1; const aDate=a.expiry?new Date(a.expiry).getTime():Number.MAX_SAFE_INTEGER; const bDate=b.expiry?new Date(b.expiry).getTime():Number.MAX_SAFE_INTEGER; if (aDate!==bDate) return aDate-bDate; return (a.item||'').localeCompare((b.item||''), undefined, {sensitivity:'base'}); });
         const block = document.createElement('div'); block.className = 'category-card open due-to-expire-card'; block.setAttribute('data-category', DUE_TO_EXPIRE_CATEGORY); const catHeader = document.createElement('div'); catHeader.className = 'cat-header'; catHeader.innerHTML = `<div style="display:flex;align-items:center;flex:1;min-width:0;">${getCategoryIcon(DUE_TO_EXPIRE_CATEGORY)}<h2 class="cat-title">${escapeHtml(DUE_TO_EXPIRE_CATEGORY)}</h2></div><span class="cat-count">${dueItems.length}</span><svg class="cat-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>`; block.appendChild(catHeader); const content = document.createElement('div'); content.className = 'cat-content'; if (dueItems.length){ dueItems.forEach(i => content.appendChild(buildItemRow(i, true))); } else { content.innerHTML = '<div class="empty-state" style="padding:20px 16px;"><p>No expired or soon-to-expire items match your current filters.</p></div>'; } block.appendChild(content); container.appendChild(block); container.appendChild(buildBackToTopButton()); return;
@@ -3453,21 +3577,2023 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 
   <div class="modal-sheet-overlay item-action-overlay" id="itemActionMenuOverlay" onclick="closeItemActionMenu(event)">
-    <div class="item-action-sheet" onclick="event.stopPropagation()">
-      <div class="item-action-title">Item actions</div>
-      <div class="item-action-name" id="itemActionMenuName">Item</div>
+    <div class="item-action-sheet" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="itemActionMenuName">
+      <div class="item-action-head">
+        <div class="item-action-head-copy">
+          <div class="item-action-title">Item actions</div>
+          <div class="item-action-name" id="itemActionMenuName">Item</div>
+        </div>
+        <button class="item-action-close" type="button" onclick="closeItemActionMenu()" aria-label="Close item actions">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6L18 18M18 6L6 18"></path></svg>
+        </button>
+      </div>
       <div class="item-action-list">
         <button class="item-action-btn" type="button" onclick="handleItemActionEdit()">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h6l11-11a2 2 0 0 0-6-6L3 15v6Z"></path><path d="m14 4 6 6"></path></svg>
-          <span>Edit Item</span>
+          <span class="item-action-btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21h6l11-11a2 2 0 0 0-6-6L3 15v6Z"></path><path d="m14 4 6 6"></path></svg></span>
+          <span class="item-action-btn-copy"><strong>Edit item</strong><small>Update quantity and expiry</small></span>
         </button>
         <button class="item-action-btn remove" type="button" onclick="handleItemActionRemove()">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
-          <span>Remove Item</span>
+          <span class="item-action-btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></span>
+          <span class="item-action-btn-copy"><strong>Remove item</strong><small>Delete it from this device</small></span>
         </button>
       </div>
     </div>
   </div>
 
+
+<style id="jp-popup-suite-final-20260328">
+  :root{
+    --jp-popup-surface:linear-gradient(180deg, rgba(255,255,255,0.985), rgba(248,246,242,0.985));
+    --jp-popup-border:1px solid rgba(255,255,255,0.82);
+    --jp-popup-shadow:0 26px 64px rgba(17,24,39,0.16);
+    --jp-popup-header:linear-gradient(180deg, #215f52 0%, #184c42 100%);
+    --jp-popup-muted:#5f6b66;
+    --jp-popup-ink:#11233f;
+    --jp-popup-soft:#f7f3ee;
+    --jp-popup-soft-2:#f0ebe4;
+    --jp-popup-soft-border:rgba(77,91,102,0.16);
+    --jp-popup-danger:linear-gradient(180deg, #e96363 0%, #d94c4c 100%);
+    --jp-popup-danger-shadow:0 14px 28px rgba(217,76,76,0.22);
+  }
+
+  .modal-overlay,
+  .modal-sheet-overlay,
+  .help-menu-overlay,
+  .coach-mark-overlay{
+    background:rgba(17,24,39,0.24) !important;
+    backdrop-filter:blur(12px) saturate(120%) !important;
+    -webkit-backdrop-filter:blur(12px) saturate(120%) !important;
+  }
+
+  .modal-content,
+  .modal-sheet-content,
+  .help-menu-container,
+  .confirm-sheet,
+  .coach-mark-container,
+  .item-action-sheet{
+    background:var(--jp-popup-surface) !important;
+    border:var(--jp-popup-border) !important;
+    box-shadow:var(--jp-popup-shadow) !important;
+  }
+
+  .help-menu-container,
+  .coach-mark-container,
+  .modal-sheet-content,
+  .item-action-sheet,
+  #jpConfirmModal .confirm-sheet,
+  #importChoiceModal .confirm-sheet{
+    border-radius:30px !important;
+  }
+
+  .help-menu-container{
+    width:min(560px, 94vw) !important;
+    padding:18px 18px 22px !important;
+  }
+
+  .help-menu-head,
+  .item-action-head{
+    position:relative;
+    background:var(--jp-popup-header) !important;
+    border-radius:24px !important;
+    color:#fff !important;
+    padding:18px 20px !important;
+    box-shadow:0 16px 28px rgba(24,76,66,0.18) !important;
+    overflow:hidden;
+  }
+  .help-menu-head::after,
+  .item-action-head::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at top right, rgba(255,255,255,0.18), transparent 34%);
+    pointer-events:none;
+  }
+
+  .help-menu-eyebrow,
+  .item-action-title{
+    position:relative;
+    z-index:1;
+    font-size:11px !important;
+    font-weight:900 !important;
+    text-transform:uppercase !important;
+    letter-spacing:1.2px !important;
+    color:rgba(255,255,255,0.76) !important;
+    margin:0 0 8px !important;
+  }
+
+  .help-menu-title,
+  .item-action-name{
+    position:relative;
+    z-index:1;
+    color:#fff !important;
+    margin:0 !important;
+    letter-spacing:-0.7px !important;
+  }
+  .help-menu-title{
+    font-size:clamp(26px, 4vw, 34px) !important;
+    line-height:1.04 !important;
+  }
+  .item-action-name{
+    font-size:24px !important;
+    line-height:1.08 !important;
+  }
+
+  .help-menu-subtitle{
+    position:relative;
+    z-index:1;
+    margin:10px 0 0 !important;
+    color:rgba(255,255,255,0.84) !important;
+    font-size:14px !important;
+    line-height:1.45 !important;
+    font-weight:600 !important;
+    max-width:420px;
+  }
+
+  .help-menu-close,
+  .item-action-close,
+  .modal-close,
+  .modal-sheet-close{
+    width:46px !important;
+    height:46px !important;
+    min-width:46px !important;
+    min-height:46px !important;
+    border-radius:999px !important;
+    background:rgba(255,255,255,0.16) !important;
+    border:1px solid rgba(255,255,255,0.18) !important;
+    color:#fff !important;
+    box-shadow:none !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    padding:0 !important;
+    line-height:0 !important;
+  }
+  .help-menu-close:hover,
+  .item-action-close:hover,
+  .modal-close:hover,
+  .modal-sheet-close:hover{
+    transform:translateY(-1px) !important;
+    background:rgba(255,255,255,0.22) !important;
+  }
+  .help-menu-close:active,
+  .item-action-close:active,
+  .modal-close:active,
+  .modal-sheet-close:active{
+    transform:scale(.94) !important;
+  }
+  .help-menu-close svg,
+  .item-action-close svg,
+  .modal-close svg,
+  .modal-sheet-close svg{
+    width:18px !important;
+    height:18px !important;
+    stroke:currentColor !important;
+    stroke-width:2.5 !important;
+    fill:none !important;
+  }
+  .help-menu-close{
+    position:absolute !important;
+    top:18px !important;
+    right:18px !important;
+    font-size:0 !important;
+    z-index:2;
+  }
+  .item-action-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:14px;
+    margin-bottom:14px;
+  }
+
+  .help-menu-buttons{
+    display:grid !important;
+    gap:12px !important;
+    margin:16px 0 18px !important;
+  }
+
+  .help-menu-btn,
+  .item-action-btn{
+    width:100% !important;
+    border:none !important;
+    background:#fff !important;
+    color:var(--jp-popup-ink) !important;
+    border-radius:22px !important;
+    border:1px solid rgba(31,111,95,0.10) !important;
+    box-shadow:0 10px 22px rgba(17,24,39,0.06) !important;
+    padding:16px 18px !important;
+    display:flex !important;
+    align-items:center !important;
+    gap:14px !important;
+    text-align:left !important;
+    text-transform:none !important;
+    letter-spacing:0 !important;
+    min-height:86px !important;
+  }
+  .help-menu-btn:hover,
+  .item-action-btn:hover{
+    transform:translateY(-1px) !important;
+    box-shadow:0 14px 24px rgba(17,24,39,0.08) !important;
+  }
+  .help-menu-btn:active,
+  .item-action-btn:active{
+    transform:scale(.98) !important;
+  }
+
+  .help-menu-btn-icon,
+  .item-action-btn-icon{
+    width:46px !important;
+    height:46px !important;
+    min-width:46px !important;
+    border-radius:16px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    background:linear-gradient(180deg, #edf6f2 0%, #e4f1eb 100%) !important;
+    color:#184c42 !important;
+    stroke:#184c42 !important;
+    fill:none !important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.9) !important;
+  }
+  .help-menu-btn svg{
+    width:24px !important;
+    height:24px !important;
+    fill:currentColor !important;
+    stroke:none !important;
+    overflow:visible !important;
+  }
+  .item-action-btn svg{
+    width:24px !important;
+    height:24px !important;
+    stroke:currentColor !important;
+    fill:none !important;
+    stroke-width:2.1 !important;
+    overflow:visible !important;
+  }
+
+  .help-menu-btn-copy,
+  .item-action-btn-copy{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    min-width:0;
+  }
+  .help-menu-btn-copy strong,
+  .item-action-btn-copy strong{
+    font-size:16px !important;
+    line-height:1.15 !important;
+    color:var(--jp-popup-ink) !important;
+    font-weight:900 !important;
+  }
+  .help-menu-btn-copy small,
+  .item-action-btn-copy small{
+    font-size:13px !important;
+    line-height:1.4 !important;
+    color:var(--jp-popup-muted) !important;
+    font-weight:700 !important;
+  }
+
+  .item-action-sheet{
+    width:100% !important;
+    max-width:620px !important;
+    padding:16px 16px calc(18px + env(safe-area-inset-bottom)) !important;
+  }
+  .item-action-sheet::before{display:none !important;}
+  .item-action-list{gap:10px !important;}
+  .item-action-btn.remove .item-action-btn-icon{
+    background:linear-gradient(180deg, #fff1f1 0%, #ffe8e8 100%) !important;
+    color:#c43d3d !important;
+    stroke:#c43d3d !important;
+  }
+  .item-action-btn.remove{
+    border-color:rgba(217,76,76,0.12) !important;
+  }
+
+  .help-region-title{
+    color:var(--jp-popup-muted) !important;
+    font-size:12px !important;
+    font-weight:900 !important;
+    letter-spacing:1.2px !important;
+    text-transform:uppercase !important;
+    margin:4px 2px 10px !important;
+    text-align:left !important;
+  }
+  .help-region-row{
+    display:grid !important;
+    grid-template-columns:repeat(4, minmax(0, 1fr)) !important;
+    gap:10px !important;
+  }
+  .help-region-btn{
+    width:100% !important;
+    height:48px !important;
+    border-radius:16px !important;
+    border:1px solid rgba(31,111,95,0.10) !important;
+    background:linear-gradient(180deg, #ffffff 0%, #f6f3ef 100%) !important;
+    color:#184c42 !important;
+    box-shadow:0 10px 18px rgba(17,24,39,0.05) !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:6px !important;
+    font-size:13px !important;
+    font-weight:900 !important;
+  }
+  .help-region-btn.active{
+    background:var(--jp-popup-header) !important;
+    color:#fff !important;
+    border-color:transparent !important;
+    box-shadow:0 14px 22px rgba(24,76,66,0.18) !important;
+  }
+  .help-region-btn svg{
+    width:16px !important;
+    height:16px !important;
+    stroke:currentColor !important;
+  }
+
+  #jpConfirmModal,
+  #importChoiceModal{
+    align-items:center !important;
+    justify-content:center !important;
+    padding:22px !important;
+  }
+  #jpConfirmModal .confirm-sheet,
+  #importChoiceModal .confirm-sheet{
+    position:relative !important;
+    left:auto !important;
+    right:auto !important;
+    bottom:auto !important;
+    min-height:auto !important;
+    display:flex !important;
+    flex-direction:column !important;
+    gap:0 !important;
+    padding:28px 24px 22px !important;
+    animation:coachMarkIn .24s ease !important;
+    overflow:hidden !important;
+  }
+  #jpConfirmModal .confirm-sheet{width:min(100%, 520px) !important;}
+  #importChoiceModal .confirm-sheet{width:min(100%, 620px) !important;}
+  #jpConfirmModal .confirm-sheet::after,
+  #importChoiceModal .confirm-sheet::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:10px;
+    background:var(--jp-popup-header);
+  }
+  #jpConfirmModal .confirm-title,
+  #importChoiceModal .confirm-title{
+    font-size:clamp(24px, 3vw, 34px) !important;
+    line-height:1.08 !important;
+    letter-spacing:-0.7px !important;
+    color:var(--jp-popup-ink) !important;
+    text-align:center !important;
+    margin:10px 0 12px !important;
+    font-weight:900 !important;
+  }
+  #jpConfirmModal .confirm-message,
+  #importChoiceModal .confirm-message{
+    font-size:15px !important;
+    line-height:1.5 !important;
+    color:var(--jp-popup-muted) !important;
+    text-align:center !important;
+    max-width:500px !important;
+    margin:0 auto 22px !important;
+    font-weight:600 !important;
+  }
+  #jpConfirmModal .confirm-actions,
+  #importChoiceModal .confirm-actions{
+    display:grid !important;
+    grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+    gap:12px !important;
+    margin-top:0 !important;
+  }
+  #jpConfirmModal .confirm-btn,
+  #importChoiceModal .confirm-btn{
+    min-height:56px !important;
+    border-radius:18px !important;
+    padding:14px 16px !important;
+    font-size:16px !important;
+    font-weight:900 !important;
+    text-transform:none !important;
+    letter-spacing:-0.1px !important;
+    border:none !important;
+  }
+  #jpConfirmModal .confirm-btn.no,
+  #importChoiceModal .confirm-btn.no,
+  #jpConfirmModal .confirm-btn.jp-cancel,
+  #importChoiceModal .confirm-btn.jp-cancel{
+    background:linear-gradient(180deg, var(--jp-popup-soft) 0%, var(--jp-popup-soft-2) 100%) !important;
+    color:#4d5b66 !important;
+    border:1px solid var(--jp-popup-soft-border) !important;
+    box-shadow:0 8px 18px rgba(17,24,39,0.05) !important;
+  }
+  #jpConfirmModal .confirm-btn.yes,
+  #jpConfirmModal .confirm-btn.jp-danger,
+  #importChoiceModal .confirm-btn.jp-replace{
+    background:var(--jp-popup-danger) !important;
+    color:#fff !important;
+    box-shadow:var(--jp-popup-danger-shadow) !important;
+  }
+  #importChoiceModal .confirm-btn.jp-merge{
+    background:var(--jp-popup-header) !important;
+    color:#fff !important;
+    box-shadow:0 14px 24px rgba(24,76,66,0.18) !important;
+  }
+  #importChoiceModal .confirm-btn.jp-cancel{
+    grid-column:1 / -1 !important;
+    max-width:280px !important;
+    justify-self:center !important;
+  }
+
+  @media (max-width:640px){
+    .help-menu-container{width:min(100%, 92vw) !important;padding:16px 16px 18px !important;}
+    .help-menu-head{padding:18px 18px 20px !important;}
+    .help-menu-title{font-size:28px !important;}
+    .help-menu-btn,
+    .item-action-btn{padding:14px 14px !important;min-height:82px !important;}
+    .help-region-row{grid-template-columns:repeat(2, minmax(0, 1fr)) !important;}
+    #jpConfirmModal .confirm-sheet,
+    #importChoiceModal .confirm-sheet{width:min(100%, 560px) !important;padding:26px 18px 18px !important;}
+    #jpConfirmModal .confirm-actions,
+    #importChoiceModal .confirm-actions{grid-template-columns:1fr !important;}
+    #importChoiceModal .confirm-btn.jp-cancel{grid-column:auto !important;max-width:none !important;justify-self:stretch !important;}
+  }
+</style>
+
+
+<style id="jp-final-mobile-storage-and-popup-fixes">
+  .help-menu-head-minimal{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    min-height:140px !important;
+    padding:22px 22px !important;
+    box-shadow:none !important;
+  }
+  .help-menu-eyebrow,
+  .help-menu-subtitle{
+    display:none !important;
+  }
+  .help-menu-title{
+    width:100% !important;
+    margin:0 !important;
+    padding:0 58px !important;
+    text-align:center !important;
+  }
+  .help-menu-buttons{
+    margin:16px 0 14px !important;
+  }
+  .help-menu-btn{
+    justify-content:center !important;
+    text-align:center !important;
+    box-shadow:none !important;
+  }
+  .help-menu-btn-copy{
+    align-items:center !important;
+    justify-content:center !important;
+    text-align:center !important;
+    flex:1 !important;
+  }
+  .help-menu-btn-copy strong,
+  .help-menu-btn-copy small{
+    text-align:center !important;
+  }
+  .help-menu-btn,
+  .help-menu-btn *{
+    transition:background-color .18s ease, color .18s ease, border-color .18s ease, opacity .18s ease !important;
+  }
+  .help-menu-btn:hover,
+  .help-menu-btn:focus-visible,
+  .help-menu-btn.active{
+    background:var(--jp-popup-header) !important;
+    color:#fff !important;
+    border-color:transparent !important;
+  }
+  .help-menu-btn:hover .help-menu-btn-copy strong,
+  .help-menu-btn:hover .help-menu-btn-copy small,
+  .help-menu-btn:focus-visible .help-menu-btn-copy strong,
+  .help-menu-btn:focus-visible .help-menu-btn-copy small,
+  .help-menu-btn:hover .help-menu-btn-icon,
+  .help-menu-btn:focus-visible .help-menu-btn-icon,
+  .help-menu-btn:hover svg,
+  .help-menu-btn:focus-visible svg,
+  .help-menu-btn:hover svg *,
+  .help-menu-btn:focus-visible svg *{
+    color:#fff !important;
+    stroke:#fff !important;
+    fill:none !important;
+  }
+  .help-menu-btn:hover .help-menu-btn-icon,
+  .help-menu-btn:focus-visible .help-menu-btn-icon{
+    background:rgba(255,255,255,0.12) !important;
+    box-shadow:none !important;
+  }
+  .help-menu-btn svg,
+  .help-menu-btn svg *{
+    stroke:currentColor !important;
+    fill:none !important;
+    stroke-width:1.9 !important;
+    stroke-linecap:round !important;
+    stroke-linejoin:round !important;
+    vector-effect:non-scaling-stroke !important;
+  }
+  .help-menu-divider{
+    height:1px;
+    margin:4px 0 14px;
+    background:linear-gradient(90deg, rgba(24,76,66,0), rgba(24,76,66,0.14) 18%, rgba(24,76,66,0.24) 50%, rgba(24,76,66,0.14) 82%, rgba(24,76,66,0));
+  }
+  .help-region-title,
+  .help-region-row,
+  .help-region-btn,
+  .help-region-btn span{
+    text-align:center !important;
+  }
+  .help-region-title{
+    margin-top:0 !important;
+  }
+  .help-region-btn{
+    box-shadow:none !important;
+  }
+  .help-region-btn:hover,
+  .help-region-btn:focus-visible{
+    background:var(--jp-popup-header) !important;
+    color:#fff !important;
+    border-color:transparent !important;
+  }
+  .help-region-btn:hover svg,
+  .help-region-btn:focus-visible svg,
+  .help-region-btn.active svg{
+    stroke:currentColor !important;
+  }
+
+  .data-btn{
+    box-shadow:none !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:12px !important;
+    text-align:center !important;
+  }
+  .data-btn:hover,
+  .data-btn:focus-visible{
+    color:#fff !important;
+  }
+  .data-btn-icon{
+    width:52px;
+    height:52px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,0.88);
+    color:#184c42;
+  }
+  .data-btn-copy{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    text-align:center;
+  }
+  .data-btn-copy strong{
+    font-size:15px;
+    line-height:1.2;
+    color:inherit;
+  }
+  .data-btn-copy small{
+    font-size:12px;
+    line-height:1.4;
+    color:rgba(255,255,255,0.82);
+    font-weight:700;
+  }
+  .data-btn svg,
+  .data-btn svg *{
+    width:24px !important;
+    height:24px !important;
+    stroke:currentColor !important;
+    fill:none !important;
+    stroke-width:2.1 !important;
+    stroke-linecap:round !important;
+    stroke-linejoin:round !important;
+    vector-effect:non-scaling-stroke !important;
+  }
+  .data-btn:hover .data-btn-icon,
+  .data-btn:focus-visible .data-btn-icon{
+    background:rgba(255,255,255,0.16) !important;
+    color:#fff !important;
+  }
+  .data-btn:hover .data-btn-copy small,
+  .data-btn:focus-visible .data-btn-copy small{
+    color:rgba(255,255,255,0.95) !important;
+  }
+
+  #jpConfirmModal .confirm-sheet::after,
+  #importChoiceModal .confirm-sheet::after{
+    display:none !important;
+  }
+  #jpConfirmModal .confirm-sheet,
+  #importChoiceModal .confirm-sheet{
+    padding-top:24px !important;
+  }
+  #jpConfirmModal .confirm-btn,
+  #importChoiceModal .confirm-btn{
+    box-shadow:none !important;
+  }
+  #jpConfirmModal .confirm-btn:hover,
+  #importChoiceModal .confirm-btn:hover{
+    box-shadow:none !important;
+  }
+
+  @media (max-width:640px){
+    .help-region-row{
+      grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+    }
+  }
+</style>
+<style id="jp-compact-help-about-20260328">
+  :root{
+    --jp-panel-height:min(720px, 90vh);
+  }
+
+  .help-menu-container,
+  #aboutModalOverlay .modal-sheet-content{
+    width:min(520px, 95vw) !important;
+    max-width:520px !important;
+    height:var(--jp-panel-height) !important;
+    max-height:var(--jp-panel-height) !important;
+    display:flex !important;
+    flex-direction:column !important;
+    overflow:hidden !important;
+  }
+
+  .help-menu-container{
+    padding:14px !important;
+  }
+
+  .help-menu-head-minimal{
+    min-height:108px !important;
+    padding:18px 18px 16px !important;
+    border-radius:24px !important;
+    flex-shrink:0 !important;
+  }
+
+  .help-menu-title{
+    font-size:clamp(24px, 4vw, 32px) !important;
+    line-height:1.05 !important;
+    padding:0 52px !important;
+  }
+
+  .help-menu-buttons{
+    display:grid !important;
+    grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+    gap:10px !important;
+    margin:12px 0 !important;
+  }
+
+  .help-menu-btn{
+    min-height:84px !important;
+    padding:12px 10px !important;
+    border-radius:18px !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:8px !important;
+    text-align:center !important;
+    box-shadow:none !important;
+  }
+
+  .help-menu-btn:hover,
+  .help-menu-btn:focus-visible{
+    transform:none !important;
+    box-shadow:none !important;
+  }
+
+  .help-menu-btn-icon{
+    width:40px !important;
+    height:40px !important;
+    min-width:40px !important;
+    min-height:40px !important;
+    border-radius:14px !important;
+    background:linear-gradient(180deg, #edf6f2 0%, #e4f1eb 100%) !important;
+  }
+
+  .help-menu-btn svg,
+  .help-menu-btn svg *{
+    width:22px !important;
+    height:22px !important;
+    stroke-width:2.2 !important;
+  }
+
+  .help-menu-btn-copy{
+    align-items:center !important;
+    justify-content:center !important;
+    gap:4px !important;
+    text-align:center !important;
+  }
+
+  .help-menu-btn-copy strong{
+    font-size:15px !important;
+    line-height:1.15 !important;
+  }
+
+  .help-menu-btn-copy small{
+    font-size:12px !important;
+    line-height:1.25 !important;
+  }
+
+  .help-menu-divider{
+    margin:12px 0 10px !important;
+    flex-shrink:0 !important;
+  }
+
+  .help-region-title{
+    margin:0 0 8px !important;
+    text-align:center !important;
+  }
+
+  .help-region-row{
+    grid-template-columns:repeat(4, minmax(0, 1fr)) !important;
+    gap:8px !important;
+    flex-shrink:0 !important;
+  }
+
+  .help-region-btn{
+    height:42px !important;
+    border-radius:14px !important;
+    font-size:12px !important;
+    box-shadow:none !important;
+  }
+
+  .help-menu-close{
+    top:16px !important;
+    right:16px !important;
+    width:42px !important;
+    height:42px !important;
+    min-width:42px !important;
+    min-height:42px !important;
+  }
+
+  #aboutModalOverlay{
+    align-items:center !important;
+    justify-content:center !important;
+    padding:22px !important;
+  }
+
+  #aboutModalOverlay .modal-sheet-content{
+    border-radius:30px !important;
+    border-bottom:var(--jp-popup-border) !important;
+    padding-bottom:0 !important;
+  }
+
+  #aboutModalOverlay .modal-sheet-header{
+    flex-shrink:0 !important;
+  }
+
+  #aboutModalOverlay .modal-sheet-body{
+    padding:16px 18px 18px !important;
+    overflow:auto !important;
+    display:flex !important;
+    flex-direction:column !important;
+    gap:14px !important;
+  }
+
+  .about-modal-body{
+    text-align:center !important;
+  }
+
+  .about-hero-card{
+    background:linear-gradient(180deg, #f5fbf8 0%, #edf5f1 100%) !important;
+    border:1px solid rgba(24,76,66,0.08) !important;
+    border-radius:22px !important;
+    padding:16px 14px !important;
+  }
+
+  .about-version-pill{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    margin:0 auto 10px !important;
+    padding:7px 12px !important;
+    border-radius:999px !important;
+    background:var(--jp-popup-header) !important;
+    color:#fff !important;
+    font-size:12px !important;
+    font-weight:900 !important;
+    letter-spacing:.4px !important;
+    text-transform:uppercase !important;
+  }
+
+  .about-lead{
+    margin:0 !important;
+    font-size:15px !important;
+    line-height:1.5 !important;
+    color:var(--jp-popup-ink) !important;
+    font-weight:700 !important;
+  }
+
+  .about-modal-body .about-section{
+    margin:0 !important;
+  }
+
+  .about-modal-body .about-section h3{
+    margin:0 0 8px !important;
+    text-align:center !important;
+  }
+
+  .about-modal-body .about-section p,
+  .about-modal-body .about-feature-item{
+    text-align:center !important;
+    font-size:13px !important;
+    line-height:1.5 !important;
+  }
+
+  .about-modal-body .about-feature-list.compact{
+    gap:8px !important;
+    margin-top:0 !important;
+  }
+
+  .about-modal-body .about-feature-item{
+    justify-content:center !important;
+  }
+
+  .data-btn{
+    box-shadow:none !important;
+  }
+
+  .data-btn-icon{
+    width:56px !important;
+    height:56px !important;
+    border-radius:18px !important;
+    background:rgba(255,255,255,0.94) !important;
+    color:#184c42 !important;
+  }
+
+  .data-btn svg,
+  .data-btn svg *{
+    width:26px !important;
+    height:26px !important;
+    stroke-width:2.3 !important;
+    opacity:1 !important;
+  }
+
+  @media (max-width:640px){
+    :root{
+      --jp-panel-height:min(680px, 90vh);
+    }
+
+    .help-menu-container,
+    #aboutModalOverlay .modal-sheet-content{
+      width:min(95vw, 360px) !important;
+      max-width:360px !important;
+      height:var(--jp-panel-height) !important;
+      max-height:var(--jp-panel-height) !important;
+    }
+
+    .help-menu-container{
+      padding:12px !important;
+    }
+
+    .help-menu-head-minimal{
+      min-height:96px !important;
+      padding:16px 16px 14px !important;
+    }
+
+    .help-menu-title{
+      font-size:24px !important;
+      padding:0 42px !important;
+    }
+
+    .help-menu-buttons{
+      gap:8px !important;
+      margin:10px 0 !important;
+    }
+
+    .help-menu-btn{
+      min-height:72px !important;
+      padding:10px 8px !important;
+      gap:6px !important;
+    }
+
+    .help-menu-btn-icon{
+      width:36px !important;
+      height:36px !important;
+      min-width:36px !important;
+      min-height:36px !important;
+      border-radius:12px !important;
+    }
+
+    .help-menu-btn svg,
+    .help-menu-btn svg *{
+      width:20px !important;
+      height:20px !important;
+      stroke-width:2.2 !important;
+    }
+
+    .help-menu-btn-copy strong{
+      font-size:13px !important;
+    }
+
+    .help-menu-btn-copy small{
+      font-size:10.5px !important;
+      line-height:1.2 !important;
+    }
+
+    .help-region-title{
+      font-size:11px !important;
+      margin-bottom:6px !important;
+    }
+
+    .help-region-row{
+      gap:7px !important;
+    }
+
+    .help-region-btn{
+      height:38px !important;
+      font-size:11px !important;
+      border-radius:12px !important;
+      gap:4px !important;
+    }
+
+    .help-region-btn svg{
+      width:14px !important;
+      height:14px !important;
+    }
+
+    #aboutModalOverlay{
+      padding:16px !important;
+    }
+
+    #aboutModalOverlay .modal-sheet-header{
+      padding:16px 16px !important;
+    }
+
+    #aboutModalOverlay .modal-sheet-header h2{
+      font-size:22px !important;
+    }
+
+    #aboutModalOverlay .modal-sheet-body{
+      padding:14px 16px 16px !important;
+      gap:12px !important;
+    }
+
+    .about-hero-card{
+      padding:14px 12px !important;
+      border-radius:20px !important;
+    }
+
+    .about-version-pill{
+      margin-bottom:8px !important;
+      font-size:11px !important;
+      padding:6px 10px !important;
+    }
+
+    .about-lead{
+      font-size:14px !important;
+      line-height:1.45 !important;
+    }
+
+    .about-modal-body .about-section h3{
+      font-size:12px !important;
+      margin-bottom:6px !important;
+    }
+
+    .about-modal-body .about-section p,
+    .about-modal-body .about-feature-item{
+      font-size:12px !important;
+      line-height:1.45 !important;
+    }
+  }
+</style>
+<script id="jp-final-mobile-storage-and-popup-script">
+(function(){
+  function getCapacitor(){ return window.Capacitor || null; }
+  function getPlatform(){
+    try {
+      const cap = getCapacitor();
+      if (!cap) return 'web';
+      if (typeof cap.getPlatform === 'function') return cap.getPlatform();
+      return 'web';
+    } catch (e) {
+      return 'web';
+    }
+  }
+  function isNativePlatform(){
+    try {
+      const cap = getCapacitor();
+      if (!cap) return false;
+      if (typeof cap.isNativePlatform === 'function') return !!cap.isNativePlatform();
+      const platform = getPlatform();
+      return platform === 'android' || platform === 'ios';
+    } catch (e) {
+      return false;
+    }
+  }
+  function getPlugin(name){
+    const cap = getCapacitor();
+    if (!cap || !cap.Plugins) return null;
+    return cap.Plugins[name] || null;
+  }
+  async function requestFilesystemPermissions(filesystem){
+    if (!filesystem) return;
+    try {
+      if (typeof filesystem.checkPermissions === 'function') {
+        const status = await filesystem.checkPermissions();
+        const needsRequest = status && (status.publicStorage === 'prompt' || status.publicStorage === 'denied');
+        if (needsRequest && typeof filesystem.requestPermissions === 'function') {
+          await filesystem.requestPermissions();
+          return;
+        }
+      }
+      if (typeof filesystem.requestPermissions === 'function') {
+        try { await filesystem.requestPermissions(); } catch (e) {}
+      }
+    } catch (e) {}
+  }
+  async function blobToText(blob){
+    if (blob && typeof blob.text === 'function') return blob.text();
+    return new Promise(function(resolve, reject){
+      const reader = new FileReader();
+      reader.onload = function(){ resolve(typeof reader.result === 'string' ? reader.result : ''); };
+      reader.onerror = reject;
+      reader.readAsText(blob);
+    });
+  }
+  function normalizeFileReadResult(result){
+    if (!result) return '';
+    if (typeof result.data === 'string') return result.data;
+    if (typeof result === 'string') return result;
+    return '';
+  }
+  function decodeBase64ToText(data){
+    try {
+      return decodeURIComponent(Array.prototype.map.call(atob(data), function(c){
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+    } catch (e) {
+      try { return atob(data); } catch (err) { return ''; }
+    }
+  }
+  function processImportedCSVText(content){
+    try {
+      if (typeof content !== 'string') throw new Error('Invalid file');
+      const lines = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n').filter(function(line){ return line.trim() !== ''; });
+      if (lines.length < 2) throw new Error('CSV file is empty or missing rows');
+      const headers = parseCSVLine(lines[0]).map(function(h){ return h.trim().toLowerCase(); });
+      const headerMap = {
+        item: headers.indexOf('item'),
+        store: headers.indexOf('store'),
+        location: headers.indexOf('location'),
+        storage: headers.indexOf('storage'),
+        category: headers.indexOf('category'),
+        quantity: headers.indexOf('quantity'),
+        expiry: headers.indexOf('expiry'),
+        notes: headers.indexOf('notes')
+      };
+      if (headerMap.item === -1) throw new Error('CSV must include an "Item" column');
+      const importedItems = [];
+      for (let i = 1; i < lines.length; i++) {
+        const row = parseCSVLine(lines[i]);
+        const item = normalizeImportedItem({
+          item: headerMap.item > -1 ? row[headerMap.item] : '',
+          store: headerMap.store > -1 ? row[headerMap.store] : '',
+          location: headerMap.location > -1 ? row[headerMap.location] : 'Kitchen',
+          storage: headerMap.storage > -1 ? row[headerMap.storage] : 'Cupboard',
+          category: headerMap.category > -1 ? row[headerMap.category] : '',
+          quantity: headerMap.quantity > -1 ? row[headerMap.quantity] : '0',
+          expiry: headerMap.expiry > -1 ? row[headerMap.expiry] : '',
+          notes: headerMap.notes > -1 ? row[headerMap.notes] : ''
+        });
+        if (item.item.trim()) importedItems.push(item);
+      }
+      if (!importedItems.length) throw new Error('No valid items found in CSV');
+      pendingImportItems = importedItems;
+      closeDataManager();
+      setTimeout(function(){ openImportChoice(importedItems.length); }, 240);
+    } catch (err) {
+      console.error(err);
+      toast('Import failed: ' + (err && err.message ? err.message : 'Could not read CSV'));
+    }
+  }
+
+  window.handleImport = function(event){
+    const file = event && event.target && event.target.files ? event.target.files[0] : null;
+    if (!file) return;
+    const done = function(){ try { event.target.value = ''; } catch (e) {} };
+    if (typeof file.text === 'function') {
+      file.text().then(processImportedCSVText).catch(function(err){
+        console.error(err);
+        toast('Import failed: Could not read the selected file');
+      }).finally(done);
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(){ processImportedCSVText(typeof reader.result === 'string' ? reader.result : ''); done(); };
+    reader.onerror = function(err){ console.error(err); toast('Import failed: Could not read the selected file'); done(); };
+    reader.readAsText(file);
+  };
+
+  window.triggerImport = async function(){
+    const input = document.getElementById('importFile');
+    const filesystem = getPlugin('Filesystem');
+    const nativePicker = getPlugin('FilePicker') || getPlugin('CapawesomeFilePicker') || getPlugin('FilePickerPlugin');
+
+    if (isNativePlatform() && nativePicker && typeof nativePicker.pickFiles === 'function') {
+      try {
+        const result = await nativePicker.pickFiles({
+          types: ['text/csv', '.csv', 'text/comma-separated-values'],
+          multiple: false,
+          readData: true
+        });
+        const file = result && result.files && result.files[0] ? result.files[0] : null;
+        if (!file) {
+          toast('Import cancelled');
+          return;
+        }
+        if (file.data) {
+          processImportedCSVText(decodeBase64ToText(file.data));
+          return;
+        }
+        const path = file.path || file.uri;
+        if (path && filesystem && typeof filesystem.readFile === 'function') {
+          const readResult = await filesystem.readFile({ path: path, encoding: 'utf8' });
+          processImportedCSVText(normalizeFileReadResult(readResult));
+          return;
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    if (window.showOpenFilePicker) {
+      try {
+        const handles = await window.showOpenFilePicker({
+          multiple: false,
+          types: [{ description: 'CSV Files', accept: { 'text/csv': ['.csv'] } }]
+        });
+        if (handles && handles[0]) {
+          const file = await handles[0].getFile();
+          processImportedCSVText(await file.text());
+          return;
+        }
+      } catch (err) {
+        if (!(err && (err.name === 'AbortError' || err.message === 'The user aborted a request.'))) {
+          console.error(err);
+        }
+      }
+    }
+
+    if (input) {
+      try { input.value = ''; } catch (e) {}
+      input.click();
+      return;
+    }
+
+    toast('Import is not available in this build');
+  };
+
+  window.downloadBlobToDevice = async function(blob, filename){
+    const filesystem = getPlugin('Filesystem');
+    const nativePicker = getPlugin('FilePicker') || getPlugin('CapawesomeFilePicker') || getPlugin('FilePickerPlugin');
+    const fileText = await blobToText(blob);
+
+    if (isNativePlatform() && filesystem && typeof filesystem.writeFile === 'function') {
+      try {
+        await requestFilesystemPermissions(filesystem);
+      } catch (e) {}
+
+      if (nativePicker && typeof nativePicker.pickDirectory === 'function') {
+        try {
+          const pickedDirectory = await nativePicker.pickDirectory();
+          const selectedPath = pickedDirectory && pickedDirectory.path ? String(pickedDirectory.path).replace(/[\/]+$/, '') : '';
+          if (selectedPath) {
+            const fullPath = selectedPath + '/' + filename;
+            await filesystem.writeFile({
+              path: fullPath,
+              data: fileText,
+              encoding: 'utf8',
+              recursive: true
+            });
+            return { status: 'saved', path: fullPath, directory: 'picked-directory' };
+          }
+        } catch (err) {
+          if (err && (err.name === 'AbortError' || /cancel/i.test(err.message || ''))) {
+            return { status: 'cancelled' };
+          }
+          console.error(err);
+        }
+      }
+
+      try {
+        const candidateDirectories = ['DOCUMENTS', 'Documents', 'DATA', 'Data'];
+        let writeResult = null;
+        let chosenDirectory = null;
+        const relativePath = 'JemsPantry/' + filename;
+
+        for (const directory of candidateDirectories) {
+          try {
+            writeResult = await filesystem.writeFile({
+              path: relativePath,
+              data: fileText,
+              directory: directory,
+              encoding: 'utf8',
+              recursive: true
+            });
+            chosenDirectory = directory;
+            break;
+          } catch (err) {
+            console.error(err);
+          }
+        }
+
+        if (writeResult) {
+          let uri = writeResult.uri || '';
+          if (!uri && typeof filesystem.getUri === 'function' && chosenDirectory) {
+            try {
+              const uriResult = await filesystem.getUri({ path: relativePath, directory: chosenDirectory });
+              uri = uriResult && uriResult.uri ? uriResult.uri : '';
+            } catch (e) {}
+          }
+          return { status: 'saved', path: uri || relativePath, directory: chosenDirectory || 'native' };
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    if (window.showSaveFilePicker) {
+      try {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: filename,
+          types: [{ description: 'CSV Files', accept: { 'text/csv': ['.csv'] } }]
+        });
+        const writable = await handle.createWritable();
+        await writable.write(blob);
+        await writable.close();
+        return { status: 'saved', path: filename, directory: 'picker' };
+      } catch (err) {
+        if (err && err.name === 'AbortError') return { status: 'cancelled' };
+        console.error(err);
+      }
+    }
+
+    if (navigator.share && typeof File !== 'undefined') {
+      try {
+        const file = new File([blob], filename, { type: blob.type || 'text/csv' });
+        if (!navigator.canShare || navigator.canShare({ files: [file] })) {
+          await navigator.share({ title: 'JemsPantry export', files: [file] });
+          return { status: 'saved', path: filename, directory: 'shared' };
+        }
+      } catch (err) {
+        if (!(err && (err.name === 'AbortError' || err.message === 'Share canceled'))) {
+          console.error(err);
+        }
+      }
+    }
+
+    try {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      return { status: 'saved', path: filename, directory: 'browser-download' };
+    } catch (err) {
+      console.error(err);
+      return { status: 'error', error: err };
+    }
+  };
+
+  window.exportInventoryAsCSV = async function(){
+    if (!inventory.length) { toast('No items to export'); return; }
+    const headers = ['Item','Store','Location','Storage','Category','Quantity','Expiry'];
+    const rows = inventory.map(function(item){
+      return [item.item || '', item.store || '', item.location || '', item.storage || '', getCategory(item) || '', item.quantity ?? 0, item.expiry || ''];
+    });
+    let csv = headers.map(csvEscape).join(',') + '\n';
+    rows.forEach(function(row){ csv += row.map(csvEscape).join(',') + '\n'; });
+    const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+    const filename = 'JemsPantry-items-' + new Date().toISOString().split('T')[0] + '.csv';
+    const result = await window.downloadBlobToDevice(blob, filename);
+    if (result && result.status === 'saved') {
+      if (result.directory === 'picked-directory') {
+        toast('CSV saved to chosen folder');
+      } else if (result.directory === 'DOCUMENTS' || result.directory === 'Documents') {
+        toast('CSV saved to Documents/JemsPantry');
+      } else if (result.directory === 'DATA' || result.directory === 'Data') {
+        toast('CSV saved to the JemsPantry app folder');
+      } else if (result.directory === 'shared') {
+        toast('CSV ready to save or share');
+      } else if (result.directory === 'picker') {
+        toast('CSV saved to selected location');
+      } else {
+        toast('CSV exported');
+      }
+    } else if (result && result.status === 'cancelled') {
+      toast('Export cancelled');
+    } else {
+      toast('Could not export CSV');
+    }
+  };
+})();
+</script>
+
+
+<style id="jp-final-v4-ui-fixes">
+  .help-menu-head-minimal{
+    font-size:0 !important;
+  }
+
+  .help-menu-btn-icon{
+    background:linear-gradient(180deg, #ffffff 0%, #f3f8f5 100%) !important;
+    border:1px solid rgba(24,76,66,0.14) !important;
+    box-shadow:none !important;
+    color:#184c42 !important;
+  }
+
+  .help-menu-btn svg,
+  .help-menu-btn svg *{
+    stroke:#184c42 !important;
+    opacity:1 !important;
+  }
+
+  .help-menu-btn:hover .help-menu-btn-icon,
+  .help-menu-btn:focus-visible .help-menu-btn-icon{
+    background:rgba(255,255,255,0.22) !important;
+    border-color:rgba(255,255,255,0.24) !important;
+  }
+
+  .help-menu-btn:hover svg,
+  .help-menu-btn:hover svg *,
+  .help-menu-btn:focus-visible svg,
+  .help-menu-btn:focus-visible svg *{
+    stroke:#ffffff !important;
+  }
+
+  .data-btn-icon{
+    background:#ffffff !important;
+    border:1px solid rgba(24,76,66,0.14) !important;
+    box-shadow:none !important;
+    color:#184c42 !important;
+  }
+
+  .data-btn:hover .data-btn-icon,
+  .data-btn:focus-visible .data-btn-icon{
+    background:#ffffff !important;
+    color:#184c42 !important;
+  }
+
+  .data-btn svg,
+  .data-btn svg *{
+    stroke:#184c42 !important;
+    opacity:1 !important;
+  }
+
+  #itemModal .field textarea,
+  #itemModal .field label[for="f_notes"],
+  #itemModal #f_notes{
+    display:none !important;
+  }
+</style>
+<script id="jp-final-v4-ui-fixes-script">
+document.addEventListener('DOMContentLoaded', function(){
+  var helpHead = document.querySelector('.help-menu-head-minimal');
+  if (helpHead) {
+    helpHead.querySelectorAll('.help-menu-eyebrow, .help-menu-subtitle').forEach(function(el){ el.remove(); });
+    Array.prototype.slice.call(helpHead.childNodes).forEach(function(node){
+      if (node && node.nodeType === 3) node.textContent = '';
+    });
+  }
+
+  var notesField = document.getElementById('f_notes');
+  if (notesField) {
+    var field = notesField.closest('.field');
+    if (field) field.remove();
+  }
+});
+</script>
+
+
+
+<style id="jp-v6-safe-mobile-fixes">
+  .help-menu-overlay,
+  #aboutModalOverlay{
+    align-items:center !important;
+    justify-content:center !important;
+    padding:14px !important;
+  }
+
+  .help-menu-container{
+    width:min(360px, 94vw) !important;
+    max-width:360px !important;
+    max-height:min(640px, calc(100vh - 72px)) !important;
+    padding:12px !important;
+    display:flex !important;
+    flex-direction:column !important;
+    overflow:auto !important;
+    box-shadow:0 18px 48px rgba(15,23,42,0.14) !important;
+  }
+
+  .help-menu-head-minimal{
+    position:relative !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    min-height:96px !important;
+    padding:18px 84px 18px 18px !important;
+    margin-bottom:10px !important;
+    border-radius:24px !important;
+  }
+
+  .help-menu-title{
+    margin:0 !important;
+    width:100% !important;
+    text-align:center !important;
+    font-size:clamp(22px, 7.4vw, 30px) !important;
+    line-height:1.06 !important;
+    letter-spacing:-0.4px !important;
+  }
+
+  .help-menu-close{
+    position:absolute !important;
+    top:50% !important;
+    right:18px !important;
+    transform:translateY(-50%) !important;
+    width:46px !important;
+    height:46px !important;
+    min-width:46px !important;
+    min-height:46px !important;
+  }
+  .help-menu-close:hover,
+  .help-menu-close:focus-visible,
+  .help-menu-close:active{
+    transform:translateY(-50%) !important;
+  }
+
+  .help-menu-buttons{
+    display:grid !important;
+    grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+    gap:10px !important;
+    margin:0 0 12px !important;
+  }
+
+  .help-menu-btn{
+    min-height:118px !important;
+    padding:14px 10px !important;
+    border-radius:22px !important;
+    box-shadow:none !important;
+    background:#ffffff !important;
+    border:1px solid #dfe7e2 !important;
+    gap:10px !important;
+    justify-content:center !important;
+  }
+  .help-menu-btn:hover,
+  .help-menu-btn:focus-visible,
+  .help-menu-btn:active{
+    transform:none !important;
+    box-shadow:none !important;
+  }
+
+  .help-menu-btn-icon{
+    width:50px !important;
+    height:50px !important;
+    min-width:50px !important;
+    min-height:50px !important;
+    border-radius:16px !important;
+    background:linear-gradient(180deg, #1a5a4d 0%, #123e35 100%) !important;
+    border:none !important;
+    color:#ffffff !important;
+    stroke:#ffffff !important;
+    fill:none !important;
+  }
+
+  .help-menu-btn svg,
+  .help-menu-btn svg *,
+  .help-menu-btn-icon svg,
+  .help-menu-btn-icon svg *{
+    stroke:#ffffff !important;
+    color:#ffffff !important;
+    fill:none !important;
+    opacity:1 !important;
+    stroke-width:2.2 !important;
+    stroke-linecap:round !important;
+    stroke-linejoin:round !important;
+  }
+
+  .help-menu-btn-copy{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    gap:6px !important;
+    width:100% !important;
+    text-align:center !important;
+  }
+  .help-menu-btn-copy strong{
+    font-size:14px !important;
+    line-height:1.12 !important;
+    text-align:center !important;
+    width:100% !important;
+  }
+  .help-menu-btn-copy small{
+    font-size:10.5px !important;
+    line-height:1.24 !important;
+    text-align:center !important;
+    width:100% !important;
+    max-width:130px !important;
+  }
+
+  .help-menu-divider{
+    margin:4px 2px 10px !important;
+    border-top:1px solid #dde6e0 !important;
+  }
+
+  .help-region-title{
+    margin:0 0 8px !important;
+    text-align:center !important;
+  }
+  .help-region-row{
+    display:grid !important;
+    grid-template-columns:repeat(4, minmax(0,1fr)) !important;
+    gap:8px !important;
+    width:100% !important;
+  }
+  .help-region-btn{
+    width:100% !important;
+    height:42px !important;
+    border-radius:14px !important;
+    box-shadow:none !important;
+    font-size:12px !important;
+    justify-content:center !important;
+    padding:0 6px !important;
+  }
+  .help-region-btn svg{
+    width:16px !important;
+    height:16px !important;
+  }
+
+  #aboutModalOverlay .modal-sheet-content{
+    width:min(360px, 94vw) !important;
+    max-width:360px !important;
+    max-height:min(640px, calc(100vh - 72px)) !important;
+    height:auto !important;
+    overflow:auto !important;
+    border-radius:28px !important;
+  }
+  #aboutModalOverlay .modal-sheet-header{
+    position:relative !important;
+    min-height:92px !important;
+    padding:18px 84px 18px 18px !important;
+  }
+  #aboutModalOverlay .modal-sheet-header h2{
+    width:100% !important;
+    margin:0 !important;
+    text-align:center !important;
+    font-size:clamp(22px, 7.4vw, 30px) !important;
+    line-height:1.06 !important;
+  }
+  #aboutModalOverlay .modal-sheet-close{
+    position:absolute !important;
+    top:50% !important;
+    right:18px !important;
+    transform:translateY(-50%) !important;
+    width:46px !important;
+    height:46px !important;
+  }
+  #aboutModalOverlay .modal-sheet-body{
+    padding:16px 18px 18px !important;
+  }
+  .about-modal-body .about-section h3,
+  .about-modal-body .about-section p,
+  .about-modal-body .about-feature-item{
+    text-align:center !important;
+  }
+
+  .data-btn, .data-btn:hover, .data-btn:focus-visible, .data-btn:active,
+  .data-btn-icon{
+    box-shadow:none !important;
+  }
+
+  @media (min-width:641px){
+    .help-menu-container,
+    #aboutModalOverlay .modal-sheet-content{
+      width:min(500px, 92vw) !important;
+      max-width:500px !important;
+      max-height:min(700px, calc(100vh - 80px)) !important;
+    }
+    .help-menu-btn{min-height:126px !important;}
+    .help-menu-btn-copy strong{font-size:15px !important;}
+    .help-menu-btn-copy small{font-size:11.5px !important; max-width:170px !important;}
+  }
+</style>
+<script id="jp-v6-safe-dom-fixes">
+(function(){
+  function removeNotesFromForms(){
+    var field = document.getElementById('f_notes');
+    if (field && field.closest('.field')) field.closest('.field').remove();
+    var itemModal = document.getElementById('itemModal');
+    if (!itemModal) return;
+    Array.prototype.forEach.call(itemModal.querySelectorAll('.field'), function(el){
+      var label = el.querySelector('label');
+      if (label && String(label.textContent || '').trim().toLowerCase() === 'notes') el.remove();
+      if (el.querySelector('textarea')) el.remove();
+    });
+  }
+
+  function compactAboutCopy(){
+    var overlay = document.getElementById('aboutModalOverlay');
+    if (!overlay) return;
+    var helpHeading = overlay.querySelectorAll('.about-section h3');
+    Array.prototype.forEach.call(helpHeading, function(h){
+      var t = (h.textContent || '').trim().toLowerCase();
+      if (t === 'need help?') h.textContent = 'Support';
+    });
+    var p = overlay.querySelector('.about-section p');
+    if (p && /uploaded to external servers/i.test(p.textContent || '')) {
+      p.textContent = 'All pantry data stays on your device. Nothing is uploaded to external servers.';
+    }
+  }
+
+  function clearExistingNotes(){
+    if (!Array.isArray(window.inventory)) return;
+    for (var i = 0; i < window.inventory.length; i++) {
+      if (window.inventory[i] && window.inventory[i].notes) window.inventory[i].notes = '';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    removeNotesFromForms();
+    compactAboutCopy();
+    clearExistingNotes();
+    try { if (typeof saveInventoryToStorage === 'function') saveInventoryToStorage(); } catch(e){}
+  });
+})();
+</script>
+
+
+<style id="jp-help-menu-v7-compact-fix">
+  :root{
+    --jp-help-max-h:min(540px, calc(100dvh - 28px));
+  }
+
+  #helpMenuOverlay{
+    align-items:center !important;
+    justify-content:center !important;
+    padding:14px !important;
+  }
+
+  .help-menu-container{
+    width:min(370px, calc(100vw - 24px)) !important;
+    max-width:370px !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:var(--jp-help-max-h) !important;
+    padding:12px !important;
+    overflow:auto !important;
+    overscroll-behavior:contain !important;
+    -webkit-overflow-scrolling:touch !important;
+  }
+
+  .help-menu-head-minimal{
+    min-height:92px !important;
+    padding:16px 16px 14px !important;
+    border-radius:22px !important;
+    margin-bottom:10px !important;
+  }
+
+  .help-menu-title{
+    font-size:22px !important;
+    line-height:1.06 !important;
+    padding:0 64px 0 14px !important;
+    text-align:center !important;
+  }
+
+  .help-menu-close{
+    top:12px !important;
+    right:12px !important;
+    width:40px !important;
+    height:40px !important;
+    min-width:40px !important;
+    min-height:40px !important;
+  }
+
+  .help-menu-buttons{
+    display:grid !important;
+    grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+    gap:8px !important;
+    margin:0 0 10px !important;
+  }
+
+  .help-menu-btn{
+    min-height:104px !important;
+    padding:12px 10px !important;
+    border-radius:20px !important;
+    gap:8px !important;
+    box-shadow:none !important;
+  }
+
+  .help-menu-btn:hover,
+  .help-menu-btn:focus-visible{
+    transform:none !important;
+    box-shadow:none !important;
+  }
+
+  .help-menu-btn-icon{
+    width:44px !important;
+    height:44px !important;
+    min-width:44px !important;
+    min-height:44px !important;
+    border-radius:14px !important;
+    background:linear-gradient(180deg, #1f6f5f 0%, #184c42 100%) !important;
+    color:#fff !important;
+    stroke:#fff !important;
+    box-shadow:none !important;
+  }
+
+  .help-menu-btn svg,
+  .help-menu-btn svg *{
+    color:#fff !important;
+    stroke:#fff !important;
+    fill:none !important;
+  }
+
+  .help-menu-btn-copy{
+    gap:4px !important;
+  }
+
+  .help-menu-btn-copy strong{
+    font-size:14px !important;
+    line-height:1.1 !important;
+  }
+
+  .help-menu-btn-copy small{
+    font-size:11px !important;
+    line-height:1.2 !important;
+    max-width:120px !important;
+  }
+
+  .help-menu-divider{
+    margin:0 0 8px !important;
+  }
+
+  .help-region-title{
+    margin:0 0 8px !important;
+    text-align:center !important;
+  }
+
+  .help-region-row{
+    grid-template-columns:repeat(4, minmax(0, 1fr)) !important;
+    gap:8px !important;
+    margin-bottom:0 !important;
+  }
+
+  .help-region-btn{
+    height:42px !important;
+    border-radius:14px !important;
+    box-shadow:none !important;
+    padding:0 8px !important;
+  }
+
+  .help-region-btn svg{
+    width:14px !important;
+    height:14px !important;
+  }
+
+  @media (max-width:640px){
+    :root{
+      --jp-help-max-h:min(500px, calc(100dvh - 24px));
+    }
+
+    .help-menu-container{
+      width:min(370px, calc(100vw - 20px)) !important;
+      max-width:370px !important;
+      padding:10px !important;
+    }
+
+    .help-menu-head-minimal{
+      min-height:86px !important;
+      padding:14px 14px 12px !important;
+      margin-bottom:8px !important;
+    }
+
+    .help-menu-title{
+      font-size:21px !important;
+      padding:0 58px 0 12px !important;
+    }
+
+    .help-menu-close{
+      top:10px !important;
+      right:10px !important;
+      width:38px !important;
+      height:38px !important;
+      min-width:38px !important;
+      min-height:38px !important;
+    }
+
+    .help-menu-buttons{
+      gap:7px !important;
+      margin:0 0 8px !important;
+    }
+
+    .help-menu-btn{
+      min-height:94px !important;
+      padding:10px 8px !important;
+      gap:7px !important;
+    }
+
+    .help-menu-btn-icon{
+      width:42px !important;
+      height:42px !important;
+      min-width:42px !important;
+      min-height:42px !important;
+      border-radius:13px !important;
+    }
+
+    .help-menu-btn-copy strong{
+      font-size:13px !important;
+    }
+
+    .help-menu-btn-copy small{
+      font-size:10.5px !important;
+      line-height:1.18 !important;
+      max-width:116px !important;
+    }
+
+    .help-region-title{
+      font-size:11px !important;
+      margin:0 0 6px !important;
+    }
+
+    .help-region-row{
+      gap:7px !important;
+    }
+
+    .help-region-btn{
+      height:38px !important;
+      border-radius:12px !important;
+      font-size:11px !important;
+      gap:4px !important;
+    }
+  }
+</style>
+
+
+<style id="jp-help-menu-v8-header-fix">
+  /* Final alignment fix for the Help menu header */
+  .help-menu-head-minimal{
+    position:relative !important;
+    display:grid !important;
+    grid-template-columns:44px minmax(0,1fr) 44px !important;
+    align-items:center !important;
+    column-gap:10px !important;
+    min-height:88px !important;
+    padding:14px 14px 12px !important;
+    overflow:hidden !important;
+  }
+
+  .help-menu-title{
+    grid-column:2 !important;
+    width:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+    text-align:center !important;
+    justify-self:center !important;
+    align-self:center !important;
+    font-size:clamp(20px, 5.8vw, 26px) !important;
+    line-height:1.08 !important;
+  }
+
+  .help-menu-close{
+    grid-column:3 !important;
+    position:relative !important;
+    top:auto !important;
+    right:auto !important;
+    left:auto !important;
+    bottom:auto !important;
+    transform:none !important;
+    justify-self:end !important;
+    align-self:start !important;
+    width:40px !important;
+    height:40px !important;
+    min-width:40px !important;
+    min-height:40px !important;
+    margin:0 !important;
+  }
+
+  .help-menu-close:hover,
+  .help-menu-close:focus-visible,
+  .help-menu-close:active{
+    transform:none !important;
+  }
+
+  @media (max-width:640px){
+    .help-menu-head-minimal{
+      grid-template-columns:40px minmax(0,1fr) 40px !important;
+      min-height:84px !important;
+      padding:12px 12px 10px !important;
+      column-gap:8px !important;
+    }
+
+    .help-menu-title{
+      font-size:clamp(18px, 6.2vw, 24px) !important;
+    }
+
+    .help-menu-close{
+      width:38px !important;
+      height:38px !important;
+      min-width:38px !important;
+      min-height:38px !important;
+    }
+  }
+</style>
+
 </body>
+<script src="capacitor.js"></script>
 </html>
+<style id="jp-help-header-v9-fix">
+  .help-menu-head-minimal{
+    min-height:110px !important;
+    padding:18px 72px 18px 20px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+  }
+  .help-menu-title{
+    width:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+    text-align:center !important;
+    font-size:clamp(22px, 4.8vw, 30px) !important;
+    line-height:1.04 !important;
+    letter-spacing:-0.5px !important;
+  }
+  .help-menu-close{
+    top:50% !important;
+    right:18px !important;
+    transform:translateY(-50%) !important;
+  }
+  .help-menu-close:hover{
+    transform:translateY(-50%) !important;
+  }
+  .help-menu-close:active{
+    transform:translateY(-50%) scale(.94) !important;
+  }
+  @media (max-width:640px){
+    .help-menu-head-minimal{
+      min-height:104px !important;
+      padding:16px 68px 16px 18px !important;
+    }
+    .help-menu-title{
+      font-size:clamp(20px, 4.6vw, 26px) !important;
+      line-height:1.06 !important;
+    }
+    .help-menu-close{
+      width:42px !important;
+      height:42px !important;
+      min-width:42px !important;
+      min-height:42px !important;
+      right:16px !important;
+    }
+  }
+</style>
+<style id="jp-help-header-v11-center-fix">
+  .help-menu-head-no-close.help-menu-head-minimal{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    min-height:104px !important;
+    padding:16px 20px !important;
+    column-gap:0 !important;
+    grid-template-columns:none !important;
+  }
+
+  .help-menu-head-no-close .help-menu-title{
+    width:100% !important;
+    max-width:none !important;
+    margin:0 auto !important;
+    text-align:center !important;
+    justify-self:center !important;
+    align-self:center !important;
+    font-size:clamp(20px, 5.2vw, 28px) !important;
+    line-height:1.06 !important;
+    letter-spacing:-0.4px !important;
+  }
+
+  @media (max-width:640px){
+    .help-menu-head-no-close.help-menu-head-minimal{
+      min-height:96px !important;
+      padding:14px 18px !important;
+    }
+
+    .help-menu-head-no-close .help-menu-title{
+      font-size:clamp(18px, 5vw, 24px) !important;
+      line-height:1.08 !important;
+    }
+  }
+</style>
